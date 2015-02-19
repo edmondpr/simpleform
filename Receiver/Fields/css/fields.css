@@ -1,0 +1,23 @@
+a.nodecoration{
+    text-decoration: none;
+}
+
+.top-buffer{
+    margin-top: 10px;
+}
+
+.field-label {
+	padding-left: 20px !important;
+}
+
+.fieldstable td {
+    vertical-align: middle !important;
+}
+
+
+
+#qrcode {
+	width: 160px;
+  	height: 160px;
+  	margin-top: 15px;
+}

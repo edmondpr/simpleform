@@ -1,0 +1,919 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"date",
+				"dateUnitPresent"
+			],
+			[
+				"my",
+				"myScrollY"
+			],
+			[
+				"modelOp",
+				"modelOperObj"
+			],
+			[
+				"model",
+				"modelOperStr"
+			],
+			[
+				"modeOP",
+				"modelOperObj"
+			],
+			[
+				"modelO",
+				"modelOperObj"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "www/js/app.js",
+			"settings":
+			{
+				"buffer_size": 2441,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/js/fields.js",
+			"settings":
+			{
+				"buffer_size": 2456,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/js/services.js",
+			"settings":
+			{
+				"buffer_size": 343,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/index.html",
+			"settings":
+			{
+				"buffer_size": 1246,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/templates/fields.html",
+			"settings":
+			{
+				"buffer_size": 1075,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/css/style.css",
+			"settings":
+			{
+				"buffer_size": 1756,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/templates/field-add.html",
+			"settings":
+			{
+				"buffer_size": 1041,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/templates/login.html",
+			"settings":
+			{
+				"buffer_size": 1012,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "www/templates/menu.html",
+			"settings":
+			{
+				"buffer_size": 1114,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/ionic",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/res",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates"
+	],
+	"file_history":
+	[
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/CODE128.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/EAN_UPC.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/JsBarcode.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/jquery-1.11.2.min.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/profiles.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/utils.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/login.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/_form.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/push.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css/style.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/spec.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/menu.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/field-add.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/config.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/fields.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/config.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/profiles.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/login.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/readme.md",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/logoutcallback.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/session.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/menu.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/lib/openfb.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/sessions.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/speakers.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/app.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/push.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/js/sessions.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/lib/ionic/css/ionic.css",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/speakers.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/speaker.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/package.json",
+		"/D/Localhost/SimpleForm/Client/ioconf/routes/speakers.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/routes/sessions.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/server.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/templates/profile.html",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/css/style.css",
+		"/D/Localhost/SimpleForm/Client/Fields/js/utils.js",
+		"/D/Localhost/SimpleForm/Client/Fields/index.html",
+		"/D/Localhost/SimpleForm/Client/Fields/js/services.js",
+		"/D/Localhost/SimpleForm/Client/Fields/js/controllers.js",
+		"/D/Localhost/SimpleForm/Client/Fields/partials/_form.html",
+		"/D/Localhost/SimpleForm/Client/Fields/partials/fields.html",
+		"/D/Localhost/SimpleForm/Client/Fields/js/app.js",
+		"/D/Localhost/SimpleForm/Client/Fields/partials/field-edit.html",
+		"/D/Localhost/SimpleForm/Client/Nuova cartella/SimpleForm Client/www/index.html",
+		"/D/Localhost/SimpleForm/test_camera.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js/controllers.js",
+		"/D/Localhost/SimpleForm/Client/Fields/partials/field-add.html",
+		"/D/Localhost/SimpleForm/Receiver/Clients/js/controllers.js",
+		"/D/Localhost/SimpleForm/Receiver/Clients/js/services.js",
+		"/D/Localhost/SimpleForm/Back-end/server.js",
+		"/D/Localhost/SimpleForm/Back-end/routes/simpleform.js",
+		"/D/Localhost/ng-grid/src/features/cellnav/js/cellnav.js",
+		"/D/Localhost/ng-grid/dist/docs/partials/tutorial/304_grid_menu.html",
+		"/D/Localhost/ng-grid/dist/docs/partials/tutorial/191_horizontal_scrolling.html",
+		"/D/Localhost/ng-grid/dist/release/ui-grid.js",
+		"/D/Localhost/ng-grid/travis_build.sh",
+		"/D/Localhost/ng-grid/dist/customizer/themes/autumn.json",
+		"/D/Localhost/ng-grid/dist/less/ui-grid.less",
+		"/C/Users/Edi/AppData/Roaming/Sublime Text 3/Packages/User/Console.log.sublime-snippet",
+		"/D/Localhost/ng-grid/misc/tutorial/304_grid_menu.ngdoc",
+		"/D/Localhost/ng-grid/src/js/i18n/en.js",
+		"/D/Localhost/ng-grid/src/js/i18n/da.js",
+		"/D/Localhost/Tests/M&S/index.html",
+		"/D/Localhost/Tests/M&S/inde.html",
+		"/D/Localhost/ng-grid/dist/docs/partials/tutorial/310_column_moving.html",
+		"/D/Localhost/ng-grid/src/js/core/directives/ui-grid-render-container.js",
+		"/D/Localhost/ng-grid/src/features/resize-columns/test/resizeColumns.spec.js",
+		"/D/Localhost/ng-grid/src/features/pagination/test/pagination.spec,js",
+		"/D/Localhost/ng-grid/src/features/pinning/test/pinning.spec.js",
+		"/D/Localhost/ng-grid/src/features/infinite-scroll/test/infiniteScroll.spec.js",
+		"/D/Localhost/ng-grid/src/features/importer/test/importer.spec.js",
+		"/D/Localhost/ng-grid/src/features/cellnav/test/uiGridCellNavFactory.spec.js",
+		"/D/Localhost/ng-grid/src/features/cellnav/test/uiGridCellNavDirective.spec.js",
+		"/D/Localhost/ng-grid/src/features/expandable/test/expandable.spec.js",
+		"/D/Localhost/ng-grid/src/features/exporter/test/exporter.spec.js",
+		"/D/Localhost/ng-grid/src/features/row-edit/test/uiGridRowEditService.spec.js",
+		"/D/Localhost/ng-grid/src/font/config.json",
+		"/D/Localhost/ng-grid/src/features/edit/test/uiGridEditService.spec.js",
+		"/D/Localhost/ng-grid/src/features/edit/test/uiGridEditDirective.spec.js",
+		"/D/Localhost/ng-grid/src/features/edit/test/uiGridCellWithDropdown.spec.js",
+		"/D/Localhost/ng-grid/src/features/edit/test/uiGridCellWithCellNav.spec.js",
+		"/D/Localhost/ng-grid/src/features/edit/test/uiGridCell.spec.js",
+		"/D/Localhost/ng-grid/src/features/move-columns/test/column-movable.spec.js",
+		"/D/Localhost/ng-grid/test/karma.conf.js",
+		"/D/Localhost/ng-grid/test/protractor.conf.js",
+		"/D/Localhost/ng-grid/test/e2e/gridTestUtils.spec.js",
+		"/D/Localhost/ng-grid/test/unit/core/factories/GridOptions.spec.js",
+		"/D/Localhost/ng-grid/test/unit/core/factories/GridColumn.spec.js",
+		"/D/Localhost/ng-grid/test/unit/core/factories/GridApi.spec.js",
+		"/D/Localhost/ng-grid/test/unit/core/factories/Grid.spec.js",
+		"/D/Localhost/ng-grid/test/unit/core/directives/ui-grid-footer-cell.spec.js",
+		"/D/Localhost/Tests/Mudano/css/app.css",
+		"/D/Localhost/Tests/Mudano/index.html",
+		"/D/Localhost/Tests/Mudano/partials/absences.html",
+		"/D/Localhost/Tests/Mudano/js/app.js",
+		"/D/Localhost/Tests/Mudano/js/utils.js",
+		"/D/Localhost/Tests/Mudano/js/controllers.js",
+		"/D/Localhost/Tests/Mudano/lib/angular.min.js",
+		"/D/Localhost/Tests/Mudano/lib/ui-bootstrap-0.1.0.min.js",
+		"/D/Localhost/Tests/Yieldify/index.html",
+		"/D/Localhost/Tests/Yieldify/js/app.js",
+		"/D/Localhost/Tests/Mudano/test.php",
+		"/D/Localhost/Tests/Mudano/partials/activities.html",
+		"/D/Localhost/Tests/SwiftShift/partials/login.html",
+		"/D/Localhost/Tests/SwiftShift/partials/events.html",
+		"/D/Localhost/Tests/SwiftShift/js/services.js",
+		"/D/Localhost/Tests/SwiftShift/lib/angular-cookies.js",
+		"/D/Localhost/Tests/SwiftShift/lib/angular-local-storage.js",
+		"/D/Localhost/Tests/SwiftShift/index.html",
+		"/D/Localhost/Tests/SwiftShift/css/app.css",
+		"/D/Localhost/Tests/SwiftShift/js/app.js",
+		"/D/Localhost/Tests/SwiftShift/js/controllers.js",
+		"/D/Localhost/Tests/SwiftShift/routes/users.js",
+		"/D/Localhost/Tests/SwiftShift/partials/user-add.html",
+		"/D/Localhost/Tests/SwiftShift/partials/_form.html",
+		"/D/Localhost/Tests/SwiftShift/partials/users.html",
+		"/D/Localhost/Tests/SwiftShift/js/utils.js",
+		"/D/Localhost/Tests/SwiftShift/css/bootstrap.min.css",
+		"/D/Localhost/Tests/SwiftShift/partials/user-edit.html",
+		"/D/Localhost/FOODit-FrontEndTest/app/views/main.html",
+		"/D/Localhost/FOODit-FrontEndTest/app/scripts/directives/main.js",
+		"/D/Localhost/FOODit-FrontEndTest/app/scripts/controllers/main.js",
+		"/D/Localhost/FOODit-FrontEndTest/app/scripts/app.js",
+		"/D/Localhost/FOODit-FrontEndTest/app/index.html",
+		"/D/Localhost/FOODit-FrontEndTest/app/styles/main.scss",
+		"/D/Localhost/FOODit-FrontEndTest/app/styles/_styles.scss"
+	],
+	"find":
+	{
+		"height": 46.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"",
+			"D:\\Localhost\\Companies\\",
+			"D:\\Localhost\\Caffe\\",
+			"D:\\Localhost\\Caffe\\public\\tpl",
+			"D:\\Localhost\\Caffe\\public",
+			"D:\\Localhost\\Caffe",
+			"D:\\Localhost\\Caffe_ORIG",
+			"D:\\Localhost\\Caffe\\paga",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			">\n",
+			"			\n",
+			"login",
+			"\n        ",
+			"conference",
+			"config",
+			"session",
+			"../",
+			"../common/",
+			"../common",
+			"./common",
+			"console",
+			"Field",
+			"../../common",
+			"scrollbar",
+			"//",
+			"scrollbar",
+			"getViewPortStyle",
+			"enableHorizontalScrollbar",
+			"horizontal",
+			"math",
+			"var newscrollleft",
+			"firstJSON",
+			"activity",
+			"activities",
+			"$scope.dates",
+			"nameToUpdate",
+			"namesDatesUnits",
+			"nameDateUnit",
+			"namesAndUnits",
+			"nameAndUnit",
+			"ymdDate",
+			"standardDate",
+			"convertDate",
+			"first",
+			"          //",
+			" nameToUpdate, dateToUpdate, ",
+			"firstJSON[i].dates",
+			"$scope.firstJSON",
+			"firstJSON",
+			"\"V\"\"",
+			"\"P\"M\"",
+			"\"P",
+			"\"T",
+			"\"V",
+			"firstDayCurrentWeek",
+			"lastDayCurrentWeek",
+			"$scope.",
+			"activities",
+			"activityNumber",
+			"activityDate",
+			"event",
+			"events",
+			"event",
+			"events",
+			"swiftshift",
+			"SwiftShift",
+			" width=\"300\"",
+			"myScrollY",
+			"myHeight",
+			"width",
+			"userApp",
+			"portaldb",
+			"min-height",
+			"max-height",
+			"95",
+			"96",
+			"price",
+			"8",
+			"border_cart_elem",
+			"28px",
+			"#d6504f",
+			"solid 1px #b2202a",
+			".cart-container .table ",
+			"240px",
+			"278px",
+			"280px",
+			"short",
+			"315",
+			"meals",
+			"0b8f01",
+			"427241",
+			"1b4624",
+			"344a39",
+			"#bc5242",
+			"#666",
+			"#000",
+			");",
+			"#ccc, ",
+			"red",
+			"blue",
+			"price",
+			")\n",
+			"store",
+			"storecontroller",
+			"sku",
+			"\">\n",
+			"client",
+			"receiver_clients",
+			"simpleform",
+			"client",
+			"simpleform",
+			"field",
+			"../../common/",
+			"qrCodeValue",
+			"qrcode",
+			"receiver",
+			"fields",
+			"address",
+			"user",
+			"window",
+			"user",
+			"address",
+			"password",
+			"user",
+			"questiontable",
+			"/api",
+			"user_id",
+			"portalUsers",
+			"movie",
+			"year",
+			"title",
+			"movie",
+			"query(",
+			"query",
+			"/api/users",
+			"title",
+			"year"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"clientApp",
+			"field",
+			"",
+			"Fields",
+			"../common",
+			"usersJSON",
+			"absences",
+			"user",
+			"namesDates",
+			"nameDate",
+			"namesDatesUnits",
+			"nameDateUnit",
+			"createDate",
+			"ymdDate",
+			"standardDate",
+			"second",
+			" ",
+			"dates",
+			"firstJSON",
+			"$scope.firstJSON",
+			"\"PM\"",
+			"\"P\"",
+			"\"T\"",
+			"\"V\"",
+			"firstDateCurrentWeek",
+			"lastDateCurrentWeek",
+			"",
+			"dates",
+			"dateNumber",
+			"date",
+			"activity",
+			"activities",
+			"activity",
+			"activities",
+			"mudano",
+			"Mudano",
+			"",
+			"scrollY",
+			"windowHeight",
+			"myScrollY",
+			"swiftshiftApp",
+			"swiftshiftdb",
+			"$height_cart_elem",
+			"$bg_cart_elem",
+			"$border_cart_elem",
+			"",
+			"small",
+			"046a0b",
+			"0b8f01",
+			"427241",
+			"1b4624",
+			"#344a39",
+			"#bc5242",
+			"#666",
+			", #ccc)",
+			"#ccc);",
+			"",
+			"#ccc",
+			"#d6504f",
+			"name",
+			"product",
+			"products",
+			"refme",
+			"product",
+			"refme",
+			"product",
+			"",
+			"qrCodeArray",
+			"qrCode",
+			"simpleform",
+			"client_fields",
+			"receiver_fields",
+			"country",
+			"client",
+			"telephone",
+			"address",
+			"client",
+			"usertable",
+			"",
+			"userId",
+			"users",
+			"user",
+			"password",
+			"username",
+			"user",
+			"/mongodb/portalUsers",
+			"name",
+			"password",
+			"name",
+			"user",
+			"portalUser",
+			"user",
+			"telephone",
+			"company",
+			"question",
+			"interview",
+			"",
+			"question",
+			"interview",
+			"question",
+			"interview",
+			"question",
+			"questions",
+			"question",
+			"questions",
+			"jobdb",
+			"Operation",
+			"operation",
+			"operationnnnn",
+			"operation",
+			"operations",
+			"personsToDelete",
+			"timeToDelete",
+			"dateToDelete",
+			"userObj",
+			"utils.dbUrl()",
+			"nutils.dbUrl()",
+			"utils.dbUrl()",
+			"/users",
+			"",
+			"32 42"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "www/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2441,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1552,
+								1415
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "www/js/fields.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1596,
+								1596
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "www/js/services.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 343,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								25,
+								25
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "www/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1246,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								853,
+								853
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "www/templates/fields.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1075,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								218,
+								218
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "www/css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1657,
+								1657
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "www/templates/field-add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1041,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								837,
+								837
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "www/templates/login.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1012,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								218,
+								218
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "www/templates/menu.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								996,
+								996
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "clientapp.sublime-project",
+	"replace":
+	{
+		"height": 86.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"D:\\Localhost\\Caffe_ORIG\\Caffe_ORIG.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 310.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

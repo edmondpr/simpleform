@@ -1,0 +1,20 @@
+<a class="btn btn-primary btn-sm" ng-click="newField()">Add New Field</a>
+<br>
+<h3>Fields</h3>
+<table class="table fieldstable">
+  <tr ng-repeat="field in fields">
+    <td width="100" align="right"><b>{{field.label}}</b></td>
+    <td width="460"><input type="text" ng-model="field.value" ng-change="updateField()" value="{{field.value}}" class="form-control"/></td>    
+    <td>
+      <a class="btn btn-primary btn-sm" ng-click="editField(field._id.$oid)">Edit</a>
+      <a class="btn btn-danger btn-sm"  ng-click="deleteField(field)">Delete</a>
+    </td>
+  </tr>
+</table>
+
+<div id="qrcode"></div>
+
+<div style="margin-top:500px;"></div>
+
+
+

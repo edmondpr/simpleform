@@ -1,0 +1,20 @@
+<a class="btn btn-primary btn-sm" ng-click="newClient()">Add New Client</a>
+<br>
+<h3>Clients</h3>
+<table class="table clientstable">
+  <tr ng-repeat="client in clients">
+    <td width="100" align="right"><b>{{client.label}}</b></td>
+    <td width="460"><input type="text" ng-model="client.value" ng-change="updateClient()" value="{{client.value}}" class="form-control"/></td>    
+    <td>
+      <a class="btn btn-primary btn-sm" ng-click="editClient(client._id.$oid)">Edit</a>
+      <a class="btn btn-danger btn-sm"  ng-click="deleteClient(client)">Delete</a>
+    </td>
+  </tr>
+</table>
+
+<div id="qrcode"></div>
+
+<div style="margin-top:500px;"></div>
+
+
+

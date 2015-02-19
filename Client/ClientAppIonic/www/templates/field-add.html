@@ -1,0 +1,26 @@
+<div class="modal">
+    <ion-header-bar>
+        <h1 class="title">Add New Field</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-close-circled"></i></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+		<form class="form-horizontal" role="form">
+		    <label class="item item-input">
+		        <input type="text" ng-model="field.label" placeholder="Label">
+		    </label>		
+		    <label class="item item-input">
+		        <input type="text" ng-model="field.value" placeholder="Value">
+		    </label>	
+		    <div class="right save-cancel">
+                <div class="left">
+                	<button class="button button-small button-balanced" ng-click="saveField()"> Save </button>  
+                </div>
+                <div class="right cancel">
+                	<button class="button button-small button-light" ng-click="closeModal()"> Cancel </button> 
+                </div>
+            </div>             
+		</form>		
+    </ion-content>
+</div>

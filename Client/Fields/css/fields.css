@@ -1,0 +1,17 @@
+.top-buffer{
+    margin-top: 10px;
+}
+
+.fieldstable td {
+    vertical-align: middle !important;
+}
+
+a.nodecoration{
+    text-decoration: none;
+}
+
+#qrcode {
+	width: 160px;
+  	height: 160px;
+  	margin-top: 15px;
+}
