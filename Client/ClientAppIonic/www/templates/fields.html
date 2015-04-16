@@ -3,7 +3,7 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-content class="has-header">
-        <img id="barcode">
+        <button class="button button-block button-positive" type="button" ng-click="generateBarcode()">Generate Barcode</button>    
         <button class="button button-block button-positive" type="button" ng-click="newField()">Add New Field</button>
         <ion-list>
             <ion-item ng-repeat="field in fields">

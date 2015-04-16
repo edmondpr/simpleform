@@ -3,7 +3,7 @@ window.utils = {
     getDbUrl: function() {
         var url = "https://api.mongolab.com/api/1/databases/simpleformdb/collections/receiver_fields";
         /*if (window.location.href.indexOf("localhost") >= 0) {
-            url = "/mongodb/client_fields";
+            url = "/mongodb/receiver_fields";
         }*/
         return url;
     },

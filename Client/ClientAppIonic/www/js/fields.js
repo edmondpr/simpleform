@@ -17,36 +17,58 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
 
     })
 
-    .controller('FieldListCtrl', function ($scope, $http, $window, $ionicModal, Fields, popupService) {
-        $scope.fields = Fields.query(); 
-        $scope.field = new Fields();  //create new field instance. Properties will be set via ng-model on UI    
+    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $ionicModal, Fields, popupService) {
+        var allFields = Fields.query(); 
+        $scope.fields = new Array();
+        $rootScope.loginEmail = "edmondpr@gmail.com";
 
-        $scope.fields.$promise.then(function(data) {
-          console.log(data[0].label)  
-        });
-         
-        /*for (var i=0; i<=fields.length-1; i++) {
-           
-            if (field.label == "E-mail") {
-                $("#barcode").JsBarcode(field.value,{width:1,height:25});
+        $scope.field = new Fields();  //create new field instance. Properties will be set via ng-model on UI   
+        allFields.$promise.then(function(data) {
+            for (var i=0; i<data.length; i++) {
+                if (data[i].user == $rootScope.loginEmail) {   
+                    var field = new Object({"label": data[i].label, "value": data[i].value});
+                    $scope.fields.push(field);
+                }
             }
-        }*/
-        
+        });
 
         // Create the add field modal
         $ionicModal.fromTemplateUrl('templates/field-add.html', {
             scope: $scope
         }).then(function (modal) {
-            $scope.modal = modal;
-        });  
+            $scope.modalAddField = modal;
+        });
 
         // Open the add field modal
         $scope.newField = function () {
-            $scope.modal.show();
-        };   
+            $scope.modalAddField.show();
+        }; 
+
+        // Close the add field modal
+        $scope.closeModalAddField = function () {
+            $scope.modalAddField.hide();
+        }   
+
+        // Create the barcode modal
+        $ionicModal.fromTemplateUrl('templates/barcode.html', {
+            scope: $scope
+        }).then(function (modal) {           
+            $scope.modalBarcode = modal;
+        });   
+
+        // Open the barcode modal
+        $scope.generateBarcode = function () {
+            $scope.modalBarcode.show();
+            $("#barcode").JsBarcode($rootScope.loginEmail, {width:1,height:25});             
+        };  
+
+        // Close the barcode modal
+        $scope.closeModalBarcode = function () {
+            $scope.modalBarcode.hide();
+        }                         
 
         $scope.saveField = function() { 
-            $scope.field.user = utils.getUser();
+            $scope.field.user = $rootScope.loginEmail;
             $scope.field.$save(function() {
               location.href = ''; //redirect to home
             });
@@ -54,11 +76,11 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
 
         $scope.updateField = function() {
             var fieldId = this.field._id.$oid;
-            $http.put(utils.getDbUrl() + '/' + 
+            $http.put(utils.getDbClientsFieldsUrl() + '/' + 
                      fieldId + '?apiKey=bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
               { 'label': this.field.label,
                 'value': this.field.value,
-                'user': utils.getUser()
+                'user': $rootScope.loginEmail
             }).success(function (data, status, headers, config) {
 
             })
@@ -70,11 +92,7 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
                 $window.location.href = ''; //redirect to home
               });
             }
-        };         
+        };                   
 
-        // Triggered in the modal window to close it
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-        }          
 
     })

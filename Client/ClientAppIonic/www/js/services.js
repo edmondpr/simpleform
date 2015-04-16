@@ -1,5 +1,11 @@
 angular.module('clientApp.services',[]).factory('Fields',function($resource){
-    return $resource(utils.getDbUrl() + '/:id',
+    return $resource(utils.getDbClientsFieldsUrl() + '/:id',
+    {
+      apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
+      id:'@_id.$oid'
+    });
+}).factory('RegData',function($resource){
+    return $resource(utils.getDbClientsRegDataUrl() + '/:id',
     {
       apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
       id:'@_id.$oid'

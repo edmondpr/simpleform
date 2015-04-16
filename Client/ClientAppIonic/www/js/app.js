@@ -1,6 +1,6 @@
-angular.module('clientApp', ['ionic', 'clientApp.fields', 'clientApp.services'])
+angular.module('clientApp', ['ionic', 'clientApp.login', 'clientApp.registration', 'clientApp.fields', 'clientApp.services'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $rootScope) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -12,6 +12,8 @@ angular.module('clientApp', ['ionic', 'clientApp.fields', 'clientApp.services'])
                 StatusBar.styleDefault();
             }
         });
+        $rootScope.loginEmail = {};
+      
     })
 
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -27,47 +29,11 @@ angular.module('clientApp', ['ionic', 'clientApp.fields', 'clientApp.services'])
 
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/fields');
+        $urlRouterProvider.otherwise('/app/login');
     })
 
-    .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
-        // Form data for the login modal
-        $scope.loginData = {};
+    .controller('AppCtrl', function ($scope, $timeout) {
+      
 
-        // Create the login modal that we will use later
-        $ionicModal.fromTemplateUrl('templates/login.html', {
-            scope: $scope
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
 
-        // Triggered in the login modal to close it
-        $scope.closeLogin = function () {
-            $scope.modal.hide();
-        },
-
-            // Open the login modal
-            $scope.login = function () {
-                $scope.modal.show();
-            };
-
-        // Perform the login action when the user submits the login form
-        $scope.doLogin = function () {
-            console.log('Login', $scope.loginData);
-            alert("Only the Facebook login is implemented in this sample app.");
-            $scope.closeLogin();
-        };
-
-        $scope.fbLogin = function () {
-            openFB.login(
-                function (response) {
-                    if (response.status === 'connected') {
-                        console.log('Facebook login succeeded');
-                        $scope.closeLogin();
-                    } else {
-                        alert('Facebook login failed');
-                    }
-                },
-                {scope: 'email,publish_actions'});
-        }
     });

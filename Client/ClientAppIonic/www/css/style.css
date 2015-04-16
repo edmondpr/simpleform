@@ -54,3 +54,9 @@
 .save-cancel .cancel {
     margin-left: 0.7em;
 }
+
+.modal .card .item {
+    height: 16em !important; 
+    padding-top: 6.5em; 
+    background-color: #f7f7f7;
+}

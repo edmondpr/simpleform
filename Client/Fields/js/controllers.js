@@ -3,7 +3,7 @@ angular.module('fieldApp.controllers', []).controller('FieldListController', fun
 
   // generate QRCode with fields
   /*var qrCode = new QRCode("qrcode");
-  qrCode.makeCode("mongolab.simpleform.com/client_fields/edmondpr");
+  qrCode.makeCode("mongolab.simpleform.com/clients_fields/edmondpr");
   $scope.fields.$promise.then(function(data) {
     var qrCodeArray = new Array();
     for (var i=0; i<data.length; i++) {
