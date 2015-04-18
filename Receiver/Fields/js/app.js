@@ -7,6 +7,12 @@ angular.module('fieldApp').config(function($stateProvider) {
     templateUrl: 'partials/fields.html',
     controller: 'FieldListController'
   });
+}).config(function($stateProvider) {
+  $stateProvider.state('scan', { // state for scan
+    url: '/scan',
+    templateUrl: 'partials/scan.html',
+    controller: 'ScanController'
+  });
 }).run(function($state) {
   $state.go('fields'); //make a transition to fields state when app starts
 });

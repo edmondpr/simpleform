@@ -4,6 +4,12 @@ angular.module('fieldApp.services',[]).factory('Fields',function($resource){
       apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
       id:'@_id.$oid'
     });
+}).factory('ClientsFields',function($resource){
+    return $resource(utils.getDbClientsFieldsUrl() + '/:id',
+    {
+      apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
+      id:'@_id.$oid'
+    });
 }).service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);
