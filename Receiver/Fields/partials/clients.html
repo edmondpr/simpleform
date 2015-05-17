@@ -1,0 +1,16 @@
+<a class="btn btn-primary btn-sm" ng-click="newClient()">Add New Client</a>
+<br>
+<h3>Clients</h3>
+<table>
+  <tr ng-repeat="client in clients">
+    <td width="300" height="40" align="left">{{client.name}} {{client.surname}}</td>   
+    <td>
+      <a class="btn btn-primary btn-sm" ng-click="editClient(client._id.$oid)">Edit</a>
+      <a class="btn btn-danger btn-sm"  ng-click="deleteClient(client)">Delete</a>
+    </td>
+  </tr>
+</table>
+
+
+
+

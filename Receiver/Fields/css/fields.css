@@ -60,13 +60,25 @@ div.scan div.buttons {
 	margin-top: 20px;
 }
 
-/* Fields */
+/* Send invite */
+
+div.title-spacer {
+	height: 20px;
+}
 
 .field-label {
 	padding-left: 20px !important;
 }
 
-.fieldstable td {
+table.invite-table td {
+	border: none !important;
+}
+
+table.invite-table td input {
+	width: 300px;
+}
+
+table.invite-table td {
     vertical-align: middle !important;
 }
 

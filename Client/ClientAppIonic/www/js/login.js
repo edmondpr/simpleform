@@ -19,13 +19,13 @@ angular.module('clientApp.login', ['ngResource', 'clientApp.push'])
 
     .controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $window, RegData, popupService) {
         $scope.loginData = {};
-        console.log($rootScope.loginId);
+        //console.log($rootScope.loginId);
         var regData = RegData.query(); 
         $scope.doLogin = function () {
             regData.$promise.then(function(data) {
                 for (var i=0; i<data.length; i++) {
-                    if ($scope.loginData.email === data[i].email && $scope.loginData.password === data[i].password) {
-                        $rootScope.loginEmail = data[i].email;  
+                    if ($scope.loginData.user === data[i].user && $scope.loginData.password === data[i].password) {
+                        $rootScope.loginEmail = data[i].user;  
                         $state.go('app.fields'); 
                     }
                 }

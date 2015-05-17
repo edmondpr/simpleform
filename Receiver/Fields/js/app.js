@@ -13,6 +13,18 @@ angular.module('fieldApp').config(function($stateProvider) {
     templateUrl: 'partials/scan.html',
     controller: 'ScanController'
   });
+}).config(function($stateProvider) {
+  $stateProvider.state('clients', { // state for scan
+    url: '/clients',
+    templateUrl: 'partials/clients.html',
+    controller: 'ClientListController'
+  });
+}).config(function($stateProvider) {
+  $stateProvider.state('send-invite', { // state for scan
+    url: '/send-invite',
+    templateUrl: 'partials/send-invite.html',
+    controller: 'SendInviteController'
+  });
 }).run(function($state) {
   $state.go('fields'); //make a transition to fields state when app starts
 });

@@ -17,19 +17,24 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
 
     })
 
-    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $ionicModal, Fields, popupService) {
+    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $timeout, $q, $log, $ionicModal, Fields, popupService) {
+
         var allFields = Fields.query(); 
         $scope.fields = new Array();
-        $rootScope.loginEmail = "edmondpr@gmail.com";
+        var userFields = new Array();
 
         $scope.field = new Fields();  //create new field instance. Properties will be set via ng-model on UI   
         allFields.$promise.then(function(data) {
             for (var i=0; i<data.length; i++) {
-                if (data[i].user == $rootScope.loginEmail) {   
-                    var field = new Object({"label": data[i].label, "value": data[i].value});
-                    $scope.fields.push(field);
+                if (data[i].user == utils.getUser()) {   
+                    userFields = data[i].fields;
+                    break;
                 }
             }
+            for (var i=0; i<userFields.length; i++) {
+                field = new Object({"label": userFields[i].label, "value": userFields[i].value});
+                $scope.fields.push(field);
+            }   
         });
 
         // Create the add field modal
@@ -59,7 +64,7 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
         // Open the barcode modal
         $scope.generateBarcode = function () {
             $scope.modalBarcode.show();
-            $("#barcode").JsBarcode($rootScope.loginEmail, {width:1,height:25});             
+            $("#barcode").JsBarcode(utils.getUser(), {width:1,height:25});             
         };  
 
         // Close the barcode modal
@@ -68,29 +73,51 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
         }                         
 
         $scope.saveField = function() { 
-            $scope.field.user = $rootScope.loginEmail;
-            $scope.field.$save(function() {
-              location.href = ''; //redirect to home
+            var label = $scope.field.label;
+            var value = $scope.field.value; 
+            var user = utils.getUser();
+            var userId = utils.getUserId();
+            Fields.get({ id: userId }).$promise.then(function(data) {
+                var userFields = data.fields;
+                field = new Object({"label": label, "value": value, "position": userFields.length+1});
+                userFields.push(field);
+                utils.updateUser($http, userId, user, userFields);                
             });
         };
 
         $scope.updateField = function() {
-            var fieldId = this.field._id.$oid;
-            $http.put(utils.getDbClientsFieldsUrl() + '/' + 
-                     fieldId + '?apiKey=bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
-              { 'label': this.field.label,
-                'value': this.field.value,
-                'user': $rootScope.loginEmail
-            }).success(function (data, status, headers, config) {
-
-            })
+            var label = this.field.label;
+            var value = this.field.value;
+            var user = utils.getUser();
+            var userId = utils.getUserId();
+            Fields.get({ id: userId }).$promise.then(function(data) {
+                var userFields = data.fields;
+                for (var i=0; i<userFields.length; i++) {
+                    if (userFields[i].label == label) {
+                        userFields[i].value = value;
+                        break;
+                    }                   
+                }
+                utils.updateUser($http, userId, user, userFields);                
+            });             
+            //var userId = this.field._id.$oid;
         };
  
         $scope.deleteField = function(field) { 
             if (popupService.showPopup('Really delete this?')) {
-              field.$delete(function() {
-                $window.location.href = ''; //redirect to home
-              });
+                var label = field.label;   
+                var user = utils.getUser();
+                var userId = utils.getUserId();
+                Fields.get({ id: userId }).$promise.then(function(data) {
+                    var userFields = data.fields;
+                    for (var i=0; i<userFields.length; i++) {
+                        if (userFields[i].label == label) {
+                            userFields.remove(i);
+                            break;
+                        }                   
+                    }
+                    utils.updateUser($http, userId, user, userFields);
+                });
             }
         };                   
 

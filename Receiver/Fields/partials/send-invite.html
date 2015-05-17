@@ -1,0 +1,16 @@
+<h3>Send Invite</h3>
+<div class="title-spacer"></div>
+<table class="table invite-table">
+  <tr ng-repeat="field in templateFields">
+    <td width="150" align="right">
+		{{field.label}}
+    </td>
+    <td width="500" class="field-label">
+    	<input type="text" ng-model="field.value" placeholder="{{field.label}}" class="form-control"/>
+    </td>    
+  </tr>
+</table>
+<a class="btn btn-primary btn-sm" ng-click="createTemplate()">Send invite</a>
+
+
+
