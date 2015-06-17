@@ -4,6 +4,12 @@ angular.module('fieldApp.services',[]).factory('Fields',function($resource){
       apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
       id:'@_id.$oid'
     });
+}).factory('OwnersFields',function($resource){
+    return $resource(utils.getDbOwnersFieldsUrl() + '/:id',
+    {
+      apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
+      id:'@_id.$oid'
+    });
 }).factory('ClientsRegdata',function($resource){
     return $resource(utils.getDbClientsRegdataUrl() + '/:id',
     {

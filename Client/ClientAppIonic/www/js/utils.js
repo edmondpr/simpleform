@@ -17,10 +17,15 @@ window.utils = {
     getDbClientsRegDataUrl: function() {
         var url = "https://api.mongolab.com/api/1/databases/simpleformdb/collections/clients_regdata";
         return url;
+    },   
+
+    getDbClientsTemplatesUrl: function() {
+        var url = "https://api.mongolab.com/api/1/databases/simpleformdb/collections/clients_templates";
+        return url;
     },     
 
     getUser: function() {
-        var user = "alex";
+        var user = "edmondpr@gmail.com";
         return user;
     },
 

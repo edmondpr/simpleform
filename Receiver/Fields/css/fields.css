@@ -82,4 +82,24 @@ table.invite-table td {
     vertical-align: middle !important;
 }
 
+/* Fields */
+
+.fieldstable td {
+    vertical-align: middle !important;
+}
+
+.test {
+	border: solid 1px blue;
+	background-image: url(../images/MoneyGram_send.jpg);
+	width: 580px;
+	height: 842px;
+	position: relative;
+}
+
+.data-preview {
+	position: absolute; 
+	color: red; 
+	font-size: 14px; 
+}
+
 

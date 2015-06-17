@@ -38,7 +38,7 @@
 }
 
 .delete {
-    margin-top: 0.5em;
+    margin-bottom: -3em;
 }
 
 .label-value {
@@ -59,4 +59,17 @@
     height: 16em !important; 
     padding-top: 6.5em; 
     background-color: #f7f7f7;
+}
+
+.animate-show,
+.animate-hide {
+  -webkit-transition:all linear 1s;
+  -moz-transition:all linear 1s;
+  -ms-transition:all linear 1s;
+  -o-transition:all linear 1s;
+  transition:all linear 1s;
+}
+
+.md-padding {
+    display: none;
 }

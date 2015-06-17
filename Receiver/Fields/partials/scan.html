@@ -5,7 +5,13 @@
 	</div>
 
 	<div class="buttons">
-		<a class="btn btn-primary btn-sm" ng-click="openReceiveForm()">Receive form</a> &nbsp;
+		<a class="btn btn-primary btn-sm" ng-click="dataPreview()">Receive form</a> &nbsp;
 		<a class="btn btn-primary btn-sm" ng-click="openSendForm()">Send form</a>
 	</div>
+
+	<div class="test">
+        <div ng-repeat="field in fields">
+        	<div class="data-preview" style="top: {{field.top}}px; left:{{field.left}}px;">{{field.value}}</div>
+        </div>
+    </div>	
 </div>

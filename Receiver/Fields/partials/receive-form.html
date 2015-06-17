@@ -2,11 +2,13 @@
     <h3 class="modal-title">Receive Form</h3>
 </div>
 <div class="modal-body">
+	<div>
 	<ul>
-		<li ng-repeat="field in fields">
-			{{field.label}}: {{field.value}}
-		</li>
+        <div ng-repeat="field in fields">
+        	<div style="position: relative; top: {{field.top}}px; left:{{field.left}}px;">{{field.value}}</div>
+        </div>
 	</ul>
+	</div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary btn-sm" ng-click="print()">Print</button>

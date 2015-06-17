@@ -10,6 +10,12 @@ angular.module('clientApp.services',[]).factory('Fields',function($resource){
       apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
       id:'@_id.$oid'
     });
+}).factory('ClientsTemplates',function($resource){
+    return $resource(utils.getDbClientsTemplatesUrl() + '/:id',
+    {
+      apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
+      id:'@_id.$oid'
+    });
 }).service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);

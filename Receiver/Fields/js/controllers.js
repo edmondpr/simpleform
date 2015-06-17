@@ -73,7 +73,7 @@ angular.module('fieldApp.controllers', []).controller('FieldListController', fun
   $scope.cancel = function () {
     $modalInstance.dismiss();
   };   
-}).controller('ScanController', function($scope, $state, $http, $modal, Fields) { 
+}).controller('ScanController', function($scope, $state, $http, $modal, Fields, ClientsTemplates, OwnersFields) { 
   $scope.code = '';  
   $scope.openReceiveForm = function () {
     var modalInstance = $modal.open({      
@@ -97,30 +97,40 @@ angular.module('fieldApp.controllers', []).controller('FieldListController', fun
         }
       }
     });
-  };    
-}).controller('ReceiveFormController', function($scope, $state, $http, $modalInstance, code, ClientsFields) { 
-  $scope.code = code;
-  var clientsFields = ClientsFields.query();
+  };   
+
+  //$scope.code = code;
+  var clientsTemplates = ClientsTemplates.query();
+  var ownersFields = OwnersFields.query();
   $scope.fields = new Array();
 
-  clientsFields.$promise.then(function(data) {
-    for (var i=0; i<data.length; i++) {
-        if (data[i].user == code) {   
-            var field = new Object({"label": data[i].label, "value": data[i].value});
-            $scope.fields.push(field);
+  $scope.dataPreview = function () {
+    console.log('inside dataPreview');
+    clientsTemplates.$promise.then(function(dataClients) {  
+      ownersFields.$promise.then(function(dataOwners) {
+        for (var i=0; i<dataOwners[0].fields.length; i++) {          
+          for (var j = dataClients.length - 1; j >= 0; j--) {
+            if (dataClients[j].user == $scope.code && dataClients[j].label == dataOwners[0].fields[i].label) {
+              var field = new Object({"value": dataClients[j].value, "top": dataOwners[i].top, "left": dataOwners[i].left});
+              $scope.fields.push(field);
+            };
+          };         
         }
-    }
-  });  
+        console.log($scope.fields)
+      });   
+    });
+  } 
+}).controller('ReceiveFormController', function($scope, $state, $http, $modalInstance, code, ClientsTemplates, OwnersFields) { 
 
   $scope.cancel = function () {
     $modalInstance.dismiss();
   };   
-}).controller('SendFormController', function($scope, $state, $http, $modalInstance, code, ClientsFields) { 
+}).controller('SendFormController', function($scope, $state, $http, $modalInstance, code, ClientsTemplates) { 
   $scope.code = code;
-  var clientsFields = ClientsFields.query();
+  var clientsTemplates = ClientsTemplates.query();
   $scope.fields = new Array();
 
-  clientsFields.$promise.then(function(data) {
+  clientsTemplates.$promise.then(function(data) {
     for (var i=0; i<data.length; i++) {
         if (data[i].user == code) {   
             var field = new Object({"label": data[i].label, "value": data[i].value});
@@ -238,52 +248,64 @@ angular.module('fieldApp.controllers', []).controller('FieldListController', fun
   };   
 }).controller('SendInviteController', function($scope, $state, $http, ClientsRegdata, ClientsFields, Fields, ClientsTemplates) { 
   var fields = Fields.query(); 
-  var clientTemplate = new ClientsTemplates();
-  var clientRegdata = new ClientsRegdata();
+
   $scope.templateFields = new Array();
 
-  fields.$promise.then(function(data) {
-    data.sort(function(a, b){
-        if(a.position < b.position) return -1;
-        if(a.position > b.position) return 1;
-        return 0;
-    });    
-    for (var i=0; i<data.length; i++) {
+  fields.$promise.then(function(data) {  
+    for (var i=0; i<data[0].fields.length; i++) {
       $scope.templateFields[i] = {};
-      $scope.templateFields[i].label = data[i].label; 
-      $scope.templateFields[i].position = data[i].position; 
-      $scope.templateFields[i].connect = data[i].connect;
+      $scope.templateFields[i].label = data[0].fields[i].label; 
+      $scope.templateFields[i].position = data[0].fields[i].position; 
+      $scope.templateFields[i].connect = data[0].fields[i].connect;
     }
   });
 
   $scope.createTemplate = function() { 
     var templateFields = $scope.templateFields;
+
+    // Create user name
+    var clientTemplate = new ClientsTemplates();    
     for (var i=0; i<templateFields.length; i++) {
-      if (templateFields[i].label == "Name") {
-        clientTemplate.user = templateFields[i].value;
-      } else if (templateFields[i].label == "Surname") {
-        clientTemplate.user += "." + templateFields[i].value;
+      if (templateFields[i].connect !== undefined) { 
+        if (templateFields[i].connect.slice(1, -1) == "Name") {
+          clientTemplate.user = templateFields[i].value;
+        } else if (templateFields[i].connect.slice(1, -1) == "Surname") {
+          clientTemplate.user += "." + templateFields[i].value;
+        }
       }
     }
+
+    // Create base client template     
+    var clientBaseTemplate = new ClientsTemplates(); 
+    clientBaseTemplate.user = clientTemplate.user; 
+    var baseFieldsArray = new Array();
     for (var i=0; i<templateFields.length; i++) {    
-      if (templateFields[i].connect !== undefined) {  
-        var clientFields = new ClientsFields(); 
-        clientFields.user = clientTemplate.user;
-        clientFields.label = templateFields[i].label;
-        clientFields.value = templateFields[i].value;
-        clientFields.$save();    
-        delete templateFields[i].value;    
+      if (templateFields[i].connect !== undefined) { 
+        baseFieldsArray[i] = {};
+        baseFieldsArray[i].label = templateFields[i].connect.slice(1, -1);
+        baseFieldsArray[i].value = templateFields[i].value;
+        baseFieldsArray[i].position = i + 1; 
+        delete templateFields[i].value;      
       }  
     }  
+    clientBaseTemplate.fields = baseFieldsArray;
+    clientBaseTemplate.$save(function() {
+      console.log('success saving base template')
+    });    
+
+    // Create registration data
+    var clientRegdata = new ClientsRegdata();
     clientRegdata.user = clientTemplate.user;     
     clientRegdata.fullName = clientTemplate.user.replace(".", " ");
     clientRegdata.password = "123456";
     clientRegdata.$save(function() {
       console.log('success saving registration data')
     });    
+    
+    // Create form template
     clientTemplate.owner = "MoneyGram";
     clientTemplate.type = "Send Form";
-    clientTemplate.template = $scope.templateFields;
+    clientTemplate.fields = $scope.templateFields;
     clientTemplate.$save(function() {
       console.log('success saving template')
     });

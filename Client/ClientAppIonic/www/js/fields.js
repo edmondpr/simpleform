@@ -1,4 +1,4 @@
-angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
+angular.module('clientApp.fields', ['ngResource', 'ngAnimate', 'clientApp.push'])
 
     // Routes
     .config(function ($stateProvider) {
@@ -17,64 +17,155 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
 
     })
 
-    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $timeout, $q, $log, $ionicModal, Fields, popupService) {
+    .config( function($mdThemingProvider){
 
-        var allFields = Fields.query(); 
-        $scope.fields = new Array();
-        var userFields = new Array();
+    // Configure a dark theme with primary foreground yellow
 
-        $scope.field = new Fields();  //create new field instance. Properties will be set via ng-model on UI   
-        allFields.$promise.then(function(data) {
+    $mdThemingProvider.theme('docs-dark', 'default')
+        .primaryPalette('blue');
+
+    })
+
+    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $timeout, $q, $log, $ionicModal, Fields, ClientsTemplates, popupService) {
+        var self = $scope;
+        self.simulateQuery = false;
+        self.isDisabled    = false;
+        self.expanded      = false;
+
+        var allTemplates = ClientsTemplates.query(); 
+        self.templates = new Array();
+        self.querySearch   = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange   = searchTextChange;
+
+        function querySearch (query) {
+          var results = query ? self.templates.filter( createFilterFor(query) ) : self.templates,
+              deferred;
+          return results;
+        }
+        function searchTextChange(text) {
+          $log.info('Text changed to ' + text);
+        }
+        function selectedItemChange(item) {
+            if (item != undefined) {
+                allTemplates.$promise.then(function(data) { 
+                    for (var i=0; i<data.length; i++) {
+                        if (i == item.index) {
+                            var newFields = data[i].fields;
+                            break;
+                        }
+                    }
+                    for (var i=0; i<newFields.length; i++) {
+                        if (newFields[i].connect != undefined) {
+                            for (var j=0; j<self.fields.length; j++) {
+                                var connect = newFields[i].connect;
+                                connect = connect.substring(1, connect.length - 1)
+                                if (connect == self.fields[j].label) {
+                                    newFields[i].value = self.fields[j].value;
+                                }
+                            }
+                        }
+                    }                
+                    self.fields = newFields;
+                });            
+                $log.info('Item changed to ' + JSON.stringify(item));
+            }
+        }
+
+        // Create list of selectable templates
+        self.fields = new Array();
+        allTemplates.$promise.then(function(data) { 
             for (var i=0; i<data.length; i++) {
-                if (data[i].user == utils.getUser()) {   
-                    userFields = data[i].fields;
-                    break;
+                if (data[i].user == utils.getUser()) {
+                    // Populate base client form on initial screen
+                    if (data[i].owner == undefined && data[i].type == undefined) {
+                        for (var j=0; j<data[i].fields.length; j++) {
+                            field = new Object({"label": data[i].fields[j].label, "value": data[i].fields[j].value});
+                            self.fields.push(field);
+                        } 
+                    } 
+
+                    // Populate all templates                         
+                    var fullName = "";
+                    // If base client form put on the first position
+                    if (data[i].owner == undefined) {
+                        for (var j in data[i].fields) {
+                            if (data[i].fields[j].label == 'Name') {
+                                fullName += data[i].fields[j].value;
+                            }
+                            if (data[i].fields[j].label == 'Surname') {
+                                fullName += " " + data[i].fields[j].value;
+                            }
+                        }
+                        self.templates.unshift({
+                          value: fullName.toLowerCase(),
+                          display: fullName,
+                          index: i
+                        });                        
+                    } else {
+                        for (var j in data[i].fields) {
+                            if (data[i].fields[j].label == 'Receiver Name') {
+                                fullName += data[i].fields[j].value;
+                            }
+                            if (data[i].fields[j].label == 'Receiver Surname') {
+                                fullName += " " + data[i].fields[j].value;
+                            }
+                        }
+                        self.templates.push({
+                          value: fullName.toLowerCase(),
+                          display: fullName,
+                          index: i
+                        });
+                    }
                 }
             }
-            for (var i=0; i<userFields.length; i++) {
-                field = new Object({"label": userFields[i].label, "value": userFields[i].value});
-                $scope.fields.push(field);
-            }   
         });
+
+        function createFilterFor(query) {
+          var lowercaseQuery = angular.lowercase(query);
+          return function filterFn(template) {
+            return (template.value.indexOf(lowercaseQuery) === 0);
+          };
+        }
 
         // Create the add field modal
         $ionicModal.fromTemplateUrl('templates/field-add.html', {
-            scope: $scope
+            scope: self
         }).then(function (modal) {
-            $scope.modalAddField = modal;
+            self.modalAddField = modal;
         });
 
         // Open the add field modal
-        $scope.newField = function () {
-            $scope.modalAddField.show();
+        self.newField = function () {
+            self.modalAddField.show();
         }; 
 
         // Close the add field modal
-        $scope.closeModalAddField = function () {
-            $scope.modalAddField.hide();
+        self.closeModalAddField = function () {
+            self.modalAddField.hide();
         }   
 
         // Create the barcode modal
         $ionicModal.fromTemplateUrl('templates/barcode.html', {
-            scope: $scope
+            scope: self
         }).then(function (modal) {           
-            $scope.modalBarcode = modal;
+            self.modalBarcode = modal;
         });   
 
         // Open the barcode modal
-        $scope.generateBarcode = function () {
-            $scope.modalBarcode.show();
+        self.generateBarcode = function () {
+            self.modalBarcode.show();
             $("#barcode").JsBarcode(utils.getUser(), {width:1,height:25});             
         };  
 
         // Close the barcode modal
-        $scope.closeModalBarcode = function () {
-            $scope.modalBarcode.hide();
+        self.closeModalBarcode = function () {
+            self.modalBarcode.hide();
         }                         
 
-        $scope.saveField = function() { 
-            var label = $scope.field.label;
-            var value = $scope.field.value; 
+        self.saveField = function() { 
+            var label = self.field.label;
+            var value = self.field.value; 
             var user = utils.getUser();
             var userId = utils.getUserId();
             Fields.get({ id: userId }).$promise.then(function(data) {
@@ -85,7 +176,7 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
             });
         };
 
-        $scope.updateField = function() {
+        self.updateField = function() {
             var label = this.field.label;
             var value = this.field.value;
             var user = utils.getUser();
@@ -103,7 +194,7 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
             //var userId = this.field._id.$oid;
         };
  
-        $scope.deleteField = function(field) { 
+        self.deleteField = function(field) { 
             if (popupService.showPopup('Really delete this?')) {
                 var label = field.label;   
                 var user = utils.getUser();
@@ -121,5 +212,15 @@ angular.module('clientApp.fields', ['ngResource', 'clientApp.push'])
             }
         };                   
 
-
     })
+
+    .animation('.slideDown', function() {
+    return {
+        addClass: function(element, className, done) {
+            $(element).slideDown({duration: 200, done});
+        },
+        removeClass: function(element, className, done) {
+            $(element).slideUp({duration: 200, done});
+        }
+    }
+});

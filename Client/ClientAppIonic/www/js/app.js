@@ -1,4 +1,4 @@
-angular.module('clientApp', ['ionic', 'clientApp.login', 'clientApp.registration', 'clientApp.fields', 'clientApp.services'])
+angular.module('clientApp', ['ionic', 'ngMaterial', 'clientApp.login', 'clientApp.registration', 'clientApp.fields', 'clientApp.services'])
 
     .run(function ($ionicPlatform, $rootScope) {
         $ionicPlatform.ready(function () {
