@@ -12489,8 +12489,8 @@ function MdTab () {
     link: postLink
   };
 
-  function postLink (scope, element, attr, ctrl) {
-    if (!ctrl) return;
+  function postLink (scope, element, attr, ctrl) {   
+    if (!ctrl) return;   
     var tabs = element.parent()[0].getElementsByTagName('md-tab'),
         index = Array.prototype.indexOf.call(tabs, element[0]),
         data = ctrl.insertTab({
@@ -13009,9 +13009,11 @@ function MdTabs ($mdTheming, $mdUtil, $compile) {
       dynamicHeight: '=?mdDynamicHeight',
       centerTabs:    '=?mdCenterTabs',
       selectedIndex: '=?mdSelected',
-      stretchTabs:   '@?mdStretchTabs'
+      stretchTabs:   '@?mdStretchTabs',
+      loadClientTemplates: '&',  
+      loadOwnersTemplates: '&'    
     },
-    template: function (element, attr) {
+    template: function (element, attr) {      
       attr.$mdTabsTemplate = element.html();
       return '\
         <md-tabs-wrapper ng-class="{ \'md-stretch-tabs\': $mdTabsCtrl.shouldStretchTabs() }">\
@@ -13111,6 +13113,14 @@ function MdTabs ($mdTheming, $mdUtil, $compile) {
     controller: 'MdTabsController',
     controllerAs: '$mdTabsCtrl',
     link: function (scope, element, attr) {
+      var switchTemplates = function() {
+        if (scope.selectedIndex == 0) {
+          scope.loadClientTemplates();
+        } else if (scope.selectedIndex == 1) {
+          scope.loadOwnersTemplates();
+        }
+      };
+      element.bind('click', switchTemplates);       
       compileTabData(attr.$mdTabsTemplate);
       delete attr.$mdTabsTemplate;
 

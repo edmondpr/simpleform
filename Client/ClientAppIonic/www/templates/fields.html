@@ -33,8 +33,8 @@
         </form>
         </md-content>  
 
-    <md-content class="md-padding" ng-class="{slideDown: expanded}" style="margin-top:-10px">
-        <md-tabs md-dynamic-height md-border-bottom>
+      <md-content class="md-padding" ng-class="{slideDown: expanded}" style="margin-top:-10px">
+        <md-tabs md-selected="0" md-dynamic-height md-border-bottom load-client-templates="switchTemplates('client')" load-owners-templates="switchTemplates('owners')">
           <md-tab label="MY FORMS">
             <md-content class="md-padding">
 
@@ -47,7 +47,7 @@
           </md-tab>
         </md-tabs>
       </md-content>
-      
+
     <md-content md-theme="docs-dark" layout-padding="" layout="row" layout-sm="column">
         <md-input-container ng-repeat="field in fields">
           <label>{{field.label}}</label>

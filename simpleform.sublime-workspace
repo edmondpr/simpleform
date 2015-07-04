@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"owns",
+				"ownersTemplates"
+			],
+			[
+				"clie",
+				"clientsTemplates"
+			],
+			[
+				"select",
+				"selectedTemplates"
+			],
+			[
+				"isol",
+				"isolatedBindingExpanded"
+			],
+			[
+				"ge",
+				"getUser"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
 				"modelOp",
 				"modelOperObj"
 			],
@@ -23,6 +47,54 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Client/ClientAppIonic/www/index.html",
+			"settings":
+			{
+				"buffer_size": 2034,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/ClientAppIonic/www/js/app.js",
+			"settings":
+			{
+				"buffer_size": 2501,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/ClientAppIonic/www/js/fields.js",
+			"settings":
+			{
+				"buffer_size": 10925,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/ClientAppIonic/www/templates/fields.html",
+			"settings":
+			{
+				"buffer_size": 2744,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/ClientAppIonic/www/css/style.css",
+			"settings":
+			{
+				"buffer_size": 3062,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Client/ClientAppIonic/www/js/sessions.js",
+			"settings":
+			{
+				"buffer_size": 10534,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -52,41 +124,119 @@
 	"expanded_folders":
 	[
 		"/D/Localhost/SimpleForm",
+		"/D/Localhost/SimpleForm/Client",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates",
-		"/D/Localhost/SimpleForm/Receiver"
+		"/D/Localhost/SimpleForm/Client/www_OLD",
+		"/D/Localhost/SimpleForm/Client/www_OLD/js",
+		"/D/Localhost/SimpleForm/Receiver",
+		"/D/Localhost/SimpleForm/Receiver/Fields",
+		"/D/Localhost/SimpleForm/Receiver/Fields/css",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials"
 	],
 	"file_history":
 	[
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/field-add.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/fields.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/login.js",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/registration.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/registration.js",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/fields.js",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/barcode.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css/style.css",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/services.js",
+		"/D/Localhost/SimpleForm/Client/www_OLD/index.html",
+		"/D/Localhost/SimpleForm/Client/www_OLD/js/app.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/index.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css/angular-material.min.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/ionic/css/ionic.nightly.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/angular-aria.min.js",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/app.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/fields.js",
+		"/D/Localhost/SimpleForm/Client/ioconf/static/index.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/hammer.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/ionic/js/ionic.nightly.bundle.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/profiles.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/push.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/config.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/sessions.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/speakers.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/login.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/registration.js",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/utils.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/services.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/scan.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/css/fields.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/fields.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/angular-material.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js/controllers.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js/services.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/receive-form.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/my-forms.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css/style.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/css/angular-material.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/config.xml",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js/utils.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/menu.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/my-forms.html",
+		"/D/Localhost/SimpleForm/Client/Fields/js/controllers.js",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/field-edit.html",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/login.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/send-invite.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/logoutcallback.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/index.html",
+		"/C/Users/Edi/Desktop/material.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/_form.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/_formClients.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/field-add.html",
+		"/D/Localhost/SimpleForm/Receiver/Fields/css/base.css",
+		"/D/Localhost/SimpleForm/Receiver/Fields/js/app.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/clients.html",
+		"/D/Localhost/SimpleForm/Receiver/Clients/js/app.js",
+		"/D/Localhost/SimpleForm/Receiver/Clients/js/controllers.js",
+		"/D/Localhost/SimpleForm/Receiver/Fields/partials/send-form.html",
+		"/D/Localhost/SimpleForm/Receiver/Clients/js/utils.js",
+		"/C/Users/Edi/Desktop/E-mails/SS_New_Open_Shift.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Nudge_Schedule.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Post_Trial.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Referral.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_User_Message.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Shift_Updated.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Shift_Start_HH.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Shift_Cancelled.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Shift_Added.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Reset_Password_Successful.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Reset_Password.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Open_Shift_Deleted.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Open_Shift_Approved.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Open_Shift_Cancelled.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Open_Shift_Applied.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Nudge_Open_Shifts.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Nudge_Employee.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_New_User_Alert.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_New_Shift_Template.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_New_Rota.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Mobile_Update_Confirmation.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Mail_Message_Template.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Leave_Request_Declined.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Leave_Request_Approved.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Leave_Request.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_High_Five_Manager.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_High_Five_Employee.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Email_Update_Confirmation.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Cover_Request_Declined.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Cover_Request_Approved.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Cover_Request.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Account_Change.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Account_Activation_Mgr_Successful.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Account_Activation_Mgr.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Account_Activation_Emp_Successful.html",
+		"/C/Users/Edi/Desktop/E-mails/SS_Account_Activation_Emp.html",
+		"/C/Users/Edi/Desktop/E-mails/style.css",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/field-add.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/registration.html",
+		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/barcode.html",
 		"/D/Localhost/SimpleForm/Client/Fields/js/app.js",
 		"/D/Localhost/SimpleForm/common/lib/angular.js",
 		"/D/Localhost/SimpleForm/Client/Fields/js/utils.js",
-		"/D/Localhost/SimpleForm/Receiver/Fields/js/utils.js",
-		"/D/Localhost/SimpleForm/Receiver/Clients/js/utils.js",
-		"/D/Localhost/SimpleForm/Client/Fields/js/controllers.js",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/registration_OLD.html",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/registration_OLD.js",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/index.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/menu.html",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/_form.html",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/config.xml",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/js/push.js",
-		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/templates/field-edit.html",
 		"/D/Localhost/SimpleForm/Client/ClientAppIonic/www/lib/ionic/js/angular-ui/angular-ui-router.js",
 		"/D/Localhost/SimpleForm/Client/Fields/index.html",
 		"/D/Localhost/SimpleForm/Client/Fields/partials/fields.html",
@@ -95,19 +245,14 @@
 		"/D/Localhost/SimpleForm/common/lib/qrcode.js",
 		"/D/Localhost/SimpleForm/Client/Fields/js/services.js",
 		"/D/Localhost/SimpleForm/Back-end/node_modules/express/node_modules/connect/lib/middleware/query.js",
-		"/D/Localhost/SimpleForm/Receiver/Clients/js/controllers.js",
-		"/D/Localhost/SimpleForm/Receiver/Fields/index.html",
 		"/D/Localhost/SimpleForm/Receiver/Clients/index.html",
-		"/D/Localhost/SimpleForm/Receiver/Fields/css/fields.css",
 		"/D/Localhost/SimpleForm/Receiver/Clients/css/clients.css",
 		"/D/Localhost/SimpleForm/Receiver/Clients/css/app.css",
-		"/D/Localhost/SimpleForm/Receiver/Fields/js/controllers.js",
 		"/D/Localhost/SimpleForm/Back-end/server.js",
 		"/D/Localhost/SimpleForm/Back-end/routes/simpleform.js",
 		"/D/Localhost/SimpleForm/Client/routes/client.js",
 		"/D/Localhost/SimpleForm/Client/server.js",
 		"/D/Localhost/SimpleForm/Client/package.json",
-		"/D/Localhost/SimpleForm/Receiver/Fields/js/services.js",
 		"/D/Localhost/SimpleForm/Receiver/routes/receiver.js",
 		"/D/Localhost/SimpleForm/Receiver/server.js",
 		"/D/Localhost/SimpleForm/Receiver/package.json",
@@ -122,73 +267,7 @@
 		"/D/Localhost/SimpleForm/.git/description",
 		"/D/Localhost/SimpleForm/Clients/index.html",
 		"/D/Localhost/SimpleForm/Clients/css/bootstrap.min.css",
-		"/D/Localhost/SimpleForm/Clients/js/utils.js",
-		"/D/Localhost/SimpleForm/Clients/js/services.js",
-		"/D/Localhost/SimpleForm/Clients/js/controllers.js",
-		"/D/Localhost/SimpleForm/Clients/js/app.js",
-		"/D/Localhost/SimpleForm/Clients/partials/client-add.html",
-		"/D/Localhost/SimpleForm/Clients/partials/client-edit.html",
-		"/D/Localhost/SimpleForm/Clients/partials/clients.html",
-		"/D/Localhost/SimpleForm/Clients/server.js",
-		"/D/Localhost/TPL/Users/server.js",
-		"/D/Localhost/TPL/Users/js/controllers.js",
-		"/D/Localhost/TPL/Users/partials/user-edit.html",
-		"/D/Localhost/TPL/Users/partials/user-add.html",
-		"/D/Localhost/TPL/Users/css/app.css",
-		"/D/Localhost/TPL/Users/partials/_form.html",
-		"/D/Localhost/TPL/Users/index.html",
-		"/D/Localhost/TPL/Users/partials/user-view.html",
-		"/D/Localhost/TPL/Users/partials/users.html",
-		"/D/Localhost/TPL/Users/lib/angular-ui-bootstrap.js",
-		"/D/Localhost/TPL/Users/js/modal.js",
-		"/D/Localhost/TPL/Users/js/services.js",
-		"/D/Localhost/TPL/Users/lib/angular-resource.js",
-		"/D/Localhost/TPL/Users/lib/angular-resource.min.js",
-		"/D/Localhost/TPL/Users/lib/angular.js",
-		"/D/Localhost/TPL/Users/routes/users.js",
-		"/D/Localhost/TPL/Users/js/utils.js",
-		"/D/Localhost/Caffe/public/js/utils.js",
-		"/D/Localhost/TPL/Users/js/app.js",
-		"/D/Localhost/TPL/Users/package.json",
-		"/D/Localhost/TPL/Users/.gitignore",
-		"/D/Localhost/Caffe/public/js/views/userdetails.js",
-		"/D/Localhost/Caffe/public/js/views/userlist.js",
-		"/D/Localhost/Caffe/public/js/views/operationlist.js",
-		"/D/Localhost/Caffe/public/js/models/models.js",
-		"/D/Localhost/TPL/Users/lib/angular-ui-router.min.js",
-		"/D/Localhost/TPL/Users/node_modules/express/node_modules/connect/lib/middleware/query.js",
-		"/D/Localhost/TPL/Users/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js",
-		"/D/Localhost/TPL/Users/node_modules/socket.io/node_modules/socket.io-client/lib/util.js",
-		"/D/Localhost/TPL/Users/lib/angular.min.js",
-		"/D/Localhost/TPL/Users/partials/portal-user-view.html",
-		"/D/Localhost/Companies/partials/_form.html",
-		"/D/Localhost/Companies/js/app.js",
-		"/D/Localhost/Companies/js/controllers.js",
-		"/D/Localhost/Companies/partials/companys.html",
-		"/D/Localhost/Companies/index.html",
-		"/D/Localhost/Companies/lib/angular.js",
-		"/D/Localhost/Companies/lib/angular.min.js",
-		"/D/Localhost/Companies/routes/companys.js",
-		"/D/Localhost/Companies/js/services.js",
-		"/D/Localhost/Companies/package.json",
-		"/D/Localhost/Companies/partials/company-view.html",
-		"/D/Localhost/Companies/partials/company-add.html",
-		"/D/Localhost/Companies/partials/company-edit.html",
-		"/D/Localhost/Companies/server.js",
-		"/D/Localhost/Companies/routes/companies.js",
-		"/D/Localhost/JobInterview/lib/angular.min.js",
-		"/D/Localhost/JobInterview/css/app.css",
-		"/D/Localhost/JobInterview/node_modules/express/node_modules/connect/lib/middleware/query.js",
-		"/D/Localhost/JobInterview/css/bootstrap.min.css",
-		"/D/Localhost/JobInterview/partials/questions.html",
-		"/D/Localhost/JobInterview/js/services.js",
-		"/D/Localhost/JobInterview/partials/question-view.html",
-		"/D/Localhost/JobInterview/js/app.js",
-		"/D/Localhost/JobInterview/routes/questions.js",
-		"/D/Localhost/Movies/partials/_form.html",
-		"/D/Localhost/ITOS/CMS/edit_controller.php",
-		"/D/Localhost/ITOS/CMS/edit_js.php",
-		"/D/Localhost/ITOS/CMS/edit_submit.php"
+		"/D/Localhost/SimpleForm/Clients/js/utils.js"
 	],
 	"find":
 	{
@@ -199,6 +278,9 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"D:\\Localhost\\SimpleForm\\Client\\ClientAppIonic\\www",
+			"clientTemplate",
+			"D:\\Localhost\\SimpleForm\\Fields",
 			"D:\\Localhost\\SimpleForm\\Client\\ClientAppIonic",
 			"D:\\Localhost\\SimpleForm",
 			"D:\\Localhost\\Companies\\",
@@ -216,6 +298,72 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"selectedIndex",
+			"conference",
+			"$mdTabsCtrl.scope",
+			"scope.$mdTabsCtrl.scope.",
+			"scope.$mdTabsCtrl.",
+			"mdAutocompleteCtrl",
+			"mdTabsCtrl",
+			"mdAutocompleteCtrl",
+			"controlleras",
+			"link: function",
+			"$mdTabsCtrl.",
+			"clientsTemplates",
+			"mdautocomplete",
+			"mdtabs",
+			"mdtab",
+			"MdAutocomplete",
+			"ui-sref",
+			"mdtabs",
+			"material.components.tabs",
+			"mdtab",
+			"clientsTemplates",
+			"allTemplates",
+			"ClientsFields",
+			"Fields",
+			"template",
+			"listleave",
+			"mdautocomplete",
+			"listclear",
+			"noBlur",
+			"self.leave",
+			"leave",
+			"hasFocus",
+			"noBlur",
+			"listLeave",
+			"self.hidde",
+			"self.hide",
+			"leave",
+			"mdtabs",
+			"hasFocus",
+			"listleave",
+			"hasFocus",
+			"isolatedBindingExpanded",
+			"listLeave",
+			"select",
+			"md-autocomplete-suggestions",
+			"mdautocomplete",
+			"simulatequery",
+			"$scope",
+			"state",
+			"ctrl.",
+			"success",
+			"angular",
+			"FieldEditController",
+			"fields",
+			"$rootScope.loginEmail",
+			"getuser",
+			"mdtab",
+			"mdtabs",
+			"tabs",
+			"template",
+			".$save",
+			"table",
+			"fieldstable",
+			"Clients",
+			"fields",
+			"top-buffer",
 			"getuser",
 			"getusere",
 			"getuser",
@@ -277,80 +425,33 @@
 			"operations",
 			"operation",
 			"operations",
-			"userdb",
-			"D",
-			"personpresent",
-			"sort",
-			"fetch",
-			"toJSON",
-			"stringif",
-			"stringiy",
-			"stringi",
-			"stringify",
-			"User",
-			"user",
-			"listento",
-			"listentoonce",
-			"fetch",
-			"append",
-			"UserListView",
-			"UserListItemView",
-			"user",
-			"usercollection",
-			"vent",
-			"user",
-			".\n",
-			"var",
-			"stringify",
-			"modelOperObj",
-			"user",
-			"users",
-			"cd_index",
-			"arrayItemToDelete[2]",
-			"arrayItemToDelete[1]",
-			"arrayItemToDelete[0]",
-			"split",
-			"pad",
-			"selectedpersons",
-			"{\n",
-			"console",
-			"var d = 0",
-			"d = 0",
-			"d=0",
-			"		    console.log(\"awesome\");",
-			"window",
-			"var i",
-			"date",
-			"selectedPersons",
-			"success: function(data)",
-			"self",
-			"render",
-			"modelObj",
-			"formatdate",
-			"users",
-			"saveuser",
-			"drophandler",
-			"console.",
-			"collapse",
-			"change",
-			"\"/users\"",
-			"db",
-			"database",
-			"https://api.mongolab.com/api/1/databases/pagacaffe/collections/users?apiKey=iuhZLOqDOaI2x6EDlRir3giBJ5-fRWdp",
-			"apiKey=iuhZLOqDOaI2x6EDlRir3giBJ5-fRWdp",
-			"http",
-			"path",
-			"tpl",
-			"lib/",
-			"32 42",
-			"views/"
+			"userdb"
 		],
 		"highlight": true,
 		"in_selection": false,
-		"preserve_case": true,
+		"preserve_case": false,
 		"regex": false,
 		"replace_history":
 		[
+			"clientApp",
+			"$mdTabsCtrl",
+			"",
+			"scope.",
+			"",
+			"clientTemplates",
+			"selectedTemplates",
+			"clientsTemplates",
+			"ClientsTemplates",
+			"fields",
+			"expanded",
+			"self",
+			"template",
+			"",
+			"my-forms",
+			"clientTemplate",
+			"",
+			"ClientsFields",
+			"scan",
 			"regData",
 			"info",
 			"field",
@@ -421,14 +522,195 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Client/ClientAppIonic/www/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2034,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								916,
+								916
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 105.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Client/ClientAppIonic/www/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2501,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1020,
+								1020
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Client/ClientAppIonic/www/js/fields.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10925,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2943,
+								1945
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Client/ClientAppIonic/www/templates/fields.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2744,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								687,
+								687
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Client/ClientAppIonic/www/css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3062,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3062,
+								3062
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 826.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Client/ClientAppIonic/www/js/sessions.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								671,
+								671
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1575.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -472,6 +754,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"login",
+				"Client\\ClientAppIonic\\www\\templates\\login.html"
+			],
 			[
 				"app",
 				"Client\\Fields\\js\\app.js"

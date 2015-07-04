@@ -22,6 +22,11 @@ window.utils = {
     getDbClientsTemplatesUrl: function() {
         var url = "https://api.mongolab.com/api/1/databases/simpleformdb/collections/clients_templates";
         return url;
+    },   
+
+    getDbOwnersTemplatesUrl: function() {
+        var url = "https://api.mongolab.com/api/1/databases/simpleformdb/collections/owners_fields";
+        return url;
     },     
 
     getUser: function() {

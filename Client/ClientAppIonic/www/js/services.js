@@ -16,6 +16,12 @@ angular.module('clientApp.services',[]).factory('Fields',function($resource){
       apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
       id:'@_id.$oid'
     });
+}).factory('OwnersTemplates',function($resource){
+    return $resource(utils.getDbOwnersTemplatesUrl() + '/:id',
+    {
+      apiKey:'bQIONBYLTcZ-IpiEIN7GbjZfhkw1FfLD',
+      id:'@_id.$oid'
+    });
 }).service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);

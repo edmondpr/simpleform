@@ -26,17 +26,34 @@ angular.module('clientApp.fields', ['ngResource', 'ngAnimate', 'clientApp.push']
 
     })
 
-    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $timeout, $q, $log, $ionicModal, Fields, ClientsTemplates, popupService) {
+    .controller('FieldListCtrl', function ($scope, $rootScope, $http, $window, $timeout, $q, $log, $ionicModal, Fields, ClientsTemplates, OwnersTemplates, popupService) {
+
         var self = $scope;
         self.simulateQuery = false;
         self.isDisabled    = false;
         self.expanded      = false;
 
-        var allTemplates = ClientsTemplates.query(); 
+        self.clientTemplates = ClientsTemplates.query(); 
+        self.ownersTemplates = OwnersTemplates.query();  
+        self.selectedTemplates = self.clientTemplates;
         self.templates = new Array();
         self.querySearch   = querySearch;
         self.selectedItemChange = selectedItemChange;
         self.searchTextChange   = searchTextChange;
+
+        createTemplates();
+
+
+        $scope.switchTemplates = function(type) {
+            if (type == "client") {
+                self.selectedTemplates = self.clientTemplates;
+            } else if (type == "owners") {
+                self.selectedTemplates = self.ownersTemplates;
+            }
+            self.templates = [];
+            createTemplates();      
+        };        
+
 
         function querySearch (query) {
           var results = query ? self.templates.filter( createFilterFor(query) ) : self.templates,
@@ -48,7 +65,7 @@ angular.module('clientApp.fields', ['ngResource', 'ngAnimate', 'clientApp.push']
         }
         function selectedItemChange(item) {
             if (item != undefined) {
-                allTemplates.$promise.then(function(data) { 
+                self.selectedTemplates.$promise.then(function(data) { 
                     for (var i=0; i<data.length; i++) {
                         if (i == item.index) {
                             var newFields = data[i].fields;
@@ -73,53 +90,55 @@ angular.module('clientApp.fields', ['ngResource', 'ngAnimate', 'clientApp.push']
         }
 
         // Create list of selectable templates
-        self.fields = new Array();
-        allTemplates.$promise.then(function(data) { 
-            for (var i=0; i<data.length; i++) {
-                if (data[i].user == utils.getUser()) {
-                    // Populate base client form on initial screen
-                    if (data[i].owner == undefined && data[i].type == undefined) {
-                        for (var j=0; j<data[i].fields.length; j++) {
-                            field = new Object({"label": data[i].fields[j].label, "value": data[i].fields[j].value});
-                            self.fields.push(field);
+        function createTemplates() {
+            self.fields = new Array();
+            self.selectedTemplates.$promise.then(function(data) { 
+                for (var i=0; i<data.length; i++) {
+                    if (data[i].user == utils.getUser() || self.selectedTemplates == self.ownersTemplates) {
+                        // Populate base client form on initial screen
+                        if (data[i].owner == undefined && data[i].type == undefined) {
+                            for (var j=0; j<data[i].fields.length; j++) {
+                                field = new Object({"label": data[i].fields[j].label, "value": data[i].fields[j].value});
+                                self.fields.push(field);
+                            } 
                         } 
-                    } 
 
-                    // Populate all templates                         
-                    var fullName = "";
-                    // If base client form put on the first position
-                    if (data[i].owner == undefined) {
-                        for (var j in data[i].fields) {
-                            if (data[i].fields[j].label == 'Name') {
-                                fullName += data[i].fields[j].value;
+                        // Populate all templates                         
+                        var fullName = "";
+                        // If base client form put on the first position
+                        if (data[i].owner == undefined) {
+                            for (var j in data[i].fields) {
+                                if (data[i].fields[j].label == 'Name') {
+                                    fullName += data[i].fields[j].value;
+                                }
+                                if (data[i].fields[j].label == 'Surname') {
+                                    fullName += " " + data[i].fields[j].value;
+                                }
                             }
-                            if (data[i].fields[j].label == 'Surname') {
-                                fullName += " " + data[i].fields[j].value;
+                            self.templates.unshift({
+                              value: fullName.toLowerCase(),
+                              display: fullName,
+                              index: i
+                            });                        
+                        } else {
+                            for (var j in data[i].fields) {
+                                if (data[i].fields[j].label == 'Receiver Name') {
+                                    fullName += data[i].fields[j].value;
+                                }
+                                if (data[i].fields[j].label == 'Receiver Surname') {
+                                    fullName += " " + data[i].fields[j].value;
+                                }
                             }
+                            self.templates.push({
+                              value: fullName.toLowerCase(),
+                              display: fullName,
+                              index: i
+                            });
                         }
-                        self.templates.unshift({
-                          value: fullName.toLowerCase(),
-                          display: fullName,
-                          index: i
-                        });                        
-                    } else {
-                        for (var j in data[i].fields) {
-                            if (data[i].fields[j].label == 'Receiver Name') {
-                                fullName += data[i].fields[j].value;
-                            }
-                            if (data[i].fields[j].label == 'Receiver Surname') {
-                                fullName += " " + data[i].fields[j].value;
-                            }
-                        }
-                        self.templates.push({
-                          value: fullName.toLowerCase(),
-                          display: fullName,
-                          index: i
-                        });
                     }
                 }
-            }
-        });
+            });
+        }
 
         function createFilterFor(query) {
           var lowercaseQuery = angular.lowercase(query);
