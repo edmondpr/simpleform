@@ -72,10 +72,10 @@ public class ClientFieldAdapter extends ArrayAdapter<ClientField> {
 
             holder.field.setHint(clientFields.get(position).getLabel());
             holder.field.setFloatingLabelText(clientFields.get(position).getLabel());
-            holder.field.setText(clientFields.get(position).getPosition().toString());
+            holder.field.setText(clientFields.get(position).getValue());
             holder.field.setId(position);
 
-            //we need to update adapter once we finish with editing
+            // We need to update the adapter once we finish editing
             holder.field.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
