@@ -10,21 +10,14 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+        <EditText
             xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/searchField"
+            android:id="@+id/search_field"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textCursorDrawable="@drawable/text_cursor_cyan"
-            android:cursorVisible="false"
-            app:met_baseColor="@android:color/white"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="20"
-            app:met_primaryColor="?colorAccent" />
+            android:layout_height="wrap_content" />
 
         <ListView
-            android:id="@+id/fields"
+            android:id="@+id/templates"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:padding="10dp"
