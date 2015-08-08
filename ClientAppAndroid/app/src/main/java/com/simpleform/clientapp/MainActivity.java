@@ -18,11 +18,11 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.simpleform.clientapp.adapters.ClientFieldAdapter;
-import com.simpleform.clientapp.adapters.OwnerFieldAdapter;
-import com.simpleform.clientapp.models.ClientField;
+import com.simpleform.clientapp.adapters.FormFieldAdapter;
+import com.simpleform.clientapp.adapters.FormFieldAdapter;
+import com.simpleform.clientapp.models.FormField;
 import com.simpleform.clientapp.models.ClientTemplate;
-import com.simpleform.clientapp.models.OwnerField;
+import com.simpleform.clientapp.models.FormField;
 import com.simpleform.clientapp.models.OwnerTemplate;
 
 import org.apache.commons.lang3.StringUtils;
@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
             @Override
             public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
-                ArrayList<ClientField> clientFields = new ArrayList<ClientField>();
+                ArrayList<FormField> clientFields = new ArrayList<FormField>();
                 for (int i = 0; i < clientsTemplates.size(); i++) {
                     if (StringUtils.isBlank(clientsTemplates.get(i).getOwner())) {
                         clientFields = clientsTemplates.get(i).getFields();
@@ -100,9 +100,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     }
                 }
                 if (!isForOwnerTemplate) {
-                    ClientFieldAdapter clientFieldAdapter = new ClientFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
+                    FormFieldAdapter formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
                     ListView listView = (ListView) findViewById(R.id.fields);
-                    listView.setAdapter(clientFieldAdapter);
+                    listView.setAdapter(formFieldAdapter);
 
                     listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -126,26 +126,26 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         });
     }
 
-    private void executeOwnerParseQuery(String objectId, final ArrayList<ClientField> clientFields) {
+    private void executeOwnerParseQuery(String objectId, final ArrayList<FormField> clientFields) {
         ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
         queryOwnersTemplates.whereEqualTo("objectId", objectId);
         queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
             @Override
             public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
-                ArrayList<OwnerField> ownerFields = new ArrayList<OwnerField>();
+                ArrayList<FormField> ownerFields = new ArrayList<FormField>();
                 ownerFields = ownersTemplates.get(0).getFields();
                 for (int i = 0; i < ownerFields.size(); i++) {
                     for (int j = 0; j < clientFields.size(); j++) {
                         if (StringUtils.isNotBlank(ownerFields.get(i).getConnect()) &&
                                 ownerFields.get(i).getConnect().contains(clientFields.get(j).getLabel())) {
-                            ownerFields.get(i).setConnect(clientFields.get(j).getValue());
-                            j = clientFields.size() - 1;
+                            ownerFields.get(i).setValue(clientFields.get(j).getValue());
+                            j = ownerFields.size() - 1;
                         }
                     }
                 }
-                OwnerFieldAdapter ownerFieldAdapter = new OwnerFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
+                FormFieldAdapter formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
                 ListView listView = (ListView) findViewById(R.id.fields);
-                listView.setAdapter(ownerFieldAdapter);
+                listView.setAdapter(formFieldAdapter);
 
                 listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {

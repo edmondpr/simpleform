@@ -17,7 +17,7 @@ public class ClientTemplate extends ParseObject {
 //    String owner;
 //    String type;
 //    String user;
-//    ArrayList<ClientField> fields;
+//    ArrayList<FormField> fields;
 
     public String getOwner() {
         return getString("owner");
@@ -40,13 +40,13 @@ public class ClientTemplate extends ParseObject {
         put("user", value);
     }
 
-    public ArrayList<ClientField> getFields() {
-        ArrayList<ClientField> clientFields = new ArrayList<ClientField>();
-        Type listType = new TypeToken<ArrayList<ClientField>>() {}.getType();
-        clientFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
-        return clientFields;
+    public ArrayList<FormField> getFields() {
+        ArrayList<FormField> formFields = new ArrayList<FormField>();
+        Type listType = new TypeToken<ArrayList<FormField>>() {}.getType();
+        formFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
+        return formFields;
     }
-    public void setFields(ArrayList<ClientField> clientFields) {
-        put("fields", clientFields);
+    public void setFields(ArrayList<FormField> formFields) {
+        put("fields", formFields);
     }
 }

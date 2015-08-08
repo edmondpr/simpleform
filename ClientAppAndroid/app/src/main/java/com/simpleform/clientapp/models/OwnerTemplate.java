@@ -15,7 +15,7 @@ public class OwnerTemplate extends ParseObject {
 
 //    String owner;
 //    String type;
-//    ArrayList<OwnerField> fields;
+//    ArrayList<FormField> fields;
 
     public String getOwner() {
         return getString("owner");
@@ -31,13 +31,13 @@ public class OwnerTemplate extends ParseObject {
         put("type", value);
     }
 
-    public ArrayList<OwnerField> getFields() {
-        ArrayList<OwnerField> ownerFields = new ArrayList<OwnerField>();
-        Type listType = new TypeToken<ArrayList<OwnerField>>() {}.getType();
-        ownerFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
-        return ownerFields;
+    public ArrayList<FormField> getFields() {
+        ArrayList<FormField> formFields = new ArrayList<FormField>();
+        Type listType = new TypeToken<ArrayList<FormField>>() {}.getType();
+        formFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
+        return formFields;
     }
-    public void setFields(ArrayList<OwnerField> ownerFields) {
-        put("fields", ownerFields);
+    public void setFields(ArrayList<FormField> formFields) {
+        put("fields", formFields);
     }
 }

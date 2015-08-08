@@ -6,26 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.simpleform.clientapp.R;
-import com.simpleform.clientapp.models.ClientField;
+import com.simpleform.clientapp.models.FormField;
 
 import java.util.ArrayList;
 
 
-public class ClientFieldAdapter extends ArrayAdapter<ClientField> {
+public class FormFieldAdapter extends ArrayAdapter<FormField> {
     private Activity activity;
-    private ArrayList<ClientField> clientFields;
+    private ArrayList<FormField> formFields;
     private int textViewResourceId;
     private static LayoutInflater inflater = null;
 
-    public ClientFieldAdapter (Activity activity, int textViewResourceId, ArrayList<ClientField> clientFields) {
-        super(activity, textViewResourceId, clientFields);
+    public FormFieldAdapter(Activity activity, int textViewResourceId, ArrayList<FormField> formFields) {
+        super(activity, textViewResourceId, formFields);
         try {
             this.activity = activity;
-            this.clientFields = clientFields;
+            this.formFields = formFields;
             this.textViewResourceId = textViewResourceId;
 
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,10 +35,10 @@ public class ClientFieldAdapter extends ArrayAdapter<ClientField> {
     }
 
     public int getCount() {
-        return clientFields.size();
+        return formFields.size();
     }
 
-    public ClientField getItem(ClientField position) {
+    public FormField getItem(FormField position) {
         return position;
     }
 
@@ -70,9 +69,9 @@ public class ClientFieldAdapter extends ArrayAdapter<ClientField> {
                 }*/
             }
 
-            holder.field.setHint(clientFields.get(position).getLabel());
-            holder.field.setFloatingLabelText(clientFields.get(position).getLabel());
-            holder.field.setText(clientFields.get(position).getValue());
+            holder.field.setHint(formFields.get(position).getLabel());
+            holder.field.setFloatingLabelText(formFields.get(position).getLabel());
+            holder.field.setText(formFields.get(position).getValue());
             holder.field.setId(position);
 
             // We need to update the adapter once we finish editing
@@ -84,7 +83,7 @@ public class ClientFieldAdapter extends ArrayAdapter<ClientField> {
                         // Prevent cursor under the other edit text fields from persisting after scroll
                         v.dispatchWindowFocusChanged(hasFocus);
                         try {
-                            clientFields.get(position).setPosition(Integer.parseInt(field_edit.getText().toString()));
+                            formFields.get(position).setPosition(Integer.parseInt(field_edit.getText().toString()));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
