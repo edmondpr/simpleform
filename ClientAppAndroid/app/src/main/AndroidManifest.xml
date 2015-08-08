@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.simpleform.clientapp.SearchActivity"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
 
     </application>
 

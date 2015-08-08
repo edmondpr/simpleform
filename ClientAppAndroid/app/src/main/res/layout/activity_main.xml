@@ -10,18 +10,39 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/searchField"
+        <LinearLayout
+            android:id="@+id/title_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MY PROFILE"
+                android:textSize="20dp"/>
+
+            <IconTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:paddingTop="5dp"
+                android:rotation="90"
+                android:text="{fa-play}"
+                android:textSize="10dp"
+                android:textColor="#FF33B5E5" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/focus_field"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
             android:cursorVisible="false"
-            app:met_baseColor="@android:color/white"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="20"
-            app:met_primaryColor="?colorAccent" />
+            android:enabled="false"/>
 
         <ListView
             android:id="@+id/fields"

@@ -1,5 +1,6 @@
 package com.simpleform.clientapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -54,17 +55,11 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
 
-                        // ListView Clicked item index
-                        int itemPosition     = position;
-
-                        // ListView Clicked item value
-                        OwnerTemplate  itemValue    = (OwnerTemplate) ownersListView.getItemAtPosition(position);
-
-                        // Show Alert
-                        Toast.makeText(getApplicationContext(),
-                                "Position: " + itemPosition + "  ListItem: " + itemValue.getOwner(), Toast.LENGTH_LONG)
-                                .show();
-
+                        OwnerTemplate ownerTemplate = (OwnerTemplate) ownersListView.getItemAtPosition(position);
+                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        intent.putExtra("formType", "owner");
+                        intent.putExtra("objectId", ownerTemplate.getObjectId());
+                        startActivity(intent);
                     }
 
                 });

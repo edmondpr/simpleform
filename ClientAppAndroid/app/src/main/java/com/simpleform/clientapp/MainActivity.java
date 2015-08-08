@@ -1,13 +1,16 @@
 package com.simpleform.clientapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -16,8 +19,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.simpleform.clientapp.adapters.ClientFieldAdapter;
+import com.simpleform.clientapp.adapters.OwnerFieldAdapter;
 import com.simpleform.clientapp.models.ClientField;
 import com.simpleform.clientapp.models.ClientTemplate;
+import com.simpleform.clientapp.models.OwnerField;
 import com.simpleform.clientapp.models.OwnerTemplate;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,21 +31,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
+
+    String loggedInUser = "edmondpr@gmail.com";
+    LinearLayout titleLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        titleLinearLayout = (LinearLayout) findViewById(R.id.title_linear_layout);
+        titleLinearLayout.setOnClickListener(this);
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(ClientTemplate.class);
-        ParseObject.registerSubclass(OwnerTemplate.class);
-        Parse.initialize(this, "HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX");
+        titleLinearLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent searchIntent = new Intent(MainActivity.this,
+                        SearchActivity.class);
+                startActivity(searchIntent);
+            }
+        });
 
+        Intent intent = getIntent();
+        String formType = "client";
+        String objectId = "";
+        if (intent != null) {
+            formType = intent.getStringExtra("formType");
+            objectId = intent.getStringExtra("objectId");
+        }
+
+        if (StringUtils.isBlank(objectId)) {
+            Parse.enableLocalDatastore(this);
+            ParseObject.registerSubclass(ClientTemplate.class);
+            ParseObject.registerSubclass(OwnerTemplate.class);
+            Parse.initialize(this, "HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX");
+            boolean isMyProfile = true;
+            String objectIdParam = "";
+            boolean isForOwnerTemplate = false;
+            executeClientParseQuery(isMyProfile, objectIdParam, isForOwnerTemplate);
+        } else {
+            if (formType.equals("client")) {
+                boolean isMyProfile = false;
+                boolean isForOwnerTemplate = false;
+                executeClientParseQuery(isMyProfile, objectId, isForOwnerTemplate);
+            } else {
+                boolean isMyProfile = true;
+                boolean isForOwnerTemplate = true;
+                executeClientParseQuery(isMyProfile, objectId, isForOwnerTemplate);
+            }
+        }
+
+    }
+
+    private void executeClientParseQuery(boolean isMyProfile, final String objectId, final boolean isForOwnerTemplate) {
         ParseQuery<ClientTemplate> queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
-        queryClientsTemplates.whereEqualTo("user", "alex");
+        if (isMyProfile) {
+            queryClientsTemplates.whereEqualTo("user", loggedInUser);
+        } else {
+            queryClientsTemplates.whereEqualTo("objectId", objectId);
+        }
         queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
             @Override
             public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
@@ -51,9 +99,53 @@ public class MainActivity extends FragmentActivity {
                         break;
                     }
                 }
-                ClientFieldAdapter clientFieldAdapter = new ClientFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
+                if (!isForOwnerTemplate) {
+                    ClientFieldAdapter clientFieldAdapter = new ClientFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
+                    ListView listView = (ListView) findViewById(R.id.fields);
+                    listView.setAdapter(clientFieldAdapter);
+
+                    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                            // TODO Auto-generated method stub
+                        }
+
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+                            EditText focusField = (EditText) findViewById(R.id.focus_field);
+                            focusField.requestFocus();
+                            if (scrollState != 0) {
+                                InputMethodManager inputMethodManager = (InputMethodManager)
+                                        getSystemService(Activity.INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            }
+                        }
+                    });
+                } else {
+                    executeOwnerParseQuery(objectId, clientFields);
+                }
+            }
+        });
+    }
+
+    private void executeOwnerParseQuery(String objectId, final ArrayList<ClientField> clientFields) {
+        ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
+        queryOwnersTemplates.whereEqualTo("objectId", objectId);
+        queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
+            @Override
+            public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
+                ArrayList<OwnerField> ownerFields = new ArrayList<OwnerField>();
+                ownerFields = ownersTemplates.get(0).getFields();
+                for (int i = 0; i < ownerFields.size(); i++) {
+                    for (int j = 0; j < clientFields.size(); j++) {
+                        if (StringUtils.isNotBlank(ownerFields.get(i).getConnect()) &&
+                                ownerFields.get(i).getConnect().contains(clientFields.get(j).getLabel())) {
+                            ownerFields.get(i).setConnect(clientFields.get(j).getValue());
+                            j = clientFields.size() - 1;
+                        }
+                    }
+                }
+                OwnerFieldAdapter ownerFieldAdapter = new OwnerFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
                 ListView listView = (ListView) findViewById(R.id.fields);
-                listView.setAdapter(clientFieldAdapter);
+                listView.setAdapter(ownerFieldAdapter);
 
                 listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -61,8 +153,8 @@ public class MainActivity extends FragmentActivity {
                     }
 
                     public void onScrollStateChanged(AbsListView view, int scrollState) {
-                        EditText searchField = (EditText) findViewById(R.id.searchField);
-                        searchField.requestFocus();
+                        EditText focusField = (EditText) findViewById(R.id.focus_field);
+                        focusField.requestFocus();
                         if (scrollState != 0) {
                             InputMethodManager inputMethodManager = (InputMethodManager)
                                     getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -72,7 +164,6 @@ public class MainActivity extends FragmentActivity {
                 });
             }
         });
-
     }
 
     @Override
@@ -97,4 +188,8 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }

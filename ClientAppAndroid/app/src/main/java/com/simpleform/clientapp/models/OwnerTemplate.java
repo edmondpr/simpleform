@@ -2,9 +2,11 @@ package com.simpleform.clientapp.models;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,10 +32,9 @@ public class OwnerTemplate extends ParseObject {
     }
 
     public ArrayList<OwnerField> getFields() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
         ArrayList<OwnerField> ownerFields = new ArrayList<OwnerField>();
-        ownerFields = (ArrayList<OwnerField>) Arrays.asList(gson.fromJson(getJSONArray("fields").toString(), OwnerField[].class));
+        Type listType = new TypeToken<ArrayList<OwnerField>>() {}.getType();
+        ownerFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
         return ownerFields;
     }
     public void setFields(ArrayList<OwnerField> ownerFields) {

@@ -41,12 +41,9 @@ public class ClientTemplate extends ParseObject {
     }
 
     public ArrayList<ClientField> getFields() {
-        /*GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();*/
         ArrayList<ClientField> clientFields = new ArrayList<ClientField>();
         Type listType = new TypeToken<ArrayList<ClientField>>() {}.getType();
         clientFields = new Gson().fromJson(getJSONArray("fields").toString(), listType);
-        //clientFields = Arrays.asList(gson.fromJson(getJSONArray("fields").toString(), ClientField[].class));
         return clientFields;
     }
     public void setFields(ArrayList<ClientField> clientFields) {
