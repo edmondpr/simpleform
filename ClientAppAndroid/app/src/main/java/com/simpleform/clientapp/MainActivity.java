@@ -136,8 +136,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ownerFields = ownersTemplates.get(0).getFields();
                 for (int i = 0; i < ownerFields.size(); i++) {
                     for (int j = 0; j < clientFields.size(); j++) {
-                        if (StringUtils.isNotBlank(ownerFields.get(i).getConnect()) &&
-                                ownerFields.get(i).getConnect().contains(clientFields.get(j).getLabel())) {
+                        String connect = "";
+                        if (StringUtils.isNotBlank(ownerFields.get(i).getConnect())) {
+                            connect = ownerFields.get(i).getConnect();
+                            connect = connect.substring(2, connect.length() - 2);
+                        }
+                        if (connect.equals(clientFields.get(j).getLabel())) {
                             ownerFields.get(i).setValue(clientFields.get(j).getValue());
                             j = ownerFields.size() - 1;
                         }

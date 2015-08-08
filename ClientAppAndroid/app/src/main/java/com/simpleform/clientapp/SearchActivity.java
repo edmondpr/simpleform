@@ -1,5 +1,7 @@
 package com.simpleform.clientapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -20,7 +22,12 @@ import com.simpleform.clientapp.adapters.SearchAdapter;
 import com.simpleform.clientapp.models.OwnerTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class SearchActivity extends FragmentActivity implements TextWatcher {
@@ -44,6 +51,15 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
             @Override
             public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
                 ownersTemplatesGlobal = (ArrayList<OwnerTemplate>) ownersTemplates;
+                final ArrayList<OwnerTemplate> ownersTemplatesOrig = ownersTemplatesGlobal;
+                ArrayList<OwnerTemplate> result = new ArrayList<OwnerTemplate>();
+                Set<String> types = new HashSet<String>();
+                for (OwnerTemplate ownerTemplate : ownersTemplatesGlobal ) {
+                    if (types.add(ownerTemplate.getOwner())) {
+                        result.add(ownerTemplate);
+                    }
+                }
+                ownersTemplatesGlobal = result;
                 searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, ownersTemplatesGlobal);
                 final ListView ownersListView = ownersListViewGlobal;
                 ownersListView.setAdapter(searchAdapter);
@@ -56,16 +72,50 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
                                             int position, long id) {
 
                         OwnerTemplate ownerTemplate = (OwnerTemplate) ownersListView.getItemAtPosition(position);
-                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                        intent.putExtra("formType", "owner");
-                        intent.putExtra("objectId", ownerTemplate.getObjectId());
-                        startActivity(intent);
+                        int numberOfForms = 0;
+                        ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
+                        for (OwnerTemplate ownerTemplateIterator : ownersTemplatesOrig) {
+                            if (ownerTemplateIterator.getOwner().equals(ownerTemplate.getOwner())) {
+                                numberOfForms++;
+                                ownersTemplatesGroup.add(ownerTemplateIterator);
+                            }
+                        }
+                        if (numberOfForms == 1) {
+                            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                            intent.putExtra("formType", "owner");
+                            intent.putExtra("objectId", ownerTemplate.getObjectId());
+                            startActivity(intent);
+                        } else {
+                            openFormSelector(ownersTemplatesGroup);
+                        }
                     }
 
                 });
             }
         });
+    }
 
+    public void openFormSelector(final ArrayList<OwnerTemplate> ownersTemplatesGroup) {
+        CharSequence forms[] = new CharSequence[ownersTemplatesGroup.size()];
+        for (int i=0; i<ownersTemplatesGroup.size(); i++) {
+            forms[i] = ownersTemplatesGroup.get(i).getType();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Please select a form");
+        builder.setItems(forms, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int i=0; i<ownersTemplatesGroup.size(); i++) {
+                    if (i == which) {
+                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        intent.putExtra("formType", "owner");
+                        intent.putExtra("objectId", ownersTemplatesGroup.get(i).getObjectId());
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
+        builder.show();
     }
 
     @Override
