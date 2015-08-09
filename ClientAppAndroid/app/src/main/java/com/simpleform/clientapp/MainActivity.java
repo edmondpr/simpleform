@@ -156,7 +156,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         });
     }
 
-    private void executeOwnerParseQuery(String objectId, final ArrayList<FormField> clientFields) {
+    private void executeOwnerParseQuery(String objectId, final ArrayList<FormField> myProfileFields) {
         ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
         queryOwnersTemplates.whereEqualTo("objectId", objectId);
         queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
@@ -165,14 +165,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ArrayList<FormField> ownerFields = new ArrayList<FormField>();
                 ownerFields = ownersTemplates.get(0).getFields();
                 for (int i = 0; i < ownerFields.size(); i++) {
-                    for (int j = 0; j < clientFields.size(); j++) {
+                    for (int j = 0; j < myProfileFields.size(); j++) {
                         String connect = "";
                         if (StringUtils.isNotBlank(ownerFields.get(i).getConnect())) {
                             connect = ownerFields.get(i).getConnect();
                             connect = connect.substring(2, connect.length() - 2);
                         }
-                        if (connect.equals(clientFields.get(j).getLabel())) {
-                            ownerFields.get(i).setValue(clientFields.get(j).getValue());
+                        if (connect.equals(myProfileFields.get(j).getLabel())) {
+                            ownerFields.get(i).setValue(myProfileFields.get(j).getValue());
                             j = ownerFields.size() - 1;
                         }
                     }

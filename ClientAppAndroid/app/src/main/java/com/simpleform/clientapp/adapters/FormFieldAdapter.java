@@ -79,11 +79,11 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         final int position = v.getId();
-                        final MaterialEditText field_edit = (MaterialEditText) v;
+                        final MaterialEditText fieldEdit = (MaterialEditText) v;
                         // Prevent cursor under the other edit text fields from persisting after scroll
                         v.dispatchWindowFocusChanged(hasFocus);
                         try {
-                            formFields.get(position).setPosition(Integer.parseInt(field_edit.getText().toString()));
+                            formFields.get(position).setValue(fieldEdit.getText().toString());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
