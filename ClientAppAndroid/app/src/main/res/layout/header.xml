@@ -2,9 +2,9 @@
 
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/form_name"
+    android:id="@+id/text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="10dp"
-    android:textColor="#fff"/>
+    android:textColor="#999"/>
 

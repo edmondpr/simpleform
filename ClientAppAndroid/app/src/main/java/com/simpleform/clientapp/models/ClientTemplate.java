@@ -14,10 +14,18 @@ import java.util.List;
 @ParseClassName("ClientsTemplates")
 public class ClientTemplate extends ParseObject {
 
+//    String name;
 //    String owner;
 //    String type;
 //    String user;
 //    ArrayList<FormField> fields;
+
+    public String getName() {
+        return getString("name");
+    }
+    public void setName(String value) {
+        put("name", value);
+    }
 
     public String getOwner() {
         return getString("owner");

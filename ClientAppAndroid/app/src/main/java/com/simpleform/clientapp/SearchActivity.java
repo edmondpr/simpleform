@@ -7,34 +7,35 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.simpleform.clientapp.adapters.SearchAdapter;
+import com.simpleform.clientapp.models.ClientTemplate;
+import com.simpleform.clientapp.models.FormTemplate;
 import com.simpleform.clientapp.models.OwnerTemplate;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
 public class SearchActivity extends FragmentActivity implements TextWatcher {
 
-    ArrayList<OwnerTemplate> ownersTemplatesGlobal = new ArrayList<OwnerTemplate>();
-    ArrayList<OwnerTemplate> searchOwnersTemplates = new ArrayList<OwnerTemplate>();
-    ListView ownersListViewGlobal;
+    ArrayList<FormTemplate> formsTemplatesGlobal = new ArrayList<FormTemplate>();
+    ArrayList<FormTemplate> searchFormsTemplates = new ArrayList<FormTemplate>();
+    StickyListHeadersListView formsListViewGlobal;
     EditText searchField;
     SearchAdapter searchAdapter;
 
@@ -44,52 +45,95 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
         setContentView(R.layout.activity_search);
         searchField = (EditText) findViewById(R.id.search_field);
         searchField.addTextChangedListener(this);
-        ownersListViewGlobal = (ListView) findViewById(R.id.templates);
+        formsListViewGlobal = (StickyListHeadersListView) findViewById(R.id.templates);
 
-        ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
-        queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
+        ParseQuery<ClientTemplate> queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
+        queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
+        queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
             @Override
-            public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
-                ownersTemplatesGlobal = (ArrayList<OwnerTemplate>) ownersTemplates;
-                final ArrayList<OwnerTemplate> ownersTemplatesOrig = ownersTemplatesGlobal;
-                ArrayList<OwnerTemplate> result = new ArrayList<OwnerTemplate>();
+            public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
+                ArrayList<ClientTemplate> clientsTemplatesSorted = new ArrayList<ClientTemplate>();
                 Set<String> types = new HashSet<String>();
-                for (OwnerTemplate ownerTemplate : ownersTemplatesGlobal ) {
-                    if (types.add(ownerTemplate.getOwner())) {
-                        result.add(ownerTemplate);
+                for (ClientTemplate clientTemplate : clientsTemplates) {
+                    if (types.add(clientTemplate.getName())) {
+                        clientsTemplatesSorted.add(clientTemplate);
                     }
                 }
-                ownersTemplatesGlobal = result;
-                searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, ownersTemplatesGlobal);
-                final ListView ownersListView = ownersListViewGlobal;
-                ownersListView.setAdapter(searchAdapter);
 
-                // ListView Item Click Listener
-                ownersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                // Add client template from sorted list to global templates
+                for (ClientTemplate clientTemplate : clientsTemplatesSorted) {
+                    FormTemplate formTemplate = new FormTemplate();
+                    if (!clientTemplate.getName().equals("My Profile")) {
+                        formTemplate.setObjectId(clientTemplate.getObjectId());
+                        formTemplate.setName(clientTemplate.getName());
+                        formTemplate.setOwner(clientTemplate.getOwner());
+                        formTemplate.setType(clientTemplate.getType());
+                        formTemplate.setFields(clientTemplate.getFields());
+                        formsTemplatesGlobal.add(formTemplate);
+                    }
+                }
 
+                ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
+                queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-
-                        OwnerTemplate ownerTemplate = (OwnerTemplate) ownersListView.getItemAtPosition(position);
-                        int numberOfForms = 0;
-                        ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
-                        for (OwnerTemplate ownerTemplateIterator : ownersTemplatesOrig) {
-                            if (ownerTemplateIterator.getOwner().equals(ownerTemplate.getOwner())) {
-                                numberOfForms++;
-                                ownersTemplatesGroup.add(ownerTemplateIterator);
+                    public void done(final List<OwnerTemplate> ownersTemplates, ParseException e) {
+                        ArrayList<OwnerTemplate> ownersTemplatesSorted = new ArrayList<OwnerTemplate>();
+                        Set<String> types = new HashSet<String>();
+                        for (OwnerTemplate ownerTemplate : ownersTemplates) {
+                            if (types.add(ownerTemplate.getOwner())) {
+                                ownersTemplatesSorted.add(ownerTemplate);
                             }
                         }
-                        if (numberOfForms == 1) {
-                            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                            intent.putExtra("formType", "owner");
-                            intent.putExtra("objectId", ownerTemplate.getObjectId());
-                            startActivity(intent);
-                        } else {
-                            openFormSelector(ownersTemplatesGroup);
-                        }
-                    }
 
+                        // Add owner template from sorted list to global templates
+                        for (OwnerTemplate ownerTemplate : ownersTemplatesSorted) {
+                            FormTemplate formTemplate = new FormTemplate();
+                            formTemplate.setObjectId(ownerTemplate.getObjectId());
+                            formTemplate.setOwner(ownerTemplate.getOwner());
+                            formTemplate.setType(ownerTemplate.getType());
+                            formTemplate.setFields(ownerTemplate.getFields());
+                            formsTemplatesGlobal.add(formTemplate);
+                        }
+
+                        searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, formsTemplatesGlobal);
+                        final StickyListHeadersListView formsListView = formsListViewGlobal;
+                        formsListView.setAdapter(searchAdapter);
+
+                        // ListView Item Click Listener
+                        formsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view,
+                                                    int position, long id) {
+
+                                FormTemplate formTemplate = (FormTemplate) formsListView.getItemAtPosition(position);
+                                int numberOfForms = 0;
+                                ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
+                                if (StringUtils.isBlank(formTemplate.getName())) {
+                                    for (OwnerTemplate ownerTemplateIterator : ownersTemplates) {
+                                        if (ownerTemplateIterator.getOwner().equals(formTemplate.getOwner())) {
+                                            numberOfForms++;
+                                            ownersTemplatesGroup.add(ownerTemplateIterator);
+                                        }
+                                    }
+                                }
+                                if (numberOfForms == 0) {
+                                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                                    intent.putExtra("formType", "client");
+                                    intent.putExtra("objectId", formTemplate.getObjectId());
+                                    startActivity(intent);
+                                }  else if (numberOfForms == 1) {
+                                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                                    intent.putExtra("formType", "owner");
+                                    intent.putExtra("objectId", formTemplate.getObjectId());
+                                    startActivity(intent);
+                                } else {
+                                    openFormSelector(ownersTemplatesGroup);
+                                }
+                            }
+
+                        });
+                    }
                 });
             }
         });
@@ -118,28 +162,6 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
         builder.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     // Search filter methods
     @Override
     public void afterTextChanged(Editable s) {
@@ -153,23 +175,32 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!ownersTemplatesGlobal.isEmpty()) {
-            if (searchOwnersTemplates != null && !searchOwnersTemplates.isEmpty()) {
-                searchOwnersTemplates.clear();
+        if (!formsTemplatesGlobal.isEmpty()) {
+            if (searchFormsTemplates != null && !searchFormsTemplates.isEmpty()) {
+                searchFormsTemplates.clear();
             }
-            for (int i = 0; i < ownersTemplatesGlobal.size(); i++) {
-                if ((ownersTemplatesGlobal.get(i)
-                        .getOwner().toLowerCase())
-                        .contains(searchField.getText()
-                                .toString().toLowerCase())) {
-                    searchOwnersTemplates.add(ownersTemplatesGlobal.get(i));
+            for (int i = 0; i < formsTemplatesGlobal.size(); i++) {
+                if (StringUtils.isNotBlank(formsTemplatesGlobal.get(i).getName())) {
+                    if ((formsTemplatesGlobal.get(i)
+                            .getName().toLowerCase())
+                            .contains(searchField.getText()
+                                    .toString().toLowerCase())) {
+                        searchFormsTemplates.add(formsTemplatesGlobal.get(i));
+                    }
+                } else {
+                    if ((formsTemplatesGlobal.get(i)
+                            .getOwner().toLowerCase())
+                            .contains(searchField.getText()
+                                    .toString().toLowerCase())) {
+                        searchFormsTemplates.add(formsTemplatesGlobal.get(i));
+                    }
                 }
             }
 
-            if (searchOwnersTemplates != null && !searchOwnersTemplates.isEmpty()) {
-                searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, searchOwnersTemplates);
+            if (searchFormsTemplates != null && !searchFormsTemplates.isEmpty()) {
+                searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, searchFormsTemplates);
             }
-            ownersListViewGlobal.setAdapter(searchAdapter);
+            formsListViewGlobal.setAdapter(searchAdapter);
         }
     }
 }

@@ -9,22 +9,26 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.simpleform.clientapp.R;
-import com.simpleform.clientapp.models.OwnerTemplate;
+import com.simpleform.clientapp.models.FormTemplate;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-public class SearchAdapter extends ArrayAdapter<OwnerTemplate> {
+
+public class SearchAdapter extends ArrayAdapter<FormTemplate> implements StickyListHeadersAdapter {
     private Activity activity;
-    private ArrayList<OwnerTemplate> ownerTemplates;
+    private ArrayList<FormTemplate> formTemplates;
     private int textViewResourceId;
     private static LayoutInflater inflater = null;
 
-    public SearchAdapter(Activity activity, int textViewResourceId, ArrayList<OwnerTemplate> ownerTemplates) {
-        super(activity, textViewResourceId, ownerTemplates);
+    public SearchAdapter(Activity activity, int textViewResourceId, ArrayList<FormTemplate> formTemplates) {
+        super(activity, textViewResourceId, formTemplates);
         try {
             this.activity = activity;
-            this.ownerTemplates = ownerTemplates;
+            this.formTemplates = formTemplates;
             this.textViewResourceId = textViewResourceId;
 
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,10 +39,10 @@ public class SearchAdapter extends ArrayAdapter<OwnerTemplate> {
     }
 
     public int getCount() {
-        return ownerTemplates.size();
+        return formTemplates.size();
     }
 
-    public OwnerTemplate getItem(OwnerTemplate position) {
+    public FormTemplate getItem(FormTemplate position) {
         return position;
     }
 
@@ -47,7 +51,7 @@ public class SearchAdapter extends ArrayAdapter<OwnerTemplate> {
     }
 
     public static class ViewHolder {
-        public TextView ownerName;
+        public TextView formName;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,7 +62,7 @@ public class SearchAdapter extends ArrayAdapter<OwnerTemplate> {
                 vi = inflater.inflate(textViewResourceId, null);
                 holder = new ViewHolder();
 
-                holder.ownerName = (TextView) vi.findViewById(R.id.owner_name);
+                holder.formName = (TextView) vi.findViewById(R.id.form_name);
 
                 vi.setTag(holder);
             } else {
@@ -68,12 +72,54 @@ public class SearchAdapter extends ArrayAdapter<OwnerTemplate> {
                 }*/
             }
 
-            holder.ownerName.setText(ownerTemplates.get(position).getOwner());
-            holder.ownerName.setId(position);
+            if (StringUtils.isNotBlank(formTemplates.get(position).getName())) {
+                holder.formName.setText(formTemplates.get(position).getName());
+            } else {
+                holder.formName.setText(formTemplates.get(position).getOwner());
+            }
+            holder.formName.setId(position);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return vi;
     }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = inflater.inflate(R.layout.header, parent, false);
+            holder.text = (TextView) convertView.findViewById(R.id.text);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+
+        String headerText = "";
+        if (StringUtils.isNotBlank(formTemplates.get(position).getName())) {
+            headerText = "My saved forms";
+        } else {
+            headerText = "Other forms";
+        }
+        holder.text.setText(headerText);
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        long id;
+        if (StringUtils.isNotBlank(formTemplates.get(position).getName())) {
+            id = 1;
+        } else {
+            id = 2;
+        }
+        return id;
+    }
+
+    class HeaderViewHolder {
+        TextView text;
+    }
+
 }

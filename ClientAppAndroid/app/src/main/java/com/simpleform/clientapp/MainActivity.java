@@ -33,7 +33,6 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
-    String loggedInUser = "edmondpr@gmail.com";
     LinearLayout titleLinearLayout;
 
     @Override
@@ -60,7 +59,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
         if (StringUtils.isBlank(objectId)) {
-            Parse.enableLocalDatastore(this);
+            //Parse.enableLocalDatastore(this);
             ParseObject.registerSubclass(ClientTemplate.class);
             ParseObject.registerSubclass(OwnerTemplate.class);
             Parse.initialize(this, "HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX");
@@ -82,24 +81,55 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private void executeClientParseQuery(boolean isMyProfile, final String objectId, final boolean isForOwnerTemplate) {
-        ParseQuery<ClientTemplate> queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
+    private void executeClientParseQuery(final boolean isMyProfile, final String objectId, final boolean isForOwnerTemplate) {
+        ParseQuery<ClientTemplate> queryMyProfile = ParseQuery.getQuery(ClientTemplate.class);
+        queryMyProfile.whereEqualTo("name", "My Profile");
+        ParseQuery<ClientTemplate> querySavedClientTemplate = ParseQuery.getQuery(ClientTemplate.class);
+        queryMyProfile.whereEqualTo("objectId", objectId);
+        List<ParseQuery<ClientTemplate>> queries = new ArrayList<ParseQuery<ClientTemplate>>();
+        queries.add(queryMyProfile);
+        queries.add(querySavedClientTemplate);
+
+        ParseQuery<ClientTemplate> queryClientsTemplates;
         if (isMyProfile) {
-            queryClientsTemplates.whereEqualTo("user", loggedInUser);
+            queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
+            queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
+            queryClientsTemplates.whereEqualTo("name", "My Profile");
         } else {
-            queryClientsTemplates.whereEqualTo("objectId", objectId);
+            queryClientsTemplates = ParseQuery.or(queries);
+            queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
         }
         queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
             @Override
             public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
                 ArrayList<FormField> clientFields = new ArrayList<FormField>();
-                for (int i = 0; i < clientsTemplates.size(); i++) {
-                    if (StringUtils.isBlank(clientsTemplates.get(i).getOwner())) {
-                        clientFields = clientsTemplates.get(i).getFields();
-                        break;
-                    }
-                }
+                ArrayList<FormField> myProfileFields = new ArrayList<FormField>();
+                clientFields = clientsTemplates.get(0).getFields();
+
                 if (!isForOwnerTemplate) {
+                    if (!isMyProfile) {
+                        if (clientsTemplates.get(0).getName().equals("My Profile")) {
+                            myProfileFields = clientsTemplates.get(0).getFields();
+                            clientFields = clientsTemplates.get(1).getFields();
+                        } else {
+                            clientFields = clientsTemplates.get(0).getFields();
+                            myProfileFields = clientsTemplates.get(1).getFields();
+                        }
+                        for (int i = 0; i < clientFields.size(); i++) {
+                            for (int j = 0; j < myProfileFields.size(); j++) {
+                                String connect = "";
+                                if (StringUtils.isNotBlank(clientFields.get(i).getConnect())) {
+                                    connect = clientFields.get(i).getConnect();
+                                    connect = connect.substring(2, connect.length() - 2);
+                                }
+                                if (connect.equals(myProfileFields.get(j).getLabel())) {
+                                    clientFields.get(i).setValue(myProfileFields.get(j).getValue());
+                                    j = clientFields.size() - 1;
+                                }
+                            }
+                        }
+                    }
+
                     FormFieldAdapter formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
                     ListView listView = (ListView) findViewById(R.id.fields);
                     listView.setAdapter(formFieldAdapter);
@@ -168,28 +198,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 });
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
