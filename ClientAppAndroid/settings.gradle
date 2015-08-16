@@ -1,1 +1,3 @@
 include ':app'
+include ':CountryPicker'
+project(':CountryPicker').projectDir = new File('app/libs/CountryPicker')

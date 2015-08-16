@@ -47,96 +47,100 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
         searchField.addTextChangedListener(this);
         formsListViewGlobal = (StickyListHeadersListView) findViewById(R.id.templates);
 
-        ParseQuery<ClientTemplate> queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
-        queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
-        queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
-            @Override
-            public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
-                ArrayList<ClientTemplate> clientsTemplatesSorted = new ArrayList<ClientTemplate>();
-                Set<String> types = new HashSet<String>();
-                for (ClientTemplate clientTemplate : clientsTemplates) {
-                    if (types.add(clientTemplate.getName())) {
-                        clientsTemplatesSorted.add(clientTemplate);
-                    }
-                }
-
-                // Add client template from sorted list to global templates
-                for (ClientTemplate clientTemplate : clientsTemplatesSorted) {
-                    FormTemplate formTemplate = new FormTemplate();
-                    if (!clientTemplate.getName().equals("My Profile")) {
-                        formTemplate.setObjectId(clientTemplate.getObjectId());
-                        formTemplate.setName(clientTemplate.getName());
-                        formTemplate.setOwner(clientTemplate.getOwner());
-                        formTemplate.setType(clientTemplate.getType());
-                        formTemplate.setFields(clientTemplate.getFields());
-                        formsTemplatesGlobal.add(formTemplate);
-                    }
-                }
-
-                ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
-                queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
-                    @Override
-                    public void done(final List<OwnerTemplate> ownersTemplates, ParseException e) {
-                        ArrayList<OwnerTemplate> ownersTemplatesSorted = new ArrayList<OwnerTemplate>();
-                        Set<String> types = new HashSet<String>();
-                        for (OwnerTemplate ownerTemplate : ownersTemplates) {
-                            if (types.add(ownerTemplate.getOwner())) {
-                                ownersTemplatesSorted.add(ownerTemplate);
-                            }
+        try {
+            ParseQuery<ClientTemplate> queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
+            queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
+            queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
+                @Override
+                public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
+                    ArrayList<ClientTemplate> clientsTemplatesSorted = new ArrayList<ClientTemplate>();
+                    Set<String> types = new HashSet<String>();
+                    for (ClientTemplate clientTemplate : clientsTemplates) {
+                        if (types.add(clientTemplate.getName())) {
+                            clientsTemplatesSorted.add(clientTemplate);
                         }
+                    }
 
-                        // Add owner template from sorted list to global templates
-                        for (OwnerTemplate ownerTemplate : ownersTemplatesSorted) {
-                            FormTemplate formTemplate = new FormTemplate();
-                            formTemplate.setObjectId(ownerTemplate.getObjectId());
-                            formTemplate.setOwner(ownerTemplate.getOwner());
-                            formTemplate.setType(ownerTemplate.getType());
-                            formTemplate.setFields(ownerTemplate.getFields());
+                    // Add client template from sorted list to global templates
+                    for (ClientTemplate clientTemplate : clientsTemplatesSorted) {
+                        FormTemplate formTemplate = new FormTemplate();
+                        if (!clientTemplate.getName().equals("My Profile")) {
+                            formTemplate.setObjectId(clientTemplate.getObjectId());
+                            formTemplate.setName(clientTemplate.getName());
+                            formTemplate.setOwner(clientTemplate.getOwner());
+                            formTemplate.setType(clientTemplate.getType());
+                            formTemplate.setFields(clientTemplate.getFields());
                             formsTemplatesGlobal.add(formTemplate);
                         }
+                    }
 
-                        searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, formsTemplatesGlobal);
-                        final StickyListHeadersListView formsListView = formsListViewGlobal;
-                        formsListView.setAdapter(searchAdapter);
-
-                        // ListView Item Click Listener
-                        formsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    int position, long id) {
-
-                                FormTemplate formTemplate = (FormTemplate) formsListView.getItemAtPosition(position);
-                                int numberOfForms = 0;
-                                ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
-                                if (StringUtils.isBlank(formTemplate.getName())) {
-                                    for (OwnerTemplate ownerTemplateIterator : ownersTemplates) {
-                                        if (ownerTemplateIterator.getOwner().equals(formTemplate.getOwner())) {
-                                            numberOfForms++;
-                                            ownersTemplatesGroup.add(ownerTemplateIterator);
-                                        }
-                                    }
-                                }
-                                if (numberOfForms == 0) {
-                                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                                    intent.putExtra("formType", "client");
-                                    intent.putExtra("objectId", formTemplate.getObjectId());
-                                    startActivity(intent);
-                                }  else if (numberOfForms == 1) {
-                                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                                    intent.putExtra("formType", "owner");
-                                    intent.putExtra("objectId", formTemplate.getObjectId());
-                                    startActivity(intent);
-                                } else {
-                                    openFormSelector(ownersTemplatesGroup);
+                    ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
+                    queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
+                        @Override
+                        public void done(final List<OwnerTemplate> ownersTemplates, ParseException e) {
+                            ArrayList<OwnerTemplate> ownersTemplatesSorted = new ArrayList<OwnerTemplate>();
+                            Set<String> types = new HashSet<String>();
+                            for (OwnerTemplate ownerTemplate : ownersTemplates) {
+                                if (types.add(ownerTemplate.getOwner())) {
+                                    ownersTemplatesSorted.add(ownerTemplate);
                                 }
                             }
 
-                        });
-                    }
-                });
-            }
-        });
+                            // Add owner template from sorted list to global templates
+                            for (OwnerTemplate ownerTemplate : ownersTemplatesSorted) {
+                                FormTemplate formTemplate = new FormTemplate();
+                                formTemplate.setObjectId(ownerTemplate.getObjectId());
+                                formTemplate.setOwner(ownerTemplate.getOwner());
+                                formTemplate.setType(ownerTemplate.getType());
+                                formTemplate.setFields(ownerTemplate.getFields());
+                                formsTemplatesGlobal.add(formTemplate);
+                            }
+
+                            searchAdapter = new SearchAdapter(SearchActivity.this, R.layout.search_adapter, formsTemplatesGlobal);
+                            final StickyListHeadersListView formsListView = formsListViewGlobal;
+                            formsListView.setAdapter(searchAdapter);
+
+                            // ListView Item Click Listener
+                            formsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view,
+                                                        int position, long id) {
+
+                                    FormTemplate formTemplate = (FormTemplate) formsListView.getItemAtPosition(position);
+                                    int numberOfForms = 0;
+                                    ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
+                                    if (StringUtils.isBlank(formTemplate.getName())) {
+                                        for (OwnerTemplate ownerTemplateIterator : ownersTemplates) {
+                                            if (ownerTemplateIterator.getOwner().equals(formTemplate.getOwner())) {
+                                                numberOfForms++;
+                                                ownersTemplatesGroup.add(ownerTemplateIterator);
+                                            }
+                                        }
+                                    }
+                                    if (numberOfForms == 0) {
+                                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                                        intent.putExtra("formType", "client");
+                                        intent.putExtra("objectId", formTemplate.getObjectId());
+                                        startActivity(intent);
+                                    } else if (numberOfForms == 1) {
+                                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                                        intent.putExtra("formType", "owner");
+                                        intent.putExtra("objectId", formTemplate.getObjectId());
+                                        startActivity(intent);
+                                    } else {
+                                        openFormSelector(ownersTemplatesGroup);
+                                    }
+                                }
+
+                            });
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void openFormSelector(final ArrayList<OwnerTemplate> ownersTemplatesGroup) {

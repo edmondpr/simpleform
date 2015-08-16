@@ -6,13 +6,11 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,11 +22,11 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.simpleform.clientapp.adapters.FormFieldAdapter;
-import com.simpleform.clientapp.adapters.FormFieldAdapter;
+import com.simpleform.clientapp.fragments.CountryFragment;
 import com.simpleform.clientapp.fragments.DatePickerFragment;
+import com.simpleform.clientapp.helpers.CountryFlagHelper;
 import com.simpleform.clientapp.models.FormField;
 import com.simpleform.clientapp.models.ClientTemplate;
-import com.simpleform.clientapp.models.FormField;
 import com.simpleform.clientapp.models.OwnerTemplate;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, CountryFlagHelper {
 
     LinearLayout titleLinearLayout;
     public int selectedField;
@@ -178,9 +176,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 EditText focusField = (EditText) findViewById(R.id.focus_field);
                 focusField.requestFocus();
                 if (scrollState != 0) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    Utility.hideKeyboard(MainActivity.this);
                 }
             }
         });
@@ -199,6 +195,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         FormField formField = (FormField) listView.getAdapter().getItem(selectedField);
         formField.setValue(date);
         ((FormFieldAdapter) listView.getAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public String getCountryFlag() {
+        Utility.hideKeyboard(this);
+        if (CountryFragment.isSelected) {
+            String countryName = CountryFragment.countryName;
+            CountryFragment.isSelected = false;
+            FormField formField = (FormField) listView.getAdapter().getItem(selectedField);
+            formField.setValue(countryName);
+            ((FormFieldAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+        return null;
+    }
+
+    public void setFragment(CountryFragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(R.id.frame_for_fragments, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void getClosedCountryPicker() {
+
     }
 
     @Override

@@ -2,15 +2,18 @@ package com.simpleform.clientapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.countrypicker.CountryPicker;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.simpleform.clientapp.MainActivity;
 import com.simpleform.clientapp.R;
+import com.simpleform.clientapp.fragments.CountryFragment;
 import com.simpleform.clientapp.models.FormField;
 
 import org.apache.commons.lang3.StringUtils;
@@ -82,22 +85,29 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
             // We need to update the adapter once we finish editing
             holder.fieldEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
-                    final int position = v.getId();
-                    if (!hasFocus) {
-                        final MaterialEditText fieldEdit = (MaterialEditText) v;
-                        // Prevent cursor under the other edit text fields from persisting after scroll
-                        v.dispatchWindowFocusChanged(hasFocus);
-                        try {
-                            formFields.get(position).setValue(fieldEdit.getText().toString());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        if (formFields.get(position).getType().equals("Date")) {
+                    try {
+                        final int position = v.getId();
+                        if (!hasFocus) {
+                            final MaterialEditText fieldEdit = (MaterialEditText) v;
+                            // Prevent cursor under the other edit text fields from persisting after scroll
+                            v.dispatchWindowFocusChanged(hasFocus);
+                            try {
+                                formFields.get(position).setValue(fieldEdit.getText().toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
                             ((MainActivity) activity).selectedField = position;
-                            holder.fieldEditText.clearFocus();
-                            ((MainActivity) activity).showDatePickerDialog(v);
+                            if (formFields.get(position).getType().equals("Date")) {
+                                holder.fieldEditText.clearFocus();
+                                ((MainActivity) activity).showDatePickerDialog(v);
+                            } else if (formFields.get(position).getType().equals("Country")) {
+                                CountryFragment objCountryFragment = new CountryFragment();
+                                ((MainActivity) activity).setFragment(objCountryFragment);
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             });
