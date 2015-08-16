@@ -125,39 +125,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                             clientFields = clientsTemplates.get(0).getFields();
                             myProfileFields = clientsTemplates.get(1).getFields();
                         }
-                        for (int i = 0; i < clientFields.size(); i++) {
-                            for (int j = 0; j < myProfileFields.size(); j++) {
-                                String connect = "";
-                                if (StringUtils.isNotBlank(clientFields.get(i).getConnect())) {
-                                    connect = clientFields.get(i).getConnect();
-                                    connect = connect.substring(2, connect.length() - 2);
-                                }
-                                if (connect.equals(myProfileFields.get(j).getLabel())) {
-                                    clientFields.get(i).setValue(myProfileFields.get(j).getValue());
-                                    j = clientFields.size() - 1;
-                                }
-                            }
-                        }
+                        connectFields(myProfileFields, clientFields);
                     }
-
-                    formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
-                    listView.setAdapter(formFieldAdapter);
-
-                    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                            // TODO Auto-generated method stub
-                        }
-
-                        public void onScrollStateChanged(AbsListView view, int scrollState) {
-                            EditText focusField = (EditText) findViewById(R.id.focus_field);
-                            focusField.requestFocus();
-                            if (scrollState != 0) {
-                                InputMethodManager inputMethodManager = (InputMethodManager)
-                                        getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                            }
-                        }
-                    });
+                    setFormFieldAdapter(clientFields);
                 } else {
                     executeOwnerParseQuery(objectId, clientFields);
                 }
@@ -173,37 +143,45 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
                 ArrayList<FormField> ownerFields = new ArrayList<FormField>();
                 ownerFields = ownersTemplates.get(0).getFields();
-                for (int i = 0; i < ownerFields.size(); i++) {
-                    for (int j = 0; j < myProfileFields.size(); j++) {
-                        String connect = "";
-                        if (StringUtils.isNotBlank(ownerFields.get(i).getConnect())) {
-                            connect = ownerFields.get(i).getConnect();
-                            connect = connect.substring(2, connect.length() - 2);
-                        }
-                        if (connect.equals(myProfileFields.get(j).getLabel())) {
-                            ownerFields.get(i).setValue(myProfileFields.get(j).getValue());
-                            j = ownerFields.size() - 1;
-                        }
-                    }
+                connectFields(myProfileFields, ownerFields);
+                setFormFieldAdapter(ownerFields);
+            }
+        });
+    }
+
+    public void connectFields(ArrayList<FormField> sourceFields, ArrayList<FormField> destFields) {
+        for (int i = 0; i < destFields.size(); i++) {
+            for (int j = 0; j < sourceFields.size(); j++) {
+                String connect = "";
+                if (StringUtils.isNotBlank(destFields.get(i).getConnect())) {
+                    connect = destFields.get(i).getConnect();
+                    connect = connect.substring(2, connect.length() - 2);
                 }
-                formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
-                listView.setAdapter(formFieldAdapter);
+                if (connect.equals(sourceFields.get(j).getLabel())) {
+                    destFields.get(i).setValue(sourceFields.get(j).getValue());
+                    j = destFields.size() - 1;
+                }
+            }
+        }
+    }
 
-                listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        // TODO Auto-generated method stub
-                    }
+    public void setFormFieldAdapter(ArrayList<FormField> formFields) {
+        formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, formFields);
+        listView.setAdapter(formFieldAdapter);
 
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
-                        EditText focusField = (EditText) findViewById(R.id.focus_field);
-                        focusField.requestFocus();
-                        if (scrollState != 0) {
-                            InputMethodManager inputMethodManager = (InputMethodManager)
-                                    getSystemService(Activity.INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                        }
-                    }
-                });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                EditText focusField = (EditText) findViewById(R.id.focus_field);
+                focusField.requestFocus();
+                if (scrollState != 0) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
             }
         });
     }
