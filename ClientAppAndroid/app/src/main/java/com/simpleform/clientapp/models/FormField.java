@@ -1,6 +1,8 @@
 package com.simpleform.clientapp.models;
 
 public class FormField {
+    private String type;
+    private String defaultValue;
     private String connect;
     private String label;
     private String value;
@@ -9,6 +11,22 @@ public class FormField {
     private Integer top;
 
     public FormField() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     public String getConnect() {

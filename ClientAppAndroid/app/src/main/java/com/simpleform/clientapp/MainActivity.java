@@ -1,6 +1,8 @@
 package com.simpleform.clientapp;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,6 +25,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.simpleform.clientapp.adapters.FormFieldAdapter;
 import com.simpleform.clientapp.adapters.FormFieldAdapter;
+import com.simpleform.clientapp.fragments.DatePickerFragment;
 import com.simpleform.clientapp.models.FormField;
 import com.simpleform.clientapp.models.ClientTemplate;
 import com.simpleform.clientapp.models.FormField;
@@ -31,9 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     LinearLayout titleLinearLayout;
+    public int selectedField;
+    FormFieldAdapter formFieldAdapter;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
         titleLinearLayout = (LinearLayout) findViewById(R.id.title_linear_layout);
         titleLinearLayout.setOnClickListener(this);
+        listView = (ListView) findViewById(R.id.fields);
 
         titleLinearLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -130,8 +140,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         }
                     }
 
-                    FormFieldAdapter formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
-                    ListView listView = (ListView) findViewById(R.id.fields);
+                    formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, clientFields);
                     listView.setAdapter(formFieldAdapter);
 
                     listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -177,8 +186,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         }
                     }
                 }
-                FormFieldAdapter formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
-                ListView listView = (ListView) findViewById(R.id.fields);
+                formFieldAdapter = new FormFieldAdapter(MainActivity.this, R.layout.field_adapter, ownerFields);
                 listView.setAdapter(formFieldAdapter);
 
                 listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -198,6 +206,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 });
             }
         });
+    }
+
+    // Show DatePicker when clicking on field in ListView
+    public void showDatePickerDialog(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+
+    // Update ListView adapter with selected date
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        String date = String.format("%02d", day) + "/" + String.format("%02d", month + 1) + "/" + year;
+        FormField formField = (FormField) listView.getAdapter().getItem(selectedField);
+        formField.setValue(date);
+        ((FormFieldAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

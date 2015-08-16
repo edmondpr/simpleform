@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.rengwuxian.materialedittext.MaterialEditText
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/field"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textCursorDrawable="@drawable/text_cursor_cyan"
-    app:met_baseColor="@android:color/white"
-    app:met_floatingLabel="highlight"
-    app:met_maxCharacters="20"
-    app:met_primaryColor="?colorAccent" />
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fieldTextView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="20dp"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fieldEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textCursorDrawable="@drawable/text_cursor_cyan"
+        app:met_baseColor="@android:color/white"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="20"
+        app:met_primaryColor="?colorAccent"/>
+
+</LinearLayout>
 

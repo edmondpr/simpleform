@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.simpleform.clientapp.MainActivity;
 import com.simpleform.clientapp.R;
 import com.simpleform.clientapp.models.FormField;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -30,7 +34,7 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -47,11 +51,11 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
     }
 
     public static class ViewHolder {
-        public MaterialEditText field;
-
+        public MaterialEditText fieldEditText;
+        public TextView fieldTextView;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
         try {
@@ -59,7 +63,8 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
                 vi = inflater.inflate(textViewResourceId, null);
                 holder = new ViewHolder();
 
-                holder.field = (MaterialEditText) vi.findViewById(R.id.field);
+                holder.fieldTextView = (TextView) vi.findViewById(R.id.fieldTextView);
+                holder.fieldEditText = (MaterialEditText) vi.findViewById(R.id.fieldEditText);
 
                 vi.setTag(holder);
             } else {
@@ -69,16 +74,16 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
                 }*/
             }
 
-            holder.field.setHint(formFields.get(position).getLabel());
-            holder.field.setFloatingLabelText(formFields.get(position).getLabel());
-            holder.field.setText(formFields.get(position).getValue());
-            holder.field.setId(position);
+            holder.fieldEditText.setHint(formFields.get(position).getLabel());
+            holder.fieldEditText.setFloatingLabelText(formFields.get(position).getLabel());
+            holder.fieldEditText.setText(formFields.get(position).getValue());
+            holder.fieldEditText.setId(position);
 
             // We need to update the adapter once we finish editing
-            holder.field.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            holder.fieldEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
+                    final int position = v.getId();
                     if (!hasFocus) {
-                        final int position = v.getId();
                         final MaterialEditText fieldEdit = (MaterialEditText) v;
                         // Prevent cursor under the other edit text fields from persisting after scroll
                         v.dispatchWindowFocusChanged(hasFocus);
@@ -86,6 +91,12 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
                             formFields.get(position).setValue(fieldEdit.getText().toString());
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }
+                    } else {
+                        if (formFields.get(position).getType().equals("Date")) {
+                            ((MainActivity) activity).selectedField = position;
+                            holder.fieldEditText.clearFocus();
+                            ((MainActivity) activity).showDatePickerDialog(v);
                         }
                     }
                 }
