@@ -21,7 +21,7 @@ public class ViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.textField.becomeFirstResponder()
         
 		cell.configure(text: "\(indexPath.row + 1)", placeholder: "Enter some text!")
-		return cell
+		return cell 
 	}
     
     @IBAction func getValue(sender : AnyObject) {
