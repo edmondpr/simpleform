@@ -1,6 +1,7 @@
 import UIKit
+import ParseUI
 
-public class TextInputTableViewCell: UITableViewCell {
+public class TextInputTableViewCell: PFTableViewCell {
 	@IBOutlet weak var textField: UITextField!
 	
 	public func configure(#text: String?, placeholder: String) {

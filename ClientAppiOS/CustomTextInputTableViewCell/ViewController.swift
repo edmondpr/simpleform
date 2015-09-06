@@ -2,7 +2,17 @@ import UIKit
 
 public class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
+    var numberOfElements = Int(0)
     var allCellsText = [String]()
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override public func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 3
