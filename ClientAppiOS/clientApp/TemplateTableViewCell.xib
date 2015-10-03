@@ -14,9 +14,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Cn-z0-0PI">
-                        <rect key="frame" x="14" y="14" width="306" height="29"/>
+                        <rect key="frame" x="14" y="11" width="306" height="29"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="textColor" red="1" green="0.26676062539030498" blue="0.085309625751986529" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.29936633031979443" green="0.80070035476488566" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>

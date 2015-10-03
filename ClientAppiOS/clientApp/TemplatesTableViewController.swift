@@ -1,6 +1,6 @@
 import UIKit
 
-class TemplatesTableViewController: PFQueryTableViewController, UITextFieldDelegate {
+class TemplatesTableViewController: PFQueryTableViewController {
     let cellIdentifier:String = "TemplateCell"
     var allCellsText = [String]()
     
@@ -28,14 +28,16 @@ class TemplatesTableViewController: PFQueryTableViewController, UITextFieldDeleg
     }
     
     override func queryForTable() -> PFQuery {
-        var query:PFQuery = PFQuery(className:self.parseClassName!)
-        //query.whereKey("TemplateId", equalTo: "dSKMBZz6Ry")
+        let predicate = NSPredicate(format:"user == 'edmondpr@gmail.com' OR user == nil")
+        var query:PFQuery = PFQuery(className:self.parseClassName!, predicate: predicate)
         
         if (objects?.count == 0) {
             query.cachePolicy = PFCachePolicy.CacheThenNetwork
         }
         
-        //query.orderByAscending("position")
+        query.orderByDescending("user")
+        query.addAscendingOrder("name")
+        query.addAscendingOrder("owner")
         
         return query
     }
@@ -49,7 +51,12 @@ class TemplatesTableViewController: PFQueryTableViewController, UITextFieldDeleg
         }
         
         if let pfObject = object {
-            cell?.templateName?.text = pfObject["owner"] as? String
+            var field:String? = pfObject["name"] as? String;
+            if field != nil {
+                cell?.templateName?.text = pfObject["name"] as? String
+            } else {
+                cell?.templateName?.text = pfObject["owner"] as? String
+            }
         }
         
         return cell
@@ -60,12 +67,7 @@ class TemplatesTableViewController: PFQueryTableViewController, UITextFieldDeleg
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        allCellsText.append(textField.text)
-        println(allCellsText)
-    }
-    
+
     
     /*
     // MARK: - Navigation
