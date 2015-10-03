@@ -1,11 +1,11 @@
 import UIKit
 
-class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
-    let cellIdentifier:String = "FormCell"
+class TemplatesTableViewController: PFQueryTableViewController, UITextFieldDelegate {
+    let cellIdentifier:String = "TemplateCell"
     var allCellsText = [String]()
     
     override init(style: UITableViewStyle, className: String!) {
-     
+        
         super.init(style: style, className: className)
         
         self.pullToRefreshEnabled = true
@@ -20,8 +20,8 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     }
     
     override func viewDidLoad() {
-        tableView.registerNib(UINib(nibName: "FormTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
-
+        tableView.registerNib(UINib(nibName: "TemplateTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -29,29 +29,27 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     
     override func queryForTable() -> PFQuery {
         var query:PFQuery = PFQuery(className:self.parseClassName!)
-        query.whereKey("formId", equalTo: "dSKMBZz6Ry")
+        //query.whereKey("TemplateId", equalTo: "dSKMBZz6Ry")
         
         if (objects?.count == 0) {
             query.cachePolicy = PFCachePolicy.CacheThenNetwork
         }
         
-        query.orderByAscending("position")
+        //query.orderByAscending("position")
         
         return query
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject?) -> PFTableViewCell? {
         
-        var cell:FormTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? FormTableViewCell
+        var cell:TemplateTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? TemplateTableViewCell
         
         if(cell == nil) {
-            cell = NSBundle.mainBundle().loadNibNamed("FormTableViewCell", owner: self, options: nil)[0] as? FormTableViewCell
+            cell = NSBundle.mainBundle().loadNibNamed("TemplateTableViewCell", owner: self, options: nil)[0] as? TemplateTableViewCell
         }
         
         if let pfObject = object {
-            cell?.textField?.text = pfObject["value"] as? String
-            cell?.textField.delegate = self
-            cell?.textField.becomeFirstResponder()
+            cell?.templateName?.text = pfObject["owner"] as? String
         }
         
         return cell

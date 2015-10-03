@@ -10,6 +10,9 @@
 		811608471BA60CB3008ED886 /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811608461BA60CB3008ED886 /* FormTableViewController.swift */; };
 		8116084A1BA6296A008ED886 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811608481BA6296A008ED886 /* FormTableViewCell.swift */; };
 		8116084B1BA6296A008ED886 /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811608491BA6296A008ED886 /* FormTableViewCell.xib */; };
+		812227B21BBFEE9100D8BED8 /* TemplatesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812227B11BBFEE9100D8BED8 /* TemplatesTableViewController.swift */; };
+		812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */; };
+		812227BA1BC000EE00D8BED8 /* TemplateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */; };
 		81E7563A1BA60827008B4688 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E756391BA60827008B4688 /* AppDelegate.swift */; };
 		81E7563C1BA60827008B4688 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E7563B1BA60827008B4688 /* ViewController.swift */; };
 		81E7563F1BA60827008B4688 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81E7563D1BA60827008B4688 /* Main.storyboard */; };
@@ -35,6 +38,9 @@
 		811608461BA60CB3008ED886 /* FormTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewController.swift; sourceTree = "<group>"; };
 		811608481BA6296A008ED886 /* FormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
 		811608491BA6296A008ED886 /* FormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
+		812227B11BBFEE9100D8BED8 /* TemplatesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplatesTableViewController.swift; sourceTree = "<group>"; };
+		812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateTableViewCell.swift; sourceTree = "<group>"; };
+		812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TemplateTableViewCell.xib; sourceTree = "<group>"; };
 		81E756341BA60827008B4688 /* clientApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = clientApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81E756381BA60827008B4688 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81E756391BA60827008B4688 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,8 +105,11 @@
 				81E756371BA60827008B4688 /* Supporting Files */,
 				811608431BA60AF6008ED886 /* clientApp-Bridging-Header.h */,
 				811608461BA60CB3008ED886 /* FormTableViewController.swift */,
+				812227B11BBFEE9100D8BED8 /* TemplatesTableViewController.swift */,
 				811608481BA6296A008ED886 /* FormTableViewCell.swift */,
 				811608491BA6296A008ED886 /* FormTableViewCell.xib */,
+				812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */,
+				812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */,
 			);
 			path = clientApp;
 			sourceTree = "<group>";
@@ -232,6 +241,7 @@
 				81E7563F1BA60827008B4688 /* Main.storyboard in Resources */,
 				8116084B1BA6296A008ED886 /* FormTableViewCell.xib in Resources */,
 				81E756441BA60827008B4688 /* LaunchScreen.xib in Resources */,
+				812227BA1BC000EE00D8BED8 /* TemplateTableViewCell.xib in Resources */,
 				81E756411BA60827008B4688 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,6 +294,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E7563C1BA60827008B4688 /* ViewController.swift in Sources */,
+				812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */,
+				812227B21BBFEE9100D8BED8 /* TemplatesTableViewController.swift in Sources */,
 				8116084A1BA6296A008ED886 /* FormTableViewCell.swift in Sources */,
 				811608471BA60CB3008ED886 /* FormTableViewController.swift in Sources */,
 				81E7563A1BA60827008B4688 /* AppDelegate.swift in Sources */,

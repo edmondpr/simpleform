@@ -18,15 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Parse.setApplicationId("HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", clientKey: "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX")
         
-        var tableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-        tableVC.title = "My Profile"
+        var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
+        formTableVC.title = "My Profile"
+        
+        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "OwnersTemplates")
+        templatesTableVC.title = "Templates"
         
         UINavigationBar.appearance().tintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        var navigationVC:UINavigationController = UINavigationController(rootViewController: tableVC)
+        var navigationVC:UINavigationController = UINavigationController(rootViewController: templatesTableVC)
         
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
