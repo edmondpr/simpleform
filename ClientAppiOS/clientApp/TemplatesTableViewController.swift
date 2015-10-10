@@ -2,7 +2,11 @@ import UIKit
 
 class TemplatesTableViewController: PFQueryTableViewController {
     let cellIdentifier:String = "TemplateCell"
-    var allCellsText = [String]()
+    var owners = [Owner]()
+    var indexZeroHeight = -1;
+    var rowMax = 0;
+    var maxReached = false;
+    
     
     override init(style: UITableViewStyle, className: String!) {
         
@@ -21,7 +25,7 @@ class TemplatesTableViewController: PFQueryTableViewController {
     
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "TemplateTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        
+        tableView.tableFooterView = UIView()
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -46,21 +50,54 @@ class TemplatesTableViewController: PFQueryTableViewController {
         
         var cell:TemplateTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? TemplateTableViewCell
         
-        if(cell == nil) {
+        if cell == nil {
             cell = NSBundle.mainBundle().loadNibNamed("TemplateTableViewCell", owner: self, options: nil)[0] as? TemplateTableViewCell
         }
         
+        if indexPath.row > rowMax {
+            rowMax = indexPath.row
+        } else if indexPath.row < rowMax {
+            maxReached = true
+        }
+        
         if let pfObject = object {
-            var field:String? = pfObject["name"] as? String;
-            if field != nil {
+            var nameField:String? = pfObject["name"] as? String;
+            if nameField != nil {
                 cell?.templateName?.text = pfObject["name"] as? String
             } else {
-                cell?.templateName?.text = pfObject["owner"] as? String
+                let ownerName:String? = pfObject["owner"] as? String
+                let ownerId:String? = pfObject.objectId
+                var exists:Bool = false
+                for ownerObj in owners {
+                    if ownerObj.owner == ownerName {
+                        exists = true
+                        break
+                    }
+                }
+                if !exists {
+                    cell?.templateName?.text = ownerName
+                } else {
+                    if !maxReached {
+                        indexZeroHeight = indexPath.row
+                    }
+                }
+                if ownerId != nil {
+                    let ownerObj = Owner(objectId: ownerId!, owner: ownerName!)
+                    owners.append(ownerObj)
+                }
             }
         }
         
         return cell
         
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var height:CGFloat = 50;
+        if indexPath.row == indexZeroHeight {
+            height = 0
+        }
+        return height;
     }
     
     override func didReceiveMemoryWarning() {
