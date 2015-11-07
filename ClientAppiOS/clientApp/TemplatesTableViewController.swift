@@ -1,12 +1,13 @@
 import UIKit
 
 class TemplatesTableViewController: PFQueryTableViewController {
+    var transition: CustomTransition!
+    
     let cellIdentifier:String = "TemplateCell"
     var owners = [Owner]()
     var indexZeroHeight = -1;
     var rowMax = 0;
     var maxReached = false;
-    
     
     override init(style: UITableViewStyle, className: String!) {
         
@@ -97,7 +98,19 @@ class TemplatesTableViewController: PFQueryTableViewController {
         if indexPath.row == indexZeroHeight {
             height = 0
         }
-        return height;
+        return height;git
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let indexPath = self.tableView.indexPathForSelectedRow()!
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! UIViewController
+        destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+        transition = CustomTransition()
+        transition.duration = 0.4
+        destinationVC.transitioningDelegate = transition
+        self.presentViewController(destinationVC, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

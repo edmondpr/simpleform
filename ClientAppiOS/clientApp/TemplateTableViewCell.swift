@@ -10,6 +10,7 @@ import UIKit
 
 class TemplateTableViewCell: PFTableViewCell {
     @IBOutlet weak var templateName:UITextView!
+    var transition: CustomTransition!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,14 +18,13 @@ class TemplateTableViewCell: PFTableViewCell {
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        super.setSelected(selected, animated: animated)      
         
         // Configure the view for the selected state
     }
     
     func configure(#text: String?, placeholder: String) {
         templateName.text = text
-        
         templateName.accessibilityValue = text
     }
     
