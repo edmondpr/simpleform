@@ -13,6 +13,7 @@
 		812227B21BBFEE9100D8BED8 /* TemplatesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812227B11BBFEE9100D8BED8 /* TemplatesTableViewController.swift */; };
 		812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */; };
 		812227BA1BC000EE00D8BED8 /* TemplateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */; };
+		81605BE31BEF9F2400380E63 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81605BE21BEF9F2400380E63 /* ArrayExtensions.swift */; };
 		817B25451BEC13DE00AFC9C6 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25441BEC13DE00AFC9C6 /* ModalViewController.swift */; };
 		817B25471BEC13FE00AFC9C6 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25461BEC13FE00AFC9C6 /* CustomTransition.swift */; };
 		817B25491BEC1A6200AFC9C6 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */; };
@@ -45,6 +46,7 @@
 		812227B11BBFEE9100D8BED8 /* TemplatesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplatesTableViewController.swift; sourceTree = "<group>"; };
 		812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateTableViewCell.swift; sourceTree = "<group>"; };
 		812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TemplateTableViewCell.xib; sourceTree = "<group>"; };
+		81605BE21BEF9F2400380E63 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		817B25441BEC13DE00AFC9C6 /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		817B25461BEC13FE00AFC9C6 /* CustomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
 		817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -82,6 +84,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		81605BDF1BEE6BA500380E63 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */,
+				81605BE21BEF9F2400380E63 /* ArrayExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		81D148201BC1E3EF007F73FD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +124,7 @@
 		81E756361BA60827008B4688 /* clientApp */ = {
 			isa = PBXGroup;
 			children = (
+				81605BDF1BEE6BA500380E63 /* Extensions */,
 				81D148201BC1E3EF007F73FD /* Models */,
 				81E756391BA60827008B4688 /* AppDelegate.swift */,
 				81E7563B1BA60827008B4688 /* ViewController.swift */,
@@ -129,7 +141,6 @@
 				812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */,
 				817B25441BEC13DE00AFC9C6 /* ModalViewController.swift */,
 				817B25461BEC13FE00AFC9C6 /* CustomTransition.swift */,
-				817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */,
 			);
 			path = clientApp;
 			sourceTree = "<group>";
@@ -318,6 +329,7 @@
 				812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */,
 				81D148221BC1E42A007F73FD /* Owner.swift in Sources */,
 				817B25471BEC13FE00AFC9C6 /* CustomTransition.swift in Sources */,
+				81605BE31BEF9F2400380E63 /* ArrayExtensions.swift in Sources */,
 				812227B21BBFEE9100D8BED8 /* TemplatesTableViewController.swift in Sources */,
 				817B25491BEC1A6200AFC9C6 /* UIViewExtensions.swift in Sources */,
 				8116084A1BA6296A008ED886 /* FormTableViewCell.swift in Sources */,

@@ -5,7 +5,9 @@ class TemplatesTableViewController: PFQueryTableViewController {
     
     let cellIdentifier:String = "TemplateCell"
     var owners = [Owner]()
-    var indexZeroHeight = -1;
+    var multipleForms = [String]()
+    var userTemplates = 0;
+    var isZeroHeight = [Bool]()
     var rowMax = 0;
     var maxReached = false;
     
@@ -62,9 +64,12 @@ class TemplatesTableViewController: PFQueryTableViewController {
         }
         
         if let pfObject = object {
-            var nameField:String? = pfObject["name"] as? String;
+            var nameField:String? = pfObject["name"] as? String
             if nameField != nil {
                 cell?.templateName?.text = pfObject["name"] as? String
+                if !maxReached {
+                    userTemplates++
+                }
             } else {
                 let ownerName:String? = pfObject["owner"] as? String
                 let ownerId:String? = pfObject.objectId
@@ -77,9 +82,16 @@ class TemplatesTableViewController: PFQueryTableViewController {
                 }
                 if !exists {
                     cell?.templateName?.text = ownerName
+                    multipleForms.append(ownerId!)
                 } else {
                     if !maxReached {
-                        indexZeroHeight = indexPath.row
+                        isZeroHeight[indexPath.row] = true
+                        var i = 1;
+                        while multipleForms[multipleForms.endIndex - i] == "" {
+                            i++
+                        }
+                        multipleForms[multipleForms.endIndex - i] += "," + ownerId!
+                        multipleForms.append("")
                     }
                 }
                 if ownerId != nil {
@@ -95,22 +107,25 @@ class TemplatesTableViewController: PFQueryTableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var height:CGFloat = 50;
-        if indexPath.row == indexZeroHeight {
+        if isZeroHeight.ref(indexPath.row) == nil {
+            isZeroHeight.append(false);
+        }
+        if isZeroHeight[indexPath.row] {
             height = 0
         }
-        return height;git
+        return height;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let indexPath = self.tableView.indexPathForSelectedRow()!
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! UIViewController
-        destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-        transition = CustomTransition()
-        transition.duration = 0.4
-        destinationVC.transitioningDelegate = transition
-        self.presentViewController(destinationVC, animated: true, completion: nil)
+        if indexPath.row >= userTemplates && multipleForms[indexPath.row-userTemplates].rangeOfString(",") != nil {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! UIViewController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            transition = CustomTransition()
+            transition.duration = 0.4
+            destinationVC.transitioningDelegate = transition
+            self.presentViewController(destinationVC, animated: true, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {
