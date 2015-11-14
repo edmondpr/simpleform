@@ -4,9 +4,9 @@ class TemplatesTableViewController: PFQueryTableViewController {
     var transition: CustomTransition!
     
     let cellIdentifier:String = "TemplateCell"
-    var owners = [Owner]()
+    var ownersTemplates = [FormTemplate]()
     var multipleForms = [String]()
-    var userTemplates = 0;
+    var userTemplatesCount = 0;
     var isZeroHeight = [Bool]()
     var rowMax = 0;
     var maxReached = false;
@@ -68,13 +68,14 @@ class TemplatesTableViewController: PFQueryTableViewController {
             if nameField != nil {
                 cell?.templateName?.text = pfObject["name"] as? String
                 if !maxReached {
-                    userTemplates++
+                    userTemplatesCount++
                 }
             } else {
                 let ownerName:String? = pfObject["owner"] as? String
+                let ownerType:String? = pfObject["type"] as? String
                 let ownerId:String? = pfObject.objectId
                 var exists:Bool = false
-                for ownerObj in owners {
+                for ownerObj in ownersTemplates {
                     if ownerObj.owner == ownerName {
                         exists = true
                         break
@@ -94,9 +95,9 @@ class TemplatesTableViewController: PFQueryTableViewController {
                         multipleForms.append("")
                     }
                 }
-                if ownerId != nil {
-                    let ownerObj = Owner(objectId: ownerId!, owner: ownerName!)
-                    owners.append(ownerObj)
+                if ownerId != nil && !maxReached {
+                    let ownerObj = FormTemplate(objectId: ownerId!, owner: ownerName!, type: ownerType!)
+                    ownersTemplates.append(ownerObj)
                 }
             }
         }
@@ -117,13 +118,34 @@ class TemplatesTableViewController: PFQueryTableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row >= userTemplates && multipleForms[indexPath.row-userTemplates].rangeOfString(",") != nil {
+        if indexPath.row < userTemplatesCount {
+            var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
+            /*if let pfObject = object {
+                //formTableVC.title = self.ownersList[indexPath.row].type
+                formTableVC.formId = pfObject.objectId!
+            }*/
+            self.presentViewController(formTableVC, animated: true, completion: nil)
+        } else if indexPath.row >= userTemplatesCount && multipleForms[indexPath.row-userTemplatesCount].rangeOfString(",") != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! UIViewController
+            let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! ModalViewController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             transition = CustomTransition()
             transition.duration = 0.4
             destinationVC.transitioningDelegate = transition
+            
+            // send multiple forms to modal controller
+            var ownersModal = [FormTemplate]()
+            var formsIdArray = split(multipleForms[indexPath.row-userTemplatesCount]) {$0 == ","}
+            for ownerObj in ownersTemplates {
+                for formId in formsIdArray {
+                    if ownerObj.objectId == formId {
+                        ownersModal.append(ownerObj)
+                    }
+                }
+            }
+            destinationVC.ownersList = ownersModal
+            destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
+            destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))
             self.presentViewController(destinationVC, animated: true, completion: nil)
         }
     }

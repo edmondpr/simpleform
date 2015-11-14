@@ -50,7 +50,6 @@ class CustomTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewC
                     
                     toViewController!.view.alpha = 1
                     toViewController!.view.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                    toViewController!.view.setHeight(150)
                     toViewController!.view.setY(100)
                 }) { (finished: Bool) -> Void in
                     transitionContext.completeTransition(true)

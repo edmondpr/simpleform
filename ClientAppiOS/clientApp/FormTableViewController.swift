@@ -3,6 +3,7 @@ import UIKit
 class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     let cellIdentifier:String = "FormCell"
     var allCellsText = [String]()
+    var formId:String = "dSKMBZz6Ry"
     
     override init(style: UITableViewStyle, className: String!) {
      
@@ -29,7 +30,7 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     
     override func queryForTable() -> PFQuery {
         var query:PFQuery = PFQuery(className:self.parseClassName!)
-        query.whereKey("formId", equalTo: "dSKMBZz6Ry")
+        query.whereKey("formId", equalTo: formId)
         
         if (objects?.count == 0) {
             query.cachePolicy = PFCachePolicy.CacheThenNetwork
@@ -49,7 +50,7 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
         }
         
         if let pfObject = object {
-            cell?.textField?.text = pfObject["value"] as? String
+            cell?.textField?.placeholder = pfObject["value"] as? String
             cell?.textField.delegate = self
             cell?.textField.becomeFirstResponder()
         }
