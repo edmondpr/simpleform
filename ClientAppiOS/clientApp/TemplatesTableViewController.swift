@@ -3,8 +3,10 @@ import UIKit
 class TemplatesTableViewController: PFQueryTableViewController {
     var transition: CustomTransition!
     
-    let cellIdentifier:String = "TemplateCell"
+    let cellIdentifier = "TemplateCell"
+    var userTemplates = [FormTemplate]()
     var ownersTemplates = [FormTemplate]()
+    var myProfileId = ""
     var multipleForms = [String]()
     var userTemplatesCount = 0;
     var isZeroHeight = [Bool]()
@@ -66,15 +68,22 @@ class TemplatesTableViewController: PFQueryTableViewController {
         if let pfObject = object {
             var nameField:String? = pfObject["name"] as? String
             if nameField != nil {
-                cell?.templateName?.text = pfObject["name"] as? String
+                let userTemplateId:String? = pfObject.objectId
+                let userTemplateName:String? = pfObject["name"] as? String
+                cell?.templateName?.text = userTemplateName
                 if !maxReached {
                     userTemplatesCount++
+                    let userTemplateObj = FormTemplate(objectId: userTemplateId!, owner: "", type: "", name:userTemplateName!)
+                    userTemplates.append(userTemplateObj)
+                }
+                if (nameField == "My Profile") {
+                    myProfileId = pfObject.objectId!
                 }
             } else {
                 let ownerName:String? = pfObject["owner"] as? String
                 let ownerType:String? = pfObject["type"] as? String
                 let ownerId:String? = pfObject.objectId
-                var exists:Bool = false
+                var exists = false
                 for ownerObj in ownersTemplates {
                     if ownerObj.owner == ownerName {
                         exists = true
@@ -96,7 +105,7 @@ class TemplatesTableViewController: PFQueryTableViewController {
                     }
                 }
                 if ownerId != nil && !maxReached {
-                    let ownerObj = FormTemplate(objectId: ownerId!, owner: ownerName!, type: ownerType!)
+                    let ownerObj = FormTemplate(objectId: ownerId!, owner: ownerName!, type: ownerType!, name:"")
                     ownersTemplates.append(ownerObj)
                 }
             }
@@ -120,10 +129,9 @@ class TemplatesTableViewController: PFQueryTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row < userTemplatesCount {
             var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-            /*if let pfObject = object {
-                //formTableVC.title = self.ownersList[indexPath.row].type
-                formTableVC.formId = pfObject.objectId!
-            }*/
+            formTableVC.title = userTemplates[indexPath.row].name
+            formTableVC.formId = userTemplates[indexPath.row].objectId
+            formTableVC.myProfileId = self.myProfileId
             self.presentViewController(formTableVC, animated: true, completion: nil)
         } else if indexPath.row >= userTemplatesCount && multipleForms[indexPath.row-userTemplatesCount].rangeOfString(",") != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -133,7 +141,7 @@ class TemplatesTableViewController: PFQueryTableViewController {
             transition.duration = 0.4
             destinationVC.transitioningDelegate = transition
             
-            // send multiple forms to modal controller
+            // send multiple forms list to modal controller
             var ownersModal = [FormTemplate]()
             var formsIdArray = split(multipleForms[indexPath.row-userTemplatesCount]) {$0 == ","}
             for ownerObj in ownersTemplates {
