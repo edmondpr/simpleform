@@ -6,7 +6,7 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     var connectDict = [Int:String]()
     var myProfileDict = [Int:String]()
     var formId = ""
-    var myProfileId = ""
+    var myProfileId = "DoccgSzAtV"
     
     override init(style: UITableViewStyle, className: String!) {
      
@@ -28,7 +28,18 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
 
         super.viewDidLoad()
         
+        let button = UIButton()
+        button.frame = CGRectMake(0, 0, 100, 40) as CGRect
+        button.setTitle("Button", forState: UIControlState.Normal)
+        button.addTarget(self, action: Selector("clickOnButton:"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.titleView = button
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func clickOnButton(button: UIButton) {
+        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
+        self.presentViewController(templatesTableVC, animated: true, completion: nil)
     }
     
     override func queryForTable() -> PFQuery {
@@ -48,14 +59,20 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
         
         var cell:FormTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? FormTableViewCell
         
-        if(cell == nil) {
+        if cell == nil {
             cell = NSBundle.mainBundle().loadNibNamed("FormTableViewCell", owner: self, options: nil)[0] as? FormTableViewCell
         }
-        
+        if formId == "" {
+            formId = myProfileId
+        }
         if let pfObject = object {
-            //if formId == myProfileId {
-                cell?.textField?.text = pfObject["value"] as? String
-            //}
+            if formId == myProfileId {
+                let fieldLabel = pfObject["label"] as? String
+                let fieldValue = pfObject["value"] as? String
+                cell?.textField?.text = fieldValue
+                let fieldObj = FormField(label: fieldLabel!, value: fieldValue!)
+                GlobalVariables.myProfile.append(fieldObj)
+            }
             cell?.textField.delegate = self
             cell?.textField.becomeFirstResponder()
         }

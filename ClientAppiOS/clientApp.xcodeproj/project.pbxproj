@@ -14,6 +14,8 @@
 		812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */; };
 		812227BA1BC000EE00D8BED8 /* TemplateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */; };
 		81605BE31BEF9F2400380E63 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81605BE21BEF9F2400380E63 /* ArrayExtensions.swift */; };
+		8169F6D51C25CBDE00E6CB31 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169F6D41C25CBDE00E6CB31 /* GlobalVariables.swift */; };
+		8169F6D71C25CCF400E6CB31 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169F6D61C25CCF400E6CB31 /* FormField.swift */; };
 		817B25451BEC13DE00AFC9C6 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25441BEC13DE00AFC9C6 /* ModalViewController.swift */; };
 		817B25471BEC13FE00AFC9C6 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25461BEC13FE00AFC9C6 /* CustomTransition.swift */; };
 		817B25491BEC1A6200AFC9C6 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */; };
@@ -47,6 +49,8 @@
 		812227B71BC000EE00D8BED8 /* TemplateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateTableViewCell.swift; sourceTree = "<group>"; };
 		812227B81BC000EE00D8BED8 /* TemplateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TemplateTableViewCell.xib; sourceTree = "<group>"; };
 		81605BE21BEF9F2400380E63 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		8169F6D41C25CBDE00E6CB31 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+		8169F6D61C25CCF400E6CB31 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		817B25441BEC13DE00AFC9C6 /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		817B25461BEC13FE00AFC9C6 /* CustomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
 		817B25481BEC1A6200AFC9C6 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				81D148211BC1E42A007F73FD /* FormTemplate.swift */,
+				8169F6D61C25CCF400E6CB31 /* FormField.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 				811608481BA6296A008ED886 /* FormTableViewCell.swift */,
 				811608491BA6296A008ED886 /* FormTableViewCell.xib */,
 				811608461BA60CB3008ED886 /* FormTableViewController.swift */,
+				8169F6D41C25CBDE00E6CB31 /* GlobalVariables.swift */,
 				81E756401BA60827008B4688 /* Images.xcassets */,
 				81E756421BA60827008B4688 /* LaunchScreen.xib */,
 				81E7563D1BA60827008B4688 /* Main.storyboard */,
@@ -329,7 +335,9 @@
 				812227B91BC000EE00D8BED8 /* TemplateTableViewCell.swift in Sources */,
 				81D148221BC1E42A007F73FD /* FormTemplate.swift in Sources */,
 				817B25471BEC13FE00AFC9C6 /* CustomTransition.swift in Sources */,
+				8169F6D71C25CCF400E6CB31 /* FormField.swift in Sources */,
 				81605BE31BEF9F2400380E63 /* ArrayExtensions.swift in Sources */,
+				8169F6D51C25CBDE00E6CB31 /* GlobalVariables.swift in Sources */,
 				812227B21BBFEE9100D8BED8 /* TemplatesTableViewController.swift in Sources */,
 				817B25491BEC1A6200AFC9C6 /* UIViewExtensions.swift in Sources */,
 				8116084A1BA6296A008ED886 /* FormTableViewCell.swift in Sources */,

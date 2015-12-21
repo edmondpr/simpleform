@@ -9,8 +9,6 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
         view.layer.cornerRadius = 6
         view.layer.shadowColor = UIColor.blackColor().CGColor
         view.layer.shadowOpacity = 0.5
@@ -22,6 +20,8 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         tableView.dataSource = self
         tableHeightConstraint.constant = CGFloat(self.ownersList.count * 45);
+        
+        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
