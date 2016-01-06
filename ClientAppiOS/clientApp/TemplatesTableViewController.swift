@@ -1,9 +1,5 @@
 import UIKit
 
-protocol TemplatesControllerDelegate: class {
-    func templatesController(templatesVC: TemplatesTableViewController)
-}
-
 class TemplatesTableViewController: PFQueryTableViewController {
     var transition: CustomTransition!
     
@@ -33,7 +29,8 @@ class TemplatesTableViewController: PFQueryTableViewController {
     }
     
     override func viewDidLoad() {
-        self.navigationItem.title = "Forms"
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList:", name:"refresh", object: nil)
+        self.navigationItem.title = "All Forms"
         tableView.registerNib(UINib(nibName: "TemplateTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
         tableView.tableFooterView = UIView()
         super.viewDidLoad()
@@ -41,6 +38,12 @@ class TemplatesTableViewController: PFQueryTableViewController {
         // Do any additional setup after loading the view.
     }
     
+    func goToForm(formId:String){
+        var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
+        formTableVC.formId = formId
+        self.navigationController?.pushViewController(formTableVC, animated: true)
+    }
+
     override func queryForTable() -> PFQuery {
         let predicate = NSPredicate(format:"user == 'edmondpr@gmail.com' OR user == nil")
         var query:PFQuery = PFQuery(className:self.parseClassName!, predicate: predicate)
@@ -158,6 +161,7 @@ class TemplatesTableViewController: PFQueryTableViewController {
             destinationVC.ownersList = ownersModal
             destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
             destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))
+            destinationVC.pViewController = self
             self.presentViewController(destinationVC, animated: true, completion: nil)
         }
     }

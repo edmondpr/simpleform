@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
         
         var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
-        templatesTableVC.title = "Templates"
 
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
@@ -29,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let mainVC = ViewController()
         let navigationVC = UINavigationController(rootViewController: formTableVC)
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()

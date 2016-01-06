@@ -1,6 +1,6 @@
 import UIKit
 
-class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate, TemplatesControllerDelegate {
+class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     let cellIdentifier = "FormCell"
     var allCellsText = [String]()
     var connectDict = [Int:String]()
@@ -30,7 +30,7 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate, 
         
         let button = UIButton()
         button.frame = CGRectMake(0, 0, 100, 40) as CGRect
-        button.setTitle("Template", forState: UIControlState.Normal)
+        button.setTitle("Form", forState: UIControlState.Normal)
         button.addTarget(self, action: Selector("clickOnButton:"), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.titleView = button
         self.navigationItem.hidesBackButton = true
@@ -85,10 +85,6 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate, 
     func textFieldDidEndEditing(textField: UITextField) {
         allCellsText.append(textField.text)
         println(allCellsText)
-    }
-    
-    func templatesController(templatesVC: TemplatesTableViewController) {
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func didReceiveMemoryWarning() {

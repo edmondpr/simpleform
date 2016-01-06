@@ -5,6 +5,7 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var dismiss: UIButton!
+    weak var pViewController: TemplatesTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,14 +42,12 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-        formTableVC.title = self.ownersList[indexPath.row].type
-        formTableVC.formId = self.ownersList[indexPath.row].objectId
-        self.navigationController?.pushViewController(formTableVC, animated: true)
+        dismissViewControllerAnimated(true, completion: nil)
+        pViewController!.goToForm(self.ownersList[indexPath.row].objectId)
     }
     
     @IBAction func onDismissTouch(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)      
     }
     
 }
