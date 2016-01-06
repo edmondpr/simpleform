@@ -1,6 +1,6 @@
 import UIKit
 
-class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
+class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate, TemplatesControllerDelegate {
     let cellIdentifier = "FormCell"
     var allCellsText = [String]()
     var connectDict = [Int:String]()
@@ -30,16 +30,17 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
         
         let button = UIButton()
         button.frame = CGRectMake(0, 0, 100, 40) as CGRect
-        button.setTitle("Button", forState: UIControlState.Normal)
+        button.setTitle("Template", forState: UIControlState.Normal)
         button.addTarget(self, action: Selector("clickOnButton:"), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.titleView = button
+        self.navigationItem.hidesBackButton = true
         
         // Do any additional setup after loading the view.
     }
     
     func clickOnButton(button: UIButton) {
         var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
-        self.presentViewController(templatesTableVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(templatesTableVC, animated: true)
     }
     
     override func queryForTable() -> PFQuery {
@@ -84,6 +85,10 @@ class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         allCellsText.append(textField.text)
         println(allCellsText)
+    }
+    
+    func templatesController(templatesVC: TemplatesTableViewController) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func didReceiveMemoryWarning() {

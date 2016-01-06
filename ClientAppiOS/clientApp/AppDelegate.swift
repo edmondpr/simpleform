@@ -19,23 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", clientKey: "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX")
         
         var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-        formTableVC.title = "My Profile"
         
         var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
         templatesTableVC.title = "Templates"
-        
-        UINavigationBar.appearance().tintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
+
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        var navigationVC:UINavigationController = UINavigationController(rootViewController: formTableVC)
-        
-        let frame = UIScreen.mainScreen().bounds
-        window = UIWindow(frame: frame)
-        
-        window!.rootViewController = navigationVC
-        window!.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let mainVC = ViewController()
+        let navigationVC = UINavigationController(rootViewController: formTableVC)
+        window?.rootViewController = navigationVC
+        window?.makeKeyAndVisible()
         
         return true
     }

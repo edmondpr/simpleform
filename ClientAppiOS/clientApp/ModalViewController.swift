@@ -44,7 +44,7 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
         var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
         formTableVC.title = self.ownersList[indexPath.row].type
         formTableVC.formId = self.ownersList[indexPath.row].objectId
-        self.presentViewController(formTableVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(formTableVC, animated: true)
     }
     
     @IBAction func onDismissTouch(sender: AnyObject) {

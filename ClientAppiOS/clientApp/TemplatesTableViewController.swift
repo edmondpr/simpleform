@@ -1,5 +1,9 @@
 import UIKit
 
+protocol TemplatesControllerDelegate: class {
+    func templatesController(templatesVC: TemplatesTableViewController)
+}
+
 class TemplatesTableViewController: PFQueryTableViewController {
     var transition: CustomTransition!
     
@@ -29,6 +33,7 @@ class TemplatesTableViewController: PFQueryTableViewController {
     }
     
     override func viewDidLoad() {
+        self.navigationItem.title = "Forms"
         tableView.registerNib(UINib(nibName: "TemplateTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
         tableView.tableFooterView = UIView()
         super.viewDidLoad()
@@ -129,10 +134,9 @@ class TemplatesTableViewController: PFQueryTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row < userTemplatesCount {
             var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-            formTableVC.title = userTemplates[indexPath.row].name
             formTableVC.formId = userTemplates[indexPath.row].objectId
             formTableVC.myProfileId = self.myProfileId
-            self.presentViewController(formTableVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(formTableVC, animated: true)
         } else if indexPath.row >= userTemplatesCount && multipleForms[indexPath.row-userTemplatesCount].rangeOfString(",") != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! ModalViewController
