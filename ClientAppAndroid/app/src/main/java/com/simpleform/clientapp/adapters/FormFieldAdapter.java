@@ -3,6 +3,7 @@ package com.simpleform.clientapp.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,11 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
             holder.fieldEditText.setFloatingLabelText(formFields.get(position).getLabel());
             holder.fieldEditText.setText(formFields.get(position).getValue());
             holder.fieldEditText.setId(position);
+
+            // check if field type is "Number" in order to show numeric keyboard
+            if(formFields.get(position).getType().equals("Number")){
+                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            }
 
             // We need to update the adapter once we finish editing
             holder.fieldEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
