@@ -25,6 +25,7 @@
 		8158EB9B1C4DA20A001C4332 /* FormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB991C4DA20A001C4332 /* FormTemplate.swift */; };
 		8158EB9C1C4DA20A001C4332 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9A1C4DA20A001C4332 /* FormField.swift */; };
 		8158EB9E1C4DAE9F001C4332 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9D1C4DAE9F001C4332 /* ViewController.swift */; };
+		8158EBA01C4DB2BA001C4332 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		8158EB991C4DA20A001C4332 /* FormTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTemplate.swift; sourceTree = "<group>"; };
 		8158EB9A1C4DA20A001C4332 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		8158EB9D1C4DAE9F001C4332 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				8158EB521C4D9E23001C4332 /* AppDelegate.swift */,
+				8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */,
 				8158EB8C1C4DA064001C4332 /* GlobalVariables.swift */,
 				8158EB591C4D9E23001C4332 /* Images.xcassets */,
 				8158EB5B1C4D9E23001C4332 /* LaunchScreen.xib */,
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8158EBA01C4DB2BA001C4332 /* FormViewController.swift in Sources */,
 				8158EB9E1C4DAE9F001C4332 /* ViewController.swift in Sources */,
 				8158EB9B1C4DA20A001C4332 /* FormTemplate.swift in Sources */,
 				8158EB911C4DA064001C4332 /* GlobalVariables.swift in Sources */,
