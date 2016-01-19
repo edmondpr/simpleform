@@ -2,7 +2,7 @@ import UIKit
 import Parse
 
 class FormViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var names = [String]()
+    var formFields = [FormField]()
     var myProfileId = "DoccgSzAtV"
     
     var tableView: UITableView!
@@ -27,12 +27,13 @@ class FormViewController: UIViewController, UITableViewDataSource, UITableViewDe
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved \(objects!.count) templates.")
                 // Do something with the found objects
                 if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        self.names.append(object["value"] as! String)
+                    for pfObject in objects {
+                        let fieldLabel = pfObject["label"] as? String
+                        let fieldValue = pfObject["value"] as? String
+                        let fieldObj = FormField(label: fieldLabel!, value: fieldValue!)
+                        self.formFields.append(fieldObj)
                     }
                     self.tableView.reloadData()
                 }
@@ -44,12 +45,13 @@ class FormViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
+        return formFields.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FormTableViewCell", forIndexPath: indexPath) as! FormTableViewCell
-        cell.textField?.text = names[indexPath.row]
+        cell.textField?.placeholder = formFields[indexPath.row].label
+        cell.textField?.text = formFields[indexPath.row].value
         return cell
     }
     
