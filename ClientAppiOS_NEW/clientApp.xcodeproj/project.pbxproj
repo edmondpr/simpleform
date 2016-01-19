@@ -26,6 +26,8 @@
 		8158EB9C1C4DA20A001C4332 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9A1C4DA20A001C4332 /* FormField.swift */; };
 		8158EB9E1C4DAE9F001C4332 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9D1C4DAE9F001C4332 /* ViewController.swift */; };
 		8158EBA01C4DB2BA001C4332 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */; };
+		816138291C4EE54F0076A9AE /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816138271C4EE54F0076A9AE /* FormTableViewCell.swift */; };
+		8161382A1C4EE54F0076A9AE /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 816138281C4EE54F0076A9AE /* FormTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		8158EB9A1C4DA20A001C4332 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		8158EB9D1C4DAE9F001C4332 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		816138271C4EE54F0076A9AE /* FormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
+		816138281C4EE54F0076A9AE /* FormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 			children = (
 				8158EB521C4D9E23001C4332 /* AppDelegate.swift */,
 				8158EB9F1C4DB2BA001C4332 /* FormViewController.swift */,
+				816138271C4EE54F0076A9AE /* FormTableViewCell.swift */,
+				816138281C4EE54F0076A9AE /* FormTableViewCell.xib */,
 				8158EB8C1C4DA064001C4332 /* GlobalVariables.swift */,
 				8158EB591C4D9E23001C4332 /* Images.xcassets */,
 				8158EB5B1C4D9E23001C4332 /* LaunchScreen.xib */,
@@ -267,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8158EB581C4D9E23001C4332 /* Main.storyboard in Resources */,
+				8161382A1C4EE54F0076A9AE /* FormTableViewCell.xib in Resources */,
 				8158EB5D1C4D9E23001C4332 /* LaunchScreen.xib in Resources */,
 				8158EB5A1C4D9E23001C4332 /* Images.xcassets in Resources */,
 			);
@@ -292,6 +299,7 @@
 				8158EB911C4DA064001C4332 /* GlobalVariables.swift in Sources */,
 				8158EB9C1C4DA20A001C4332 /* FormField.swift in Sources */,
 				8158EB531C4D9E23001C4332 /* AppDelegate.swift in Sources */,
+				816138291C4EE54F0076A9AE /* FormTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

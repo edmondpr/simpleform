@@ -13,7 +13,8 @@ class FormViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView = UITableView(frame: view.frame)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NameCell")
+        let cellNib = UINib(nibName: "FormTableViewCell", bundle: NSBundle.mainBundle())
+        tableView.registerNib(cellNib, forCellReuseIdentifier: "FormTableViewCell")
         view.addSubview(tableView)
         
         getFormFields()
@@ -47,8 +48,8 @@ class FormViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NameCell") as! UITableViewCell
-        cell.textLabel?.text = names[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("FormTableViewCell", forIndexPath: indexPath) as! FormTableViewCell
+        cell.textField?.text = names[indexPath.row]
         return cell
     }
     
