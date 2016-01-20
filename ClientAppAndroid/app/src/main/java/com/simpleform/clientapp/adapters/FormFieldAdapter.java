@@ -86,6 +86,9 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
             // check if field type is "Number" in order to show numeric keyboard
             if(formFields.get(position).getType().equals("Number")){
                 holder.fieldEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            } else if(formFields.get(position).getType().equals("String")){
+                //this is an work-around, we shouldn't need to set normal keyboard,  but in the same time we got the chance to cap set every words
+                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
             }
 
             // We need to update the adapter once we finish editing
