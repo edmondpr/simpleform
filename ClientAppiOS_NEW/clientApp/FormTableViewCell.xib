@@ -15,7 +15,7 @@
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aUK-7N-XWS" customClass="MKTextField" customModule="MaterialKit">
                         <rect key="frame" x="21" y="6" width="274" height="36"/>
-                        <color key="textColor" red="0.1980999993089167" green="0.42287038784750347" blue="0.90271859217171713" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.092135971725157459" green="0.39125631313131315" blue="0.22843025876853595" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                         <userDefinedRuntimeAttributes>

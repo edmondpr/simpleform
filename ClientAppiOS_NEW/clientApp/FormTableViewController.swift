@@ -1,8 +1,9 @@
 import UIKit
 import Parse
 
-class FormViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FormTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var formFields = [FormField]()
+    var formId = ""    
     var myProfileId = "DoccgSzAtV"
     
     var tableView: UITableView!
@@ -10,14 +11,32 @@ class FormViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setHeader()
+        loadTableView()
+        getFormFields()
+    }
+    
+    func setHeader() {
+        let button = UIButton()
+        button.frame = CGRectMake(0, 0, 100, 40) as CGRect
+        button.setTitle("Form", forState: UIControlState.Normal)
+        button.addTarget(self, action: Selector("clickOnButton:"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.titleView = button
+        self.navigationItem.hidesBackButton = true
+    }
+    
+    func clickOnButton(button: UIButton) {
+        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController()
+        self.navigationController?.pushViewController(templatesTableVC, animated: true)
+    }
+    
+    func loadTableView() {
         tableView = UITableView(frame: view.frame)
         tableView.dataSource = self
         tableView.delegate = self
         let cellNib = UINib(nibName: "FormTableViewCell", bundle: NSBundle.mainBundle())
         tableView.registerNib(cellNib, forCellReuseIdentifier: "FormTableViewCell")
         view.addSubview(tableView)
-        
-        getFormFields()
     }
     
     func getFormFields() {
