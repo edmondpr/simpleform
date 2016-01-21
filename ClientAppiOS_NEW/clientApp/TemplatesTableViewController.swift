@@ -8,6 +8,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     var myProfileId = ""
     var tableView: UITableView!
     var selectedIndexPath: NSIndexPath?
+    var transition: CustomTransition!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,11 +64,16 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
                 break
             }
         }
-        
         if !exists {
             let multipleFormTemplate = MultipleFormTemplate(firstTemplate: ownerTemplateDB, otherTemplates: [])
             ownersTemplates.append(multipleFormTemplate)
         }
+    }
+    
+    func goToForm(formId:String){
+        var formTableVC:FormTableViewController = FormTableViewController()
+        formTableVC.formId = formId
+        self.navigationController?.pushViewController(formTableVC, animated: true)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,6 +84,25 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCellWithIdentifier("TemplateTableViewCell", forIndexPath: indexPath) as! TemplateTableViewCell
         cell.textLabel?.text = ownersTemplates[indexPath.row].firstTemplate.owner
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! ModalViewController
+        destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+        transition = CustomTransition()
+        transition.duration = 0.4
+        destinationVC.transitioningDelegate = transition
+        
+        // send multiple forms list to modal controller
+        var ownersModal = [FormTemplate]()
+        ownersModal.append(ownersTemplates[indexPath.row].firstTemplate)
+        ownersModal.extend(ownersTemplates[indexPath.row].otherTemplates)
+        destinationVC.ownersList = ownersModal
+        destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
+        destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))
+        destinationVC.pViewController = self
+        self.presentViewController(destinationVC, animated: true, completion: nil)
     }
     
 }
