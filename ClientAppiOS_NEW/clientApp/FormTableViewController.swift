@@ -5,7 +5,6 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
     var formFields = [FormField]()
     var isOwner = false
     var formId = ""
-    var myProfileId = "DoccgSzAtV"
     
     var tableView: UITableView!
     var selectedIndexPath: NSIndexPath?
@@ -46,9 +45,9 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
             className = "OwnersFields"
         }
         if formId == "" {
-            formId = myProfileId
+            formId = GlobalVariables.myProfileId
         }
-        let predicate = NSPredicate(format:"formId == '" + formId + "'")
+        let predicate = NSPredicate(format: "formId == '" + formId + "'")
         var query:PFQuery = PFQuery(className: className, predicate: predicate)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -59,9 +58,9 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
                         let fieldLabel = pfObject["label"] as? String
                         var fieldValue = pfObject["value"] as? String
                         // Connect fields from my profile
-                        if self.formId != self.myProfileId {
+                        if self.formId != GlobalVariables.myProfileId {
                             let fieldConnect = pfObject["connect"] as? String
-                            if fieldConnect != nil {
+                            if fieldConnect != nil && fieldConnect != "" {
                                 let startIndex = advance(fieldConnect!.startIndex, 2)
                                 let endIndex = advance(fieldConnect!.endIndex, -2)
                                 let range = startIndex..<endIndex
@@ -81,7 +80,7 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
                         self.formFields.append(fieldObj)
                     }
                     self.tableView.reloadData()
-                    if self.formId == self.myProfileId {
+                    if self.formId == GlobalVariables.myProfileId {
                         GlobalVariables.myProfile = self.formFields
                     }
                 }
