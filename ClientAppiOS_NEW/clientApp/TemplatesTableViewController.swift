@@ -7,6 +7,8 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     var selectedIndexPath: NSIndexPath?
     var transition: CustomTransition!
     
+    let CellIdentifier = "TemplateTableViewCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
@@ -40,6 +42,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
                     for pfObject in objects {
                         self.addClientTemplate(pfObject)
                     }
+                    self.addOwnersHeader()
                     self.getOwnersTemplates()
                 }
             } else {
@@ -55,6 +58,12 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
         let clientTemplateDB = FormTemplate(objectId: clientId!, owner: "", type: "", name: clientName!)
         let multipleFormTemplate = MultipleFormTemplate(firstTemplate: clientTemplateDB, otherTemplates: [])
         templates.append(multipleFormTemplate)
+    }
+    
+    func addOwnersHeader() {
+        let header = FormTemplate(objectId: "", owner: "Available Forms", type: "", name: "")
+        let headerTemplate = MultipleFormTemplate(firstTemplate: header, otherTemplates: [])
+        templates.append(headerTemplate)
     }
     
     func getOwnersTemplates() {
@@ -115,6 +124,11 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
             cell.textLabel?.text = templates[indexPath.row].firstTemplate.name
         } else {
             cell.textLabel?.text = templates[indexPath.row].firstTemplate.owner
+            // Set owners header style
+            if templates[indexPath.row].firstTemplate.objectId == "" {
+                cell.textLabel?.font = cell.textLabel?.font.fontWithSize(12)
+                cell.textLabel?.textColor = UIColor.redColor()
+            }
         }
         return cell
     }
@@ -123,8 +137,18 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
         if templates[indexPath.row].firstTemplate.name != "" {
             loadClientTemplate(indexPath)
         } else {
-            openOwnerModal(indexPath)
+            if templates[indexPath.row].firstTemplate.objectId != "" {
+                openOwnerModal(indexPath)
+            }
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var height:CGFloat = 40
+        if templates[indexPath.row].firstTemplate.objectId == "" {
+            height = 30
+        }
+        return height
     }
     
     func loadClientTemplate(indexPath: NSIndexPath) {
