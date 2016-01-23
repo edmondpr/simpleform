@@ -43,7 +43,7 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         dismissViewControllerAnimated(true, completion: nil)
-        pViewController!.goToForm(self.ownersList[indexPath.row].objectId)
+        pViewController!.goToForm(self.ownersList[indexPath.row].objectId, isOwner: true)
     }
     
     @IBAction func onDismissTouch(sender: AnyObject) {

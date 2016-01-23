@@ -70,9 +70,10 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    func goToForm(formId:String){
+    func goToForm(formId: String, isOwner: Bool){
         var formTableVC:FormTableViewController = FormTableViewController()
         formTableVC.formId = formId
+        formTableVC.isOwner = isOwner
         self.navigationController?.pushViewController(formTableVC, animated: true)
     }
     
