@@ -36,7 +36,6 @@
 		818C5F8B1C518C82002F9AB5 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818C5F8A1C518C82002F9AB5 /* ModalViewController.swift */; };
 		818C5F8D1C518CA5002F9AB5 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818C5F8C1C518CA5002F9AB5 /* CustomTransition.swift */; };
 		818C5F901C518CD6002F9AB5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818C5F8F1C518CD6002F9AB5 /* UIViewExtensions.swift */; };
-		A126B087DE3F0FDAE461CAB4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A734E8329D68230C1A2423 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +49,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06A734E8329D68230C1A2423 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CFB29C6E2C90B4E19124E13 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		815007091C50340000236A51 /* TemplatesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplatesTableViewController.swift; sourceTree = "<group>"; };
 		8150070B1C5039DF00236A51 /* TemplateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateTableViewCell.swift; sourceTree = "<group>"; };
@@ -82,7 +80,7 @@
 		8158EB9F1C4DB2BA001C4332 /* FormTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewController.swift; sourceTree = "<group>"; };
 		816138271C4EE54F0076A9AE /* FormTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
 		816138281C4EE54F0076A9AE /* FormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
-		8161382B1C4EEDFF0076A9AE /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		8161382B1C4EEDFF0076A9AE /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		818C5F8A1C518C82002F9AB5 /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		818C5F8C1C518CA5002F9AB5 /* CustomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
 		818C5F8F1C518CD6002F9AB5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 				8158EB841C4D9EF0001C4332 /* ParseCrashReporting.framework in Frameworks */,
 				8158EB851C4D9EF0001C4332 /* ParseFacebookUtils.framework in Frameworks */,
 				8158EB791C4D9EAB001C4332 /* SystemConfiguration.framework in Frameworks */,
-				A126B087DE3F0FDAE461CAB4 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +203,6 @@
 				8158EB801C4D9EF0001C4332 /* ParseFacebookUtils.framework */,
 				8158EB811C4D9EF0001C4332 /* ParseUI.framework */,
 				8158EB7C1C4D9EDB001C4332 /* System Frameworks */,
-				06A734E8329D68230C1A2423 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -287,6 +283,8 @@
 		8158EB451C4D9E23001C4332 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Edmond Pruteanu";
 				TargetAttributes = {
@@ -354,7 +352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${SRCROOT}/Podfile.lock\" \"${SRCROOT}/Pods/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		732A20CDFBD1A4457A1601F9 /* Copy Pods Resources */ = {
@@ -369,7 +367,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "
+";
 			showEnvVarsInLog = 0;
 		};
 		AB685B6724EAFDC1A242759B /* Embed Pods Frameworks */ = {
@@ -384,7 +383,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "
+";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

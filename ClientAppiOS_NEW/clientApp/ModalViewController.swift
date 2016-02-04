@@ -35,7 +35,7 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ownercell", forIndexPath: indexPath) as! UITableViewCell
+        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ownercell", forIndexPath: indexPath) 
         
         cell.textLabel!.text = self.ownersList[indexPath.row].type
         return cell

@@ -8,7 +8,7 @@ extension UIView {
     /**
     Redefines the height of the view
     
-    :param: height The new value for the view's height
+    - parameter height: The new value for the view's height
     */
     func setHeight(height: CGFloat) {
         
@@ -21,7 +21,7 @@ extension UIView {
     /**
     Redefines the width of the view
     
-    :param: width The new value for the view's width
+    - parameter width: The new value for the view's width
     */
     func setWidth(width: CGFloat) {
         
@@ -34,7 +34,7 @@ extension UIView {
     /**
     Redefines X position of the view
     
-    :param: x The new x-coordinate of the view's origin point
+    - parameter x: The new x-coordinate of the view's origin point
     */
     func setX(x: CGFloat) {
         
@@ -47,7 +47,7 @@ extension UIView {
     /**
     Redefines Y position of the view
     
-    :param: y The new y-coordinate of the view's origin point
+    - parameter y: The new y-coordinate of the view's origin point
     */
     func setY(y: CGFloat) {
         

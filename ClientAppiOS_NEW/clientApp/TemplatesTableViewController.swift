@@ -31,7 +31,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     
     func getTemplates() {
         let predicate = NSPredicate(format: "user == '" + GlobalVariables.user + "'")
-        var clientQuery:PFQuery = PFQuery(className: "ClientsTemplates", predicate: predicate)
+        let clientQuery:PFQuery = PFQuery(className: "ClientsTemplates", predicate: predicate)
         clientQuery.addAscendingOrder("name")
         clientQuery.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -47,7 +47,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
                 }
             } else {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
@@ -67,7 +67,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func getOwnersTemplates() {
-        var ownersQuery:PFQuery = PFQuery(className:"OwnersTemplates")
+        let ownersQuery:PFQuery = PFQuery(className:"OwnersTemplates")
         ownersQuery.addAscendingOrder("owner")
         ownersQuery.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -82,7 +82,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
                 }
             } else {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
@@ -108,7 +108,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func goToForm(formId: String, isOwner: Bool){
-        var formTableVC:FormTableViewController = FormTableViewController()
+        let formTableVC:FormTableViewController = FormTableViewController()
         formTableVC.formId = formId
         formTableVC.isOwner = isOwner
         self.navigationController?.pushViewController(formTableVC, animated: true)
@@ -152,7 +152,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func loadClientTemplate(indexPath: NSIndexPath) {
-        var formTableVC:FormTableViewController = FormTableViewController()
+        let formTableVC:FormTableViewController = FormTableViewController()
         formTableVC.isOwner = false
         formTableVC.formId = templates[indexPath.row].firstTemplate.objectId
         self.navigationController?.pushViewController(formTableVC, animated: true)
@@ -169,7 +169,7 @@ class TemplatesTableViewController: UIViewController, UITableViewDataSource, UIT
         // send multiple forms list to modal controller
         var ownersModal = [FormTemplate]()
         ownersModal.append(templates[indexPath.row].firstTemplate)
-        ownersModal.extend(templates[indexPath.row].otherTemplates)
+        ownersModal.appendContentsOf(templates[indexPath.row].otherTemplates)
         destinationVC.ownersList = ownersModal
         destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
         destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))

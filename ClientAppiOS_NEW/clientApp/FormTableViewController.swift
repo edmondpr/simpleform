@@ -26,7 +26,7 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func clickOnButton(button: UIButton) {
-        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController()
+        let templatesTableVC:TemplatesTableViewController = TemplatesTableViewController()
         self.navigationController?.pushViewController(templatesTableVC, animated: true)
     }
     
@@ -48,7 +48,7 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
             formId = GlobalVariables.myProfileId
         }
         let predicate = NSPredicate(format: "formId == '" + formId + "'")
-        var query:PFQuery = PFQuery(className: className, predicate: predicate)
+        let query:PFQuery = PFQuery(className: className, predicate: predicate)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
@@ -61,10 +61,10 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
                         if self.formId != GlobalVariables.myProfileId {
                             let fieldConnect = pfObject["connect"] as? String
                             if fieldConnect != nil && fieldConnect != "" {
-                                let startIndex = advance(fieldConnect!.startIndex, 2)
-                                let endIndex = advance(fieldConnect!.endIndex, -2)
+                                let startIndex = fieldConnect!.startIndex.advancedBy(2)
+                                let endIndex = fieldConnect!.endIndex.advancedBy(-2)
                                 let range = startIndex..<endIndex
-                                var fieldConnectStripped = fieldConnect!.substringWithRange(range)
+                                let fieldConnectStripped = fieldConnect!.substringWithRange(range)
                                 for myProfileField in GlobalVariables.myProfile {
                                     if myProfileField.label == fieldConnectStripped {
                                         fieldValue = myProfileField.value
@@ -86,7 +86,7 @@ class FormTableViewController: UIViewController, UITableViewDataSource, UITableV
                 }
             } else {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }

@@ -7,18 +7,13 @@
 //
 
 import UIKit
-import MaterialKit
 
 class FormTableViewCell: UITableViewCell {
 
-    @IBOutlet var textField: MKTextField!
+    @IBOutlet var textField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        textField.rippleLocation = .Left
-        textField.floatingPlaceholderEnabled = true
-        textField.layer.borderColor = UIColor.clearColor().CGColor
-        textField.rippleLayerColor = UIColor.MKColor.LightGreen
         // Initialization code
     }
 
