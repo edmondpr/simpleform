@@ -2,34 +2,24 @@
 
 angular.module('simpleFormApp.queueTable', [])
 
-.controller('queueTableCtrl', function($scope, $timeout) {
-    var nameList = ['Pierre', 'Pol', 'Jacques', 'Robert', 'Elisa'];
-    var familyName = ['Dupont', 'Germain', 'Delcourt', 'bjip', 'Menez'];
+.controller('queueTableCtrl', function($scope, $http, $timeout) {
 
     $scope.isLoading = false;
     $scope.rowCollection = [];
-
-
-    function createRandomItem() {
-        var
-            firstName = nameList[Math.floor(Math.random() * 4)],
-            lastName = familyName[Math.floor(Math.random() * 4)],
-            age = Math.floor(Math.random() * 100),
-            email = firstName + lastName + '@whatever.com',
-            balance = Math.random() * 3000;
-
-        return {
-            firstName: firstName,
-            lastName: lastName,
-            age: age,
-            email: email,
-            balance: balance
-        };
-    }
+    $scope.displayedCollection = [];
     
-    $scope.columns=['firstName', 'lastName','age','email','balance'];
+    $scope.columns = ['label', 'value', 'position'];
     
-    for(var i=0;i<50;i++){
-      $scope.rowCollection.push(createRandomItem());
-    }
+	$http.get('https://api.parse.com/1/classes/ClientsFields', {
+	    headers: {
+	        'X-Parse-Application-Id': "HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA",
+	        'X-Parse-REST-API-Key': "CaQYDxjD1iuYBOh8A0l3HNsDoNqbTSnZVbUzYHrK"
+	    }
+	}).then(function(response) {
+		for (var i in response.data.results) {
+        	$scope.rowCollection.push(response.data.results[i]);
+    	}
+    	$scope.displayedCollection  = [].concat($scope.rowCollection);
+    });  
+
 });
