@@ -1,185 +1,179 @@
 import UIKit
+import Parse
 
-class TemplatesTableViewController: PFQueryTableViewController {
+class TemplatesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var templates = [MultipleFormTemplate]()
+    var tableView: UITableView!
+    var selectedIndexPath: NSIndexPath?
     var transition: CustomTransition!
     
-    let cellIdentifier = "TemplateCell"
-    var userTemplates = [FormTemplate]()
-    var ownersTemplates = [FormTemplate]()
-    var myProfileId = ""
-    var multipleForms = [String]()
-    var userTemplatesCount = 0;
-    var isZeroHeight = [Bool]()
-    var rowMax = 0;
-    var maxReached = false;
-    
-    override init(style: UITableViewStyle, className: String!) {
-        
-        super.init(style: style, className: className)
-        
-        self.pullToRefreshEnabled = true
-        self.paginationEnabled = false
-        self.objectsPerPage = 25
-        
-        self.parseClassName = className
-    }
-    
-    required init(coder aDecoder:NSCoder) {
-        fatalError("NSCoding not supported")
-    }
+    let CellIdentifier = "TemplateTableViewCell"
     
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList:", name:"refresh", object: nil)
-        self.navigationItem.title = "All Forms"
-        tableView.registerNib(UINib(nibName: "TemplateTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        tableView.tableFooterView = UIView()
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        setHeader()
+        loadTableView()
+        getTemplates()
     }
     
-    func goToForm(formId:String){
-        var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-        formTableVC.formId = formId
-        self.navigationController?.pushViewController(formTableVC, animated: true)
-    }
-
-    override func queryForTable() -> PFQuery {
-        let predicate = NSPredicate(format:"user == 'edmondpr@gmail.com' OR user == nil")
-        var query:PFQuery = PFQuery(className:self.parseClassName!, predicate: predicate)
-        
-        if (objects?.count == 0) {
-            query.cachePolicy = PFCachePolicy.CacheThenNetwork
-        }
-        
-        query.orderByDescending("user")
-        query.addAscendingOrder("name")
-        query.addAscendingOrder("owner")
-        
-        return query
+    func setHeader() {
+        self.navigationItem.title = "All Forms"
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject?) -> PFTableViewCell? {
-        
-        var cell:TemplateTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? TemplateTableViewCell
-        
-        if cell == nil {
-            cell = NSBundle.mainBundle().loadNibNamed("TemplateTableViewCell", owner: self, options: nil)[0] as? TemplateTableViewCell
-        }
-        
-        if indexPath.row > rowMax {
-            rowMax = indexPath.row
-        } else if indexPath.row < rowMax {
-            maxReached = true
-        }
-        
-        if let pfObject = object {
-            var nameField:String? = pfObject["name"] as? String
-            if nameField != nil {
-                let userTemplateId:String? = pfObject.objectId
-                let userTemplateName:String? = pfObject["name"] as? String
-                cell?.templateName?.text = userTemplateName
-                if !maxReached {
-                    userTemplatesCount++
-                    let userTemplateObj = FormTemplate(objectId: userTemplateId!, owner: "", type: "", name:userTemplateName!)
-                    userTemplates.append(userTemplateObj)
-                }
-                if (nameField == "My Profile") {
-                    myProfileId = pfObject.objectId!
+    func loadTableView() {
+        tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        let cellNib = UINib(nibName: "TemplateTableViewCell", bundle: NSBundle.mainBundle())
+        tableView.registerNib(cellNib, forCellReuseIdentifier: "TemplateTableViewCell")
+        view.addSubview(tableView)
+    }
+    
+    func getTemplates() {
+        let predicate = NSPredicate(format: "user == '" + GlobalVariables.user + "'")
+        let clientQuery:PFQuery = PFQuery(className: "ClientsTemplates", predicate: predicate)
+        clientQuery.addAscendingOrder("name")
+        clientQuery.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // Do something with the found objects
+                if let objects = objects as? [PFObject] {
+                    for pfObject in objects {
+                        self.addClientTemplate(pfObject)
+                    }
+                    self.addOwnersHeader()
+                    self.getOwnersTemplates()
                 }
             } else {
-                let ownerName:String? = pfObject["owner"] as? String
-                let ownerType:String? = pfObject["type"] as? String
-                let ownerId:String? = pfObject.objectId
-                var exists = false
-                for ownerObj in ownersTemplates {
-                    if ownerObj.owner == ownerName {
-                        exists = true
-                        break
-                    }
-                }
-                if !exists {
-                    cell?.templateName?.text = ownerName
-                    multipleForms.append(ownerId!)
-                } else {
-                    if !maxReached {
-                        isZeroHeight[indexPath.row] = true
-                        var i = 1;
-                        while multipleForms[multipleForms.endIndex - i] == "" {
-                            i++
-                        }
-                        multipleForms[multipleForms.endIndex - i] += "," + ownerId!
-                        multipleForms.append("")
-                    }
-                }
-                if ownerId != nil && !maxReached {
-                    let ownerObj = FormTemplate(objectId: ownerId!, owner: ownerName!, type: ownerType!, name:"")
-                    ownersTemplates.append(ownerObj)
-                }
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
-        
-        return cell
-        
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        var height:CGFloat = 50;
-        if isZeroHeight.ref(indexPath.row) == nil {
-            isZeroHeight.append(false);
-        }
-        if isZeroHeight[indexPath.row] {
-            height = 0
-        }
-        return height;
+    func addClientTemplate(pfObject:PFObject) {
+        let clientName:String? = pfObject["name"] as? String
+        let clientId:String? = pfObject.objectId
+        let clientTemplateDB = FormTemplate(objectId: clientId!, owner: "", type: "", name: clientName!)
+        let multipleFormTemplate = MultipleFormTemplate(firstTemplate: clientTemplateDB, otherTemplates: [])
+        templates.append(multipleFormTemplate)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row < userTemplatesCount {
-            var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-            formTableVC.formId = userTemplates[indexPath.row].objectId
-            formTableVC.myProfileId = self.myProfileId
-            self.navigationController?.pushViewController(formTableVC, animated: true)
-        } else if indexPath.row >= userTemplatesCount && multipleForms[indexPath.row-userTemplatesCount].rangeOfString(",") != nil {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! ModalViewController
-            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-            transition = CustomTransition()
-            transition.duration = 0.4
-            destinationVC.transitioningDelegate = transition
+    func addOwnersHeader() {
+        let header = FormTemplate(objectId: "", owner: "Available Forms", type: "", name: "")
+        let headerTemplate = MultipleFormTemplate(firstTemplate: header, otherTemplates: [])
+        templates.append(headerTemplate)
+    }
+    
+    func getOwnersTemplates() {
+        let ownersQuery:PFQuery = PFQuery(className:"OwnersTemplates")
+        ownersQuery.addAscendingOrder("owner")
+        ownersQuery.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
             
-            // send multiple forms list to modal controller
-            var ownersModal = [FormTemplate]()
-            var formsIdArray = split(multipleForms[indexPath.row-userTemplatesCount]) {$0 == ","}
-            for ownerObj in ownersTemplates {
-                for formId in formsIdArray {
-                    if ownerObj.objectId == formId {
-                        ownersModal.append(ownerObj)
+            if error == nil {
+                // Do something with the found objects
+                if let objects = objects as? [PFObject] {
+                    for pfObject in objects {
+                        self.addOwnerTemplate(pfObject)
                     }
+                    self.tableView.reloadData()
                 }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
             }
-            destinationVC.ownersList = ownersModal
-            destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
-            destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))
-            destinationVC.pViewController = self
-            self.presentViewController(destinationVC, animated: true, completion: nil)
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func addOwnerTemplate(pfObject:PFObject) {
+        let ownerName:String? = pfObject["owner"] as? String
+        let ownerType:String? = pfObject["type"] as? String
+        let ownerId:String? = pfObject.objectId
+        let ownerTemplateDB = FormTemplate(objectId: ownerId!, owner: ownerName!, type: ownerType!, name: "")
+        
+        var exists = false
+        for ownerTemplate in templates {
+            if ownerTemplate.firstTemplate.owner == ownerName {
+                exists = true
+                ownerTemplate.otherTemplates.append(ownerTemplateDB)
+                break
+            }
+        }
+        if !exists {
+            let multipleFormTemplate = MultipleFormTemplate(firstTemplate: ownerTemplateDB, otherTemplates: [])
+            templates.append(multipleFormTemplate)
+        }
     }
-
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    func goToForm(formId: String, isOwner: Bool){
+        let formTableVC:FormTableViewController = FormTableViewController()
+        formTableVC.formId = formId
+        formTableVC.isOwner = isOwner
+        self.navigationController?.pushViewController(formTableVC, animated: true)
     }
-    */
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return templates.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("TemplateTableViewCell", forIndexPath: indexPath) as! TemplateTableViewCell
+        if templates[indexPath.row].firstTemplate.name != "" {
+            cell.textLabel?.text = templates[indexPath.row].firstTemplate.name
+        } else {
+            cell.textLabel?.text = templates[indexPath.row].firstTemplate.owner
+            // Set owners header style
+            if templates[indexPath.row].firstTemplate.objectId == "" {
+                cell.textLabel?.font = cell.textLabel?.font.fontWithSize(12)
+                cell.textLabel?.textColor = UIColor.redColor()
+            }
+        }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if templates[indexPath.row].firstTemplate.name != "" {
+            loadClientTemplate(indexPath)
+        } else {
+            if templates[indexPath.row].firstTemplate.objectId != "" {
+                openOwnerModal(indexPath)
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var height:CGFloat = 40
+        if templates[indexPath.row].firstTemplate.objectId == "" {
+            height = 30
+        }
+        return height
+    }
+    
+    func loadClientTemplate(indexPath: NSIndexPath) {
+        let formTableVC:FormTableViewController = FormTableViewController()
+        formTableVC.isOwner = false
+        formTableVC.formId = templates[indexPath.row].firstTemplate.objectId
+        self.navigationController?.pushViewController(formTableVC, animated: true)
+    }
+    
+    func openOwnerModal(indexPath: NSIndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewControllerWithIdentifier("ModalViewControllerID") as! ModalViewController
+        destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+        transition = CustomTransition()
+        transition.duration = 0.4
+        destinationVC.transitioningDelegate = transition
+        
+        // send multiple forms list to modal controller
+        var ownersModal = [FormTemplate]()
+        ownersModal.append(templates[indexPath.row].firstTemplate)
+        ownersModal.appendContentsOf(templates[indexPath.row].otherTemplates)
+        destinationVC.ownersList = ownersModal
+        destinationVC.view.setHeight(CGFloat(ownersModal.count * 45 + 60))
+        destinationVC.tableView.setHeight(CGFloat(ownersModal.count * 50 ))
+        destinationVC.pViewController = self
+        self.presentViewController(destinationVC, animated: true, completion: nil)
+    }
 }

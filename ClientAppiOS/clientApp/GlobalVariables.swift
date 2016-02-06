@@ -10,4 +10,6 @@ import Foundation
 
 struct GlobalVariables {
     static var myProfile = [FormField]()
+    static var myProfileId = "tPm8gXTUv1"
+    static var user = "edmondpr@gmail.com"
 }

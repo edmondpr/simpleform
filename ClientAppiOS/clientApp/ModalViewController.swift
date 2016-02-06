@@ -35,7 +35,7 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ownercell", forIndexPath: indexPath) as! UITableViewCell
+        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ownercell", forIndexPath: indexPath) 
         
         cell.textLabel!.text = self.ownersList[indexPath.row].type
         return cell
@@ -43,11 +43,11 @@ class ModalViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         dismissViewControllerAnimated(true, completion: nil)
-        pViewController!.goToForm(self.ownersList[indexPath.row].objectId)
+        pViewController!.goToForm(self.ownersList[indexPath.row].objectId, isOwner: true)
     }
     
     @IBAction func onDismissTouch(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)      
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

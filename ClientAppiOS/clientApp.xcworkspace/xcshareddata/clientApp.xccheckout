@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6D52AB93-E599-4D42-B351-A943E2C61206</string>
+	<string>CF3304A7-0CB3-4560-9810-65C5A1B202BE</string>
 	<key>IDESourceControlProjectName</key>
 	<string>clientApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,7 +14,7 @@
 		<string>https://github.com/edmondpr/simpleform.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ClientAppiOS/clientApp.xcworkspace</string>
+	<string>ClientAppiOS_NEW/clientApp.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C47492092B82C823A2DBB93443A0FDC683C33B8F</key>

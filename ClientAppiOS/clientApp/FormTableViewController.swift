@@ -1,106 +1,105 @@
 import UIKit
+import Parse
 
-class FormTableViewController: PFQueryTableViewController, UITextFieldDelegate {
-    let cellIdentifier = "FormCell"
-    var allCellsText = [String]()
-    var connectDict = [Int:String]()
-    var myProfileDict = [Int:String]()
+class FormTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var formFields = [FormField]()
+    var isOwner = false
     var formId = ""
-    var myProfileId = "DoccgSzAtV"
     
-    override init(style: UITableViewStyle, className: String!) {
-     
-        super.init(style: style, className: className)
-        
-        self.pullToRefreshEnabled = true
-        self.paginationEnabled = false
-        self.objectsPerPage = 25
-        
-        self.parseClassName = className
-    }
-    
-    required init(coder aDecoder:NSCoder) {
-        fatalError("NSCoding not supported")
-    }
+    var tableView: UITableView!
+    var selectedIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
-        tableView.registerNib(UINib(nibName: "FormTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
-
         super.viewDidLoad()
-        
+        setHeader()
+        loadTableView()
+        getFormFields()
+    }
+    
+    func setHeader() {
         let button = UIButton()
         button.frame = CGRectMake(0, 0, 100, 40) as CGRect
         button.setTitle("Form", forState: UIControlState.Normal)
         button.addTarget(self, action: Selector("clickOnButton:"), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.titleView = button
         self.navigationItem.hidesBackButton = true
-        
-        // Do any additional setup after loading the view.
     }
     
     func clickOnButton(button: UIButton) {
-        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
+        let templatesTableVC:TemplatesTableViewController = TemplatesTableViewController()
         self.navigationController?.pushViewController(templatesTableVC, animated: true)
     }
     
-    override func queryForTable() -> PFQuery {
-        let predicate = NSPredicate(format:"formId == '" + formId + "' OR formId == '" + myProfileId + "'")
-        var query:PFQuery = PFQuery(className:self.parseClassName!, predicate: predicate)
-        
-        if (objects?.count == 0) {
-            query.cachePolicy = PFCachePolicy.CacheThenNetwork
-        }
-        
-        query.orderByAscending("position")
-        
-        return query
+    func loadTableView() {
+        tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        let cellNib = UINib(nibName: "FormTableViewCell", bundle: NSBundle.mainBundle())
+        tableView.registerNib(cellNib, forCellReuseIdentifier: "FormTableViewCell")
+        view.addSubview(tableView)
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject?) -> PFTableViewCell? {
-        
-        var cell:FormTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? FormTableViewCell
-        
-        if cell == nil {
-            cell = NSBundle.mainBundle().loadNibNamed("FormTableViewCell", owner: self, options: nil)[0] as? FormTableViewCell
+    func getFormFields() {
+        var className = "ClientsFields"
+        if isOwner {
+            className = "OwnersFields"
         }
         if formId == "" {
-            formId = myProfileId
+            formId = GlobalVariables.myProfileId
         }
-        if let pfObject = object {
-            if formId == myProfileId {
-                let fieldLabel = pfObject["label"] as? String
-                let fieldValue = pfObject["value"] as? String
-                cell?.textField?.text = fieldValue
-                let fieldObj = FormField(label: fieldLabel!, value: fieldValue!)
-                GlobalVariables.myProfile.append(fieldObj)
+        let predicate = NSPredicate(format: "formId == '" + formId + "'")
+        let query:PFQuery = PFQuery(className: className, predicate: predicate)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    for pfObject in objects {
+                        let fieldLabel = pfObject["label"] as? String
+                        var fieldValue = pfObject["value"] as? String
+                        // Connect fields from my profile
+                        if self.formId != GlobalVariables.myProfileId {
+                            let fieldConnect = pfObject["connect"] as? String
+                            if fieldConnect != nil && fieldConnect != "" {
+                                let startIndex = fieldConnect!.startIndex.advancedBy(2)
+                                let endIndex = fieldConnect!.endIndex.advancedBy(-2)
+                                let range = startIndex..<endIndex
+                                let fieldConnectStripped = fieldConnect!.substringWithRange(range)
+                                for myProfileField in GlobalVariables.myProfile {
+                                    if myProfileField.label == fieldConnectStripped {
+                                        fieldValue = myProfileField.value
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                        if fieldValue == nil {
+                            fieldValue = ""
+                        }
+                        let fieldObj = FormField(label: fieldLabel!, value: fieldValue!)
+                        self.formFields.append(fieldObj)
+                    }
+                    self.tableView.reloadData()
+                    if self.formId == GlobalVariables.myProfileId {
+                        GlobalVariables.myProfile = self.formFields
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
             }
-            cell?.textField.delegate = self
-            cell?.textField.becomeFirstResponder()
         }
-        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return formFields.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("FormTableViewCell", forIndexPath: indexPath) as! FormTableViewCell
+        cell.textField?.placeholder = formFields[indexPath.row].label
+        cell.textField?.text = formFields[indexPath.row].value
         return cell
-        
     }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        allCellsText.append(textField.text)
-        println(allCellsText)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
     
 }

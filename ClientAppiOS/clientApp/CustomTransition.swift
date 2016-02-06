@@ -23,17 +23,17 @@ class CustomTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewC
         return self
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return duration
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        var containerView = transitionContext.containerView()
-        var toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
-        var fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+        let containerView = transitionContext.containerView()
+        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
         
         if (isPresenting == true) {
-            containerView.addSubview(toViewController!.view)
+            containerView!.addSubview(toViewController!.view)
             toViewController!.view.alpha = 0
             toViewController!.view.transform = CGAffineTransformMakeScale(0.2, 0.2)
             
@@ -41,7 +41,7 @@ class CustomTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewC
                 delay: 0,
                 usingSpringWithDamping: 0.6,
                 initialSpringVelocity: 2,
-                options: nil,
+                options: [],
                 animations: {
                     
                     UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)

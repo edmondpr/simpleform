@@ -2,8 +2,8 @@
 //  clientAppTests.swift
 //  clientAppTests
 //
-//  Created by Edmond Pruteanu on 13/09/2015.
-//  Copyright (c) 2015 Edmond Pruteanu. All rights reserved.
+//  Created by Edmond Pruteanu on 18/01/2016.
+//  Copyright (c) 2016 Edmond Pruteanu. All rights reserved.
 //
 
 import UIKit

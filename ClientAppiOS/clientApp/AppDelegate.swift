@@ -2,33 +2,31 @@
 //  AppDelegate.swift
 //  clientApp
 //
-//  Created by Edmond Pruteanu on 13/09/2015.
-//  Copyright (c) 2015 Edmond Pruteanu. All rights reserved.
+//  Created by Edmond Pruteanu on 18/01/2016.
+//  Copyright (c) 2016 Edmond Pruteanu. All rights reserved.
 //
 
 import UIKit
+import Bolts
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Parse.setApplicationId("HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", clientKey: "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX")
         
-        var formTableVC:FormTableViewController = FormTableViewController(className: "ClientsFields")
-        
-        var templatesTableVC:TemplatesTableViewController = TemplatesTableViewController(className: "Templates")
-
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let navigationVC = UINavigationController(rootViewController: formTableVC)
+        let mainVC = FormTableViewController()
+        let navigationVC = UINavigationController(rootViewController: mainVC)
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()
         
