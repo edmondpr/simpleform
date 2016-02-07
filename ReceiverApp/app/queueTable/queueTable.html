@@ -1,21 +1,23 @@
-    <div class="table-container">
-      <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
-    <thead>
-    <tr>
-        <th lr-drag-src="headers" lr-drop-target="headers" ng-repeat="col in columns" st-sort="{{col}}">{{col}}</th>
-    </tr>
-    <tr>
-        <th>
-            <input st-search="label" placeholder="search for name" class="input-sm form-control" type="search"/>
-        </th>
-        <th colspan="4">
-            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="row in displayedCollection">
-        <td ng-repeat="col in columns">{{row[col]}}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="table-container">
+	<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+	    <thead>
+		    <tr>
+		        <th ng-repeat="col in columns" st-sort="{{col}}">{{col}}</th>
+		    </tr>
+		    <tr>
+		        <th>
+		            <input st-search="label" placeholder="search for name" class="input-sm form-control" type="search"/>
+		        </th>
+		        <th colspan="4">
+		            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+		        </th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr ng-repeat="row in displayedCollection">
+		        <td ng-repeat="col in columns" width="31%">{{row[col]}}</td>
+		        <td> print </td>
+		    </tr>
+	    </tbody>
+	</table>
+</div>	
