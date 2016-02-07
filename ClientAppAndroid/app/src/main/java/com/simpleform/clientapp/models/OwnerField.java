@@ -1,10 +1,12 @@
 package com.simpleform.clientapp.models;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+@ParseClassName("OwnersFields")
 public class OwnerField extends ParseObject {
     // String connect;
-    // String formId
+    // String formId;
     // String label;
     // Integer left;
     // Integer position;
@@ -18,7 +20,7 @@ public class OwnerField extends ParseObject {
         put("connect", value);
     }
 
-    public String getFormIdl() {
+    public String getFormId() {
         return getString("formId");
     }
     public void setFormId(String value) {

@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -27,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
@@ -64,14 +62,12 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
                     // Add client template from sorted list to global templates
                     for (ClientTemplate clientTemplate : clientsTemplatesSorted) {
                         FormTemplate formTemplate = new FormTemplate();
-                        if (!clientTemplate.getName().equals("My Profile")) {
-                            formTemplate.setObjectId(clientTemplate.getObjectId());
-                            formTemplate.setName(clientTemplate.getName());
-                            formTemplate.setOwner(clientTemplate.getOwner());
-                            formTemplate.setType(clientTemplate.getType());
-                            formTemplate.setFields(clientTemplate.getFields());
-                            formsTemplatesGlobal.add(formTemplate);
-                        }
+                        formTemplate.setObjectId(clientTemplate.getObjectId());
+                        formTemplate.setName(clientTemplate.getName());
+                        formTemplate.setOwner(clientTemplate.getOwner());
+                        formTemplate.setType(clientTemplate.getType());
+                        formTemplate.setFields(clientTemplate.getFields());
+                        formsTemplatesGlobal.add(formTemplate);
                     }
 
                     ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
@@ -108,25 +104,26 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
                                                         int position, long id) {
 
                                     FormTemplate formTemplate = (FormTemplate) formsListView.getItemAtPosition(position);
-                                    int numberOfForms = 0;
+                                    // We use numberOfOwnerTemplates to decide if it's a client template or owner template
+                                    int numberOfOwnerTemplates = 0;
                                     ArrayList<OwnerTemplate> ownersTemplatesGroup = new ArrayList<OwnerTemplate>();
                                     if (StringUtils.isBlank(formTemplate.getName())) {
                                         for (OwnerTemplate ownerTemplateIterator : ownersTemplates) {
                                             if (ownerTemplateIterator.getOwner().equals(formTemplate.getOwner())) {
-                                                numberOfForms++;
+                                                numberOfOwnerTemplates++;
                                                 ownersTemplatesGroup.add(ownerTemplateIterator);
                                             }
                                         }
                                     }
-                                    if (numberOfForms == 0) {
+                                    if (numberOfOwnerTemplates == 0) {
                                         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                                         intent.putExtra("formType", "client");
-                                        intent.putExtra("objectId", formTemplate.getObjectId());
+                                        intent.putExtra("formId", formTemplate.getObjectId());
                                         startActivity(intent);
-                                    } else if (numberOfForms == 1) {
+                                    } else if (numberOfOwnerTemplates == 1) {
                                         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                                         intent.putExtra("formType", "owner");
-                                        intent.putExtra("objectId", formTemplate.getObjectId());
+                                        intent.putExtra("formId", formTemplate.getObjectId());
                                         startActivity(intent);
                                     } else {
                                         openFormSelector(ownersTemplatesGroup);
@@ -157,7 +154,7 @@ public class SearchActivity extends FragmentActivity implements TextWatcher {
                     if (i == which) {
                         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                         intent.putExtra("formType", "owner");
-                        intent.putExtra("objectId", ownersTemplatesGroup.get(i).getObjectId());
+                        intent.putExtra("formId", ownersTemplatesGroup.get(i).getObjectId());
                         startActivity(intent);
                     }
                 }

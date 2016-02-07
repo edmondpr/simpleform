@@ -1,7 +1,9 @@
 package com.simpleform.clientapp.models;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+@ParseClassName("ClientsFields")
 public class ClientField extends ParseObject{
    // String type;
    // String defaultValue;
@@ -62,7 +64,7 @@ public class ClientField extends ParseObject{
         put("objectId", value);
     }
 
-    public String getFormIdl() {
+    public String getFormId() {
         return getString("formId");
     }
     public void setFormId(String value) {

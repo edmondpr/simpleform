@@ -1,6 +1,5 @@
 package com.simpleform.clientapp;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,17 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.simpleform.clientapp.adapters.FormFieldAdapter;
 import com.simpleform.clientapp.fragments.CountryFragment;
 import com.simpleform.clientapp.fragments.DatePickerFragment;
 import com.simpleform.clientapp.helpers.CountryFlagHelper;
-import com.simpleform.clientapp.models.FormField;
+import com.simpleform.clientapp.models.ClientField;
 import com.simpleform.clientapp.models.ClientTemplate;
-import com.simpleform.clientapp.models.OwnerTemplate;
+import com.simpleform.clientapp.models.FormField;
+import com.simpleform.clientapp.models.OwnerField;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,92 +57,94 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         Intent intent = getIntent();
         String formType = "client";
-        String objectId = "";
+        String formId = "";
         if (intent != null) {
             formType = intent.getStringExtra("formType");
-            objectId = intent.getStringExtra("objectId");
+            formId = intent.getStringExtra("formId");
         }
 
-        if (StringUtils.isBlank(objectId)) {
-            //Parse.enableLocalDatastore(this);
-            ParseObject.registerSubclass(ClientTemplate.class);
-            ParseObject.registerSubclass(OwnerTemplate.class);
-            Parse.initialize(this, "HxlZ3d7O3BuGM6oION0qPLrtrh5TcqnGR1eRecmA", "NP9FyiUzHqbR9LEZXeJ4cgjkfHTTnieMAYJCZkhX");
-            boolean isMyProfile = true;
-            String objectIdParam = "";
-            boolean isForOwnerTemplate = false;
-            executeClientParseQuery(isMyProfile, objectIdParam, isForOwnerTemplate);
+        if (StringUtils.isBlank(formId)) {
+            getMyProfile();
         } else {
             if (formType.equals("client")) {
-                boolean isMyProfile = false;
-                boolean isForOwnerTemplate = false;
-                executeClientParseQuery(isMyProfile, objectId, isForOwnerTemplate);
+                getClientFields(formId);
             } else {
-                boolean isMyProfile = true;
-                boolean isForOwnerTemplate = true;
-                executeClientParseQuery(isMyProfile, objectId, isForOwnerTemplate);
+                getOwnerFields(formId);
             }
         }
 
     }
 
-    private void executeClientParseQuery(final boolean isMyProfile, final String objectId, final boolean isForOwnerTemplate) {
-        ParseQuery<ClientTemplate> queryMyProfile = ParseQuery.getQuery(ClientTemplate.class);
-        queryMyProfile.whereEqualTo("name", "My Profile");
-        ParseQuery<ClientTemplate> querySavedClientTemplate = ParseQuery.getQuery(ClientTemplate.class);
-        queryMyProfile.whereEqualTo("objectId", objectId);
-        List<ParseQuery<ClientTemplate>> queries = new ArrayList<ParseQuery<ClientTemplate>>();
-        queries.add(queryMyProfile);
-        queries.add(querySavedClientTemplate);
-
-        ParseQuery<ClientTemplate> queryClientsTemplates;
-        if (isMyProfile) {
-            queryClientsTemplates = ParseQuery.getQuery(ClientTemplate.class);
-            queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
-            queryClientsTemplates.whereEqualTo("name", "My Profile");
-        } else {
-            queryClientsTemplates = ParseQuery.or(queries);
-            queryClientsTemplates.whereEqualTo("user", Utility.getLoggedInUser());
-        }
-        queryClientsTemplates.findInBackground(new FindCallback<ClientTemplate>() {
+    private void getMyProfile() {
+        ParseQuery<ClientTemplate> queryMyProfileId = ParseQuery.getQuery(ClientTemplate.class);
+        queryMyProfileId.whereEqualTo("name", "My Profile");
+        queryMyProfileId.whereEqualTo("user", Utility.getLoggedInUser());
+        queryMyProfileId.findInBackground(new FindCallback<ClientTemplate>() {
             @Override
             public void done(List<ClientTemplate> clientsTemplates, ParseException e) {
-                ArrayList<FormField> clientFields = new ArrayList<FormField>();
-                ArrayList<FormField> myProfileFields = new ArrayList<FormField>();
-                clientFields = clientsTemplates.get(0).getFields();
-
-                if (!isForOwnerTemplate) {
-                    if (!isMyProfile) {
-                        if (clientsTemplates.get(0).getName().equals("My Profile")) {
-                            myProfileFields = clientsTemplates.get(0).getFields();
-                            clientFields = clientsTemplates.get(1).getFields();
-                        } else {
-                            clientFields = clientsTemplates.get(0).getFields();
-                            myProfileFields = clientsTemplates.get(1).getFields();
+                String myProfileId = clientsTemplates.get(0).getObjectId();
+                ParseQuery<ClientField> queryMyProfile = ParseQuery.getQuery(ClientField.class);
+                queryMyProfile.whereEqualTo("formId", myProfileId);
+                queryMyProfile.findInBackground(new FindCallback<ClientField>() {
+                    @Override
+                    public void done(List<ClientField> myProfileFields, ParseException e) {
+                        ArrayList<FormField> myProfileFormFields = new ArrayList<FormField>();
+                        for (ClientField clientField : myProfileFields) {
+                            FormField formField = new FormField();
+                            formField.setLabel(clientField.getLabel());
+                            formField.setValue(clientField.getValue());
+                            formField.setConnect(clientField.getConnect());
+                            formField.setType(clientField.getType());
+                            myProfileFormFields.add(formField);
                         }
-                        connectFields(myProfileFields, clientFields);
+                        SimpleFormApplication.myProfileFormFields = myProfileFormFields;
+                        setFormFieldAdapter(myProfileFormFields);
                     }
-                    setFormFieldAdapter(clientFields);
-                } else {
-                    executeOwnerParseQuery(objectId, clientFields);
-                }
+                });
             }
         });
     }
 
-    private void executeOwnerParseQuery(String objectId, final ArrayList<FormField> myProfileFields) {
-        ParseQuery<OwnerTemplate> queryOwnersTemplates = ParseQuery.getQuery(OwnerTemplate.class);
-        queryOwnersTemplates.whereEqualTo("objectId", objectId);
-        queryOwnersTemplates.findInBackground(new FindCallback<OwnerTemplate>() {
+    private void getClientFields(String formId) {
+        ParseQuery<ClientField> queryClientFields = ParseQuery.getQuery(ClientField.class);
+        queryClientFields.whereEqualTo("formId", formId);
+        queryClientFields.findInBackground(new FindCallback<ClientField>() {
             @Override
-            public void done(List<OwnerTemplate> ownersTemplates, ParseException e) {
-                ArrayList<FormField> ownerFields = new ArrayList<FormField>();
-                ownerFields = ownersTemplates.get(0).getFields();
-                connectFields(myProfileFields, ownerFields);
-                setFormFieldAdapter(ownerFields);
+            public void done(List<ClientField> clientFields, ParseException e) {
+                ArrayList<FormField> clientFormFields = new ArrayList<FormField>();
+                for (ClientField clientField : clientFields) {
+                    FormField formField = new FormField();
+                    formField.setLabel(clientField.getLabel());
+                    formField.setValue(clientField.getValue());
+                    formField.setConnect(clientField.getConnect());
+                    formField.setType(clientField.getType());
+                    clientFormFields.add(formField);
+                }
+                connectFields(SimpleFormApplication.myProfileFormFields, clientFormFields);
+                setFormFieldAdapter(clientFormFields);
             }
         });
     }
+    private void getOwnerFields(String formId) {
+        ParseQuery<OwnerField> queryOwnerFields = ParseQuery.getQuery(OwnerField.class);
+        queryOwnerFields.whereEqualTo("formId", formId);
+        queryOwnerFields.findInBackground(new FindCallback<OwnerField>() {
+            @Override
+            public void done(List<OwnerField> ownerFields, ParseException e) {
+                ArrayList<FormField> ownerFormFields = new ArrayList<FormField>();
+                OwnerField ownerField1 = ownerFields.get(0);
+                for (OwnerField ownerField : ownerFields) {
+                    FormField formField = new FormField();
+                    //formField.setLabel(ownerField.getLabel());
+                    formField.setConnect(ownerField.getConnect());
+                    ownerFormFields.add(formField);
+                }
+                connectFields(SimpleFormApplication.myProfileFormFields, ownerFormFields);
+                setFormFieldAdapter(ownerFormFields);
+            }
+        });
+    }
+
 
     public void connectFields(ArrayList<FormField> sourceFields, ArrayList<FormField> destFields) {
         for (int i = 0; i < destFields.size(); i++) {

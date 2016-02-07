@@ -2,7 +2,6 @@ package com.simpleform.clientapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.countrypicker.CountryPicker;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.simpleform.clientapp.MainActivity;
 import com.simpleform.clientapp.R;
 import com.simpleform.clientapp.fragments.CountryFragment;
 import com.simpleform.clientapp.models.FormField;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -83,14 +79,6 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
             holder.fieldEditText.setText(formFields.get(position).getValue());
             holder.fieldEditText.setId(position);
 
-            // check if field type is "Number" in order to show numeric keyboard
-            if(formFields.get(position).getType().equals("Number")){
-                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            } else if(formFields.get(position).getType().equals("String")){
-                //this is an work-around, we shouldn't need to set normal keyboard,  but in the same time we got the chance to cap set every words
-                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-            }
-
             // We need to update the adapter once we finish editing
             holder.fieldEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -113,6 +101,12 @@ public class FormFieldAdapter extends ArrayAdapter<FormField> {
                             } else if (formFields.get(position).getType().equals("Country")) {
                                 CountryFragment objCountryFragment = new CountryFragment();
                                 ((MainActivity) activity).setFragment(objCountryFragment);
+                            } else if (formFields.get(position).getType().equals("Number")) {
+                                // check if field type is "Number" in order to show numeric keyboard
+                                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            } else if (formFields.get(position).getType().equals("String")) {
+                                //this is a workaround, we shouldn't need to set normal keyboard, but at the same time we've got the chance to cap set every words
+                                holder.fieldEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
                             }
                         }
                     } catch (Exception e) {
